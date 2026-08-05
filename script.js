@@ -1,10 +1,14 @@
+// ==========================================
+// MATHS MEMORY TRAINER
+// FAST TOUCH VERSION
+// ==========================================
+
 const QUESTIONS = [];
 
-// ==========================================
-// YOUR QUESTION BANK
-// ==========================================
-
+// ------------------------------------------
 // SUBTRACTION
+// ------------------------------------------
+
 for (let a = 18; a >= 1; a--) {
   const maxB = Math.min(9, a);
   const minB = Math.max(0, a - 9);
@@ -16,18 +20,34 @@ for (let a = 18; a >= 1; a--) {
 
 QUESTIONS.push(["0-0", 0]);
 
+
+// ------------------------------------------
 // MULTIPLICATION 0-12
+// ------------------------------------------
+
 for (let a = 0; a <= 12; a++) {
   for (let b = 0; b <= 12; b++) {
     QUESTIONS.push([`${a}×${b}`, a * b]);
   }
 }
 
+
+// ------------------------------------------
 // ADDITION 0-9
+// ------------------------------------------
+
 for (let a = 0; a <= 9; a++) {
   for (let b = 0; b <= 9; b++) {
-    QUESTIONS.push([`${a}+${b}`, a + b]);
-    QUESTIONS.push([`${a}+${b}+1`, a + b + 1]);
+
+    QUESTIONS.push([
+      `${a}+${b}`,
+      a + b
+    ]);
+
+    QUESTIONS.push([
+      `${a}+${b}+1`,
+      a + b + 1
+    ]);
   }
 }
 
@@ -36,17 +56,32 @@ for (let a = 0; a <= 9; a++) {
 // ELEMENTS
 // ==========================================
 
-const home = document.getElementById("home");
-const game = document.getElementById("game");
-const results = document.getElementById("results");
+const home =
+  document.getElementById("home");
 
-const questionEl = document.getElementById("question");
-const answerDisplay = document.getElementById("answerDisplay");
-const progressEl = document.getElementById("progress");
-const timerEl = document.getElementById("timer");
-const scoreEl = document.getElementById("score");
-const accuracyEl = document.getElementById("accuracy");
-const feedbackEl = document.getElementById("feedback");
+const game =
+  document.getElementById("game");
+
+const results =
+  document.getElementById("results");
+
+const questionEl =
+  document.getElementById("question");
+
+const answerDisplay =
+  document.getElementById("answerDisplay");
+
+const progressEl =
+  document.getElementById("progress");
+
+const timerEl =
+  document.getElementById("timer");
+
+const accuracyEl =
+  document.getElementById("accuracy");
+
+const feedbackEl =
+  document.getElementById("feedback");
 
 
 // ==========================================
@@ -56,6 +91,7 @@ const feedbackEl = document.getElementById("feedback");
 let mode = "speed";
 
 let pool = [];
+
 let current = null;
 
 let answer = "";
@@ -63,6 +99,7 @@ let answer = "";
 let index = 0;
 
 let correct = 0;
+
 let wrong = 0;
 
 let startedAt = 0;
@@ -72,31 +109,28 @@ let timerHandle = null;
 let locked = false;
 
 let currentStreak = 0;
+
 let streakStartedAt = 0;
 
 
 // ==========================================
-// SAVED HIGH SCORES
+// HIGH SCORES
 // ==========================================
 
-// SPEED:
-// Fastest time for a perfect 10/10.
-
 let speedBest =
-  Number(localStorage.getItem("mathSpeedBest")) || null;
-
-
-// PRACTICE:
-// Longest correct streak.
+  Number(
+    localStorage.getItem("mathSpeedBest")
+  ) || null;
 
 let practiceBest =
-  Number(localStorage.getItem("mathPracticeBest")) || 0;
-
-
-// Time achieved during the best practice streak.
+  Number(
+    localStorage.getItem("mathPracticeBest")
+  ) || 0;
 
 let practiceBestTime =
-  Number(localStorage.getItem("mathPracticeBestTime")) || 0;
+  Number(
+    localStorage.getItem("mathPracticeBestTime")
+  ) || 0;
 
 
 // ==========================================
@@ -107,10 +141,16 @@ function shuffle(array) {
 
   const copy = array.slice();
 
-  for (let i = copy.length - 1; i > 0; i--) {
+  for (
+    let i = copy.length - 1;
+    i > 0;
+    i--
+  ) {
 
     const j =
-      Math.floor(Math.random() * (i + 1));
+      Math.floor(
+        Math.random() * (i + 1)
+      );
 
     [copy[i], copy[j]] =
       [copy[j], copy[i]];
@@ -121,7 +161,7 @@ function shuffle(array) {
 
 
 // ==========================================
-// START GAME
+// START
 // ==========================================
 
 function startGame(selectedMode) {
@@ -150,14 +190,19 @@ function startGame(selectedMode) {
 
   game.classList.remove("hidden");
 
-  startedAt = performance.now();
+  startedAt =
+    performance.now();
 
-  streakStartedAt = startedAt;
+  streakStartedAt =
+    startedAt;
 
   clearInterval(timerHandle);
 
   timerHandle =
-    setInterval(updateTimer, 50);
+    setInterval(
+      updateTimer,
+      50
+    );
 
   updateHighScoreDisplay();
 
@@ -174,7 +219,10 @@ function updateTimer() {
   if (!startedAt) return;
 
   const elapsed =
-    (performance.now() - startedAt) / 1000;
+    (
+      performance.now() -
+      startedAt
+    ) / 1000;
 
   timerEl.textContent =
     elapsed.toFixed(2) + "s";
@@ -182,7 +230,7 @@ function updateTimer() {
 
 
 // ==========================================
-// HIGH SCORE DISPLAY DURING GAME
+// HIGH SCORE DISPLAY
 // ==========================================
 
 function updateHighScoreDisplay() {
@@ -222,7 +270,6 @@ function updateHighScoreDisplay() {
 
 function nextQuestion() {
 
-  // SPEED TEST FINISHED
   if (
     mode === "speed" &&
     index >= 10
@@ -234,17 +281,18 @@ function nextQuestion() {
   }
 
 
-  // PRACTICE MODE
   if (
     mode === "practice" &&
     pool.length === 0
   ) {
 
-    pool = shuffle(QUESTIONS);
+    pool =
+      shuffle(QUESTIONS);
   }
 
 
-  current = pool.shift();
+  current =
+    pool.shift();
 
   index++;
 
@@ -253,7 +301,10 @@ function nextQuestion() {
   locked = false;
 
   questionEl.textContent =
-    current[0].replaceAll("-", "−");
+    current[0].replaceAll(
+      "-",
+      "−"
+    );
 
   answerDisplay.textContent =
     "\u00a0";
@@ -348,10 +399,6 @@ function submitAnswer() {
     entered === correctAnswer;
 
 
-  // ========================================
-  // CORRECT
-  // ========================================
-
   if (isCorrect) {
 
     correct++;
@@ -362,17 +409,14 @@ function submitAnswer() {
       "✓ Correct";
 
 
-    // SPEED MODE
     if (mode === "speed") {
 
-      // Go straight to the next question.
       nextQuestion();
 
       return;
     }
 
 
-    // PRACTICE MODE
     progressEl.textContent =
       `Streak: ${currentStreak}`;
 
@@ -382,17 +426,12 @@ function submitAnswer() {
   }
 
 
-  // ========================================
-  // WRONG
-  // ========================================
-
   wrong++;
 
   feedbackEl.textContent =
     `✗ Answer: ${correctAnswer}`;
 
 
-  // PRACTICE MODE ENDS IMMEDIATELY
   if (mode === "practice") {
 
     finishPractice();
@@ -401,13 +440,12 @@ function submitAnswer() {
   }
 
 
-  // SPEED TEST
   nextQuestion();
 }
 
 
 // ==========================================
-// FINISH SPEED TEST
+// SPEED RESULTS
 // ==========================================
 
 function finishSpeed() {
@@ -417,17 +455,17 @@ function finishSpeed() {
   timerHandle = null;
 
   const totalTime =
-    (performance.now() - startedAt) / 1000;
-
+    (
+      performance.now() -
+      startedAt
+    ) / 1000;
 
   const perfect =
     correct === 10;
 
-
   let newRecord = false;
 
 
-  // ONLY A PERFECT 10/10 CAN SET A RECORD
   if (perfect) {
 
     if (
@@ -435,7 +473,8 @@ function finishSpeed() {
       totalTime < speedBest
     ) {
 
-      speedBest = totalTime;
+      speedBest =
+        totalTime;
 
       localStorage.setItem(
         "mathSpeedBest",
@@ -452,120 +491,57 @@ function finishSpeed() {
   results.classList.remove("hidden");
 
 
-  // TITLE
-  if (newRecord) {
-
-    document.getElementById(
-      "resultTitle"
-    ).textContent =
-      "🏆 NEW HIGH SCORE!";
-
-  } else if (perfect) {
-
-    document.getElementById(
-      "resultTitle"
-    ).textContent =
-      "10/10 Complete!";
-
-  } else {
-
-    document.getElementById(
-      "resultTitle"
-    ).textContent =
-      "Round Complete";
-  }
+  document.getElementById(
+    "resultTitle"
+  ).textContent =
+    newRecord
+      ? "🏆 NEW HIGH SCORE!"
+      : perfect
+        ? "10/10 Complete!"
+        : "Round Complete";
 
 
-  // SCORE
   document.getElementById(
     "resultScore"
   ).textContent =
     `${correct} / 10`;
 
 
-  // CORRECT
   document.getElementById(
     "resultCorrect"
   ).textContent =
     correct;
 
 
-  // WRONG
   document.getElementById(
     "resultWrong"
   ).textContent =
     wrong;
 
 
-  // CURRENT TIME
   document.getElementById(
     "resultTime"
   ).textContent =
     totalTime.toFixed(2) + " s";
 
 
-  // AVERAGE
   document.getElementById(
     "resultAverage"
   ).textContent =
-    (totalTime / 10).toFixed(2) + " s";
+    (totalTime / 10)
+      .toFixed(2) + " s";
 
 
-  // ========================================
-  // SHOW BEST TIME
-  // ========================================
-
-  const resultCard =
-    document.querySelector(".result-card");
-
-
-  let bestDisplay =
-    document.getElementById(
-      "bestScoreDisplay"
-    );
-
-
-  if (!bestDisplay) {
-
-    bestDisplay =
-      document.createElement("div");
-
-    bestDisplay.id =
-      "bestScoreDisplay";
-
-    bestDisplay.style.textAlign =
-      "center";
-
-    bestDisplay.style.fontSize =
-      "20px";
-
-    bestDisplay.style.fontWeight =
-      "800";
-
-    bestDisplay.style.marginTop =
-      "18px";
-
-    resultCard.appendChild(
-      bestDisplay
-    );
-  }
-
-
-  if (speedBest !== null) {
-
-    bestDisplay.textContent =
-      `🏆 Best 10/10 time: ${speedBest.toFixed(2)} s`;
-
-  } else {
-
-    bestDisplay.textContent =
-      "🏆 Best 10/10 time: Not set";
-  }
+  showBestResult(
+    speedBest !== null
+      ? `🏆 Best 10/10 time: ${speedBest.toFixed(2)} s`
+      : "🏆 Best 10/10 time: Not set"
+  );
 }
 
 
 // ==========================================
-// FINISH PRACTICE
+// PRACTICE RESULTS
 // ==========================================
 
 function finishPractice() {
@@ -574,17 +550,14 @@ function finishPractice() {
 
   timerHandle = null;
 
-
   const streakTime =
-    (performance.now() - streakStartedAt) / 1000;
-
+    (
+      performance.now() -
+      streakStartedAt
+    ) / 1000;
 
   let newRecord = false;
 
-
-  // ========================================
-  // NEW STREAK RECORD
-  // ========================================
 
   if (
     currentStreak > practiceBest
@@ -596,18 +569,15 @@ function finishPractice() {
     practiceBestTime =
       streakTime;
 
-
     localStorage.setItem(
       "mathPracticeBest",
       String(practiceBest)
     );
 
-
     localStorage.setItem(
       "mathPracticeBestTime",
       String(practiceBestTime)
     );
-
 
     newRecord = true;
 
@@ -620,12 +590,8 @@ function finishPractice() {
     )
   ) {
 
-    // Same number of questions,
-    // but completed faster.
-
     practiceBestTime =
       streakTime;
-
 
     localStorage.setItem(
       "mathPracticeBestTime",
@@ -639,23 +605,14 @@ function finishPractice() {
   results.classList.remove("hidden");
 
 
-  if (newRecord) {
-
-    document.getElementById(
-      "resultTitle"
-    ).textContent =
-      "🔥 NEW PRACTICE HIGH SCORE!";
-
-  } else {
-
-    document.getElementById(
-      "resultTitle"
-    ).textContent =
-      "Practice Failed";
-  }
+  document.getElementById(
+    "resultTitle"
+  ).textContent =
+    newRecord
+      ? "🔥 NEW PRACTICE HIGH SCORE!"
+      : "Practice Failed";
 
 
-  // CURRENT STREAK
   document.getElementById(
     "resultScore"
   ).textContent =
@@ -674,29 +631,42 @@ function finishPractice() {
     1;
 
 
-  // CURRENT TIME
   document.getElementById(
     "resultTime"
   ).textContent =
     streakTime.toFixed(2) + " s";
 
 
-  // CURRENT AVERAGE
   document.getElementById(
     "resultAverage"
   ).textContent =
     currentStreak > 0
-      ? (streakTime / currentStreak).toFixed(2) + " s"
+      ? (
+          streakTime /
+          currentStreak
+        ).toFixed(2) + " s"
       : "0.00 s";
 
 
-  // ========================================
-  // SHOW BEST PRACTICE SCORE
-  // ========================================
+  showBestResult(
+    practiceBest > 0
+      ? `🏆 Best streak: ${practiceBest} correct<br>
+         ⏱️ Best time: ${practiceBestTime.toFixed(2)} s`
+      : "🏆 Best streak: Not set"
+  );
+}
+
+
+// ==========================================
+// RESULT HIGH SCORE
+// ==========================================
+
+function showBestResult(text) {
 
   const resultCard =
-    document.querySelector(".result-card");
-
+    document.querySelector(
+      ".result-card"
+    );
 
   let bestDisplay =
     document.getElementById(
@@ -733,40 +703,53 @@ function finishPractice() {
   }
 
 
-  if (practiceBest > 0) {
-
-    bestDisplay.innerHTML =
-      `🏆 Best streak: ${practiceBest} correct<br>` +
-      `⏱️ Best time: ${practiceBestTime.toFixed(2)} s`;
-
-  } else {
-
-    bestDisplay.textContent =
-      "🏆 Best streak: Not set";
-  }
+  bestDisplay.innerHTML =
+    text;
 }
 
 
 // ==========================================
-// FAST TOUCH HANDLER
+// ⚡ ULTRA-FAST BUTTON HANDLING
 // ==========================================
 //
-// We use pointerdown so the action happens
-// when your finger TOUCHES the button,
-// rather than waiting for a click.
+// IMPORTANT:
+// We don't use click events here.
 //
-// The buttons already have touch-action:
-// manipulation in style.css.
+// The action happens immediately on
+// pointerdown.
+//
+// We also prevent the browser from
+// generating a second click afterwards.
 
-function fastTouch(element, action) {
+function fastButton(
+  element,
+  action
+) {
+
+  if (!element) return;
+
 
   element.addEventListener(
     "pointerdown",
-    function(event) {
+    event => {
 
       event.preventDefault();
 
       action();
+
+    },
+    {
+      passive: false
+    }
+  );
+
+
+  element.addEventListener(
+    "click",
+    event => {
+
+      event.preventDefault();
+
     },
     {
       passive: false
@@ -783,27 +766,30 @@ document
   .querySelectorAll(".key")
   .forEach(button => {
 
-    fastTouch(button, () => {
+    fastButton(
+      button,
+      () => {
 
-      const key =
-        button.dataset.key;
+        const key =
+          button.dataset.key;
 
 
-      if (key === "clear") {
+        if (key === "clear") {
 
-        clearLast();
+          clearLast();
 
-      } else if (
-        key === "clearAll"
-      ) {
+        } else if (
+          key === "clearAll"
+        ) {
 
-        clearAll();
+          clearAll();
 
-      } else {
+        } else {
 
-        enterDigit(key);
+          enterDigit(key);
+        }
       }
-    });
+    );
   });
 
 
@@ -811,8 +797,10 @@ document
 // SUBMIT
 // ==========================================
 
-fastTouch(
-  document.getElementById("submitBtn"),
+fastButton(
+  document.getElementById(
+    "submitBtn"
+  ),
   submitAnswer
 );
 
@@ -821,58 +809,82 @@ fastTouch(
 // HOME BUTTONS
 // ==========================================
 
-fastTouch(
-  document.getElementById("speedBtn"),
+fastButton(
+  document.getElementById(
+    "speedBtn"
+  ),
   () => startGame("speed")
 );
 
 
-fastTouch(
-  document.getElementById("practiceBtn"),
+fastButton(
+  document.getElementById(
+    "practiceBtn"
+  ),
   () => startGame("practice")
 );
 
 
-fastTouch(
-  document.getElementById("againBtn"),
+fastButton(
+  document.getElementById(
+    "againBtn"
+  ),
   () => startGame(mode)
 );
 
 
-fastTouch(
-  document.getElementById("homeBtn"),
+fastButton(
+  document.getElementById(
+    "homeBtn"
+  ),
   () => {
 
-    clearInterval(timerHandle);
+    clearInterval(
+      timerHandle
+    );
 
     timerHandle = null;
 
-    results.classList.add("hidden");
+    results.classList.add(
+      "hidden"
+    );
 
-    game.classList.add("hidden");
+    game.classList.add(
+      "hidden"
+    );
 
-    home.classList.remove("hidden");
+    home.classList.remove(
+      "hidden"
+    );
   }
 );
 
 
-fastTouch(
-  document.getElementById("backBtn"),
+fastButton(
+  document.getElementById(
+    "backBtn"
+  ),
   () => {
 
-    clearInterval(timerHandle);
+    clearInterval(
+      timerHandle
+    );
 
     timerHandle = null;
 
-    game.classList.add("hidden");
+    game.classList.add(
+      "hidden"
+    );
 
-    home.classList.remove("hidden");
+    home.classList.remove(
+      "hidden"
+    );
   }
 );
 
 
 // ==========================================
-// PHYSICAL KEYBOARD SUPPORT
+// PHYSICAL KEYBOARD
 // ==========================================
 
 document.addEventListener(
