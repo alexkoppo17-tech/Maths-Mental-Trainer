@@ -1,87 +1,43 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#111827">
-  <title>Mental Maths Trainer</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Maths Memory Trainer</title>
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
 <main class="app">
 
-<section id="home" class="screen">
+<section id="home">
+<h1>Maths Memory Trainer</h1>
+<p class="subtitle">469 original questions</p>
 
-<h1>Mental Maths Trainer</h1>
-
-<p class="subtitle">
-Train your speed and accuracy.
-</p>
-
-<button class="menu-btn" id="speedBtn">
-10 Question Speed Test
-</button>
-
-<button class="menu-btn secondary" id="practiceBtn">
-Practice Mode
-</button>
-
-<p class="small">
-Mixed subtraction, multiplication and addition from your original question list.
-</p>
-
+<button id="speedBtn" class="primary">⚡ 10 Question Mode</button>
+<button id="practiceBtn" class="primary">🎯 Practice Mode</button>
+<button id="customSpeedBtn" class="secondary">⚡ My Questions — 10</button>
+<button id="customPracticeBtn" class="secondary">🎯 My Questions — Practice</button>
+<button id="bankBtn" class="secondary">📚 Question Bank</button>
 </section>
 
+<section id="game" class="hidden">
+<button id="backBtn" class="back">← Home</button>
 
-<section id="game" class="screen hidden">
-
-<div class="topbar">
-
-<button class="back-btn" id="backBtn">
-←
-</button>
-
-<div id="progress">
-Question 1 / 10
+<div class="stats">
+<span id="progress"></span>
+<span id="timer">0.00s</span>
 </div>
 
-<div id="timer">
-0.00s
-</div>
+<div id="best" class="best"></div>
 
-</div>
+<h2 id="question"></h2>
 
+<div id="answerDisplay" class="answer-display">&nbsp;</div>
 
-<div class="scoreline">
-
-<span id="score">
-Correct: 0
-</span>
-
-<span id="accuracy">
-Accuracy: 0%
-</span>
-
-</div>
-
-
-<div class="question-card">
-
-<div id="question">
-18 − 9
-</div>
-
-<div id="answerDisplay">
-&nbsp;
-</div>
-
-</div>
-
+<div id="feedback" class="feedback">&nbsp;</div>
 
 <div class="keypad">
-
 <button class="key" data-key="1">1</button>
 <button class="key" data-key="2">2</button>
 <button class="key" data-key="3">3</button>
@@ -94,81 +50,51 @@ Accuracy: 0%
 <button class="key" data-key="8">8</button>
 <button class="key" data-key="9">9</button>
 
-<button class="key action" data-key="clear">
-⌫
-</button>
-
-<button class="key" data-key="0">
-0
-</button>
-
-<button class="key action" data-key="clearAll">
-C
-</button>
-
+<button class="key action" data-key="clear">⌫</button>
+<button class="key" data-key="0">0</button>
+<button class="key action" data-key="clearAll">C</button>
 </div>
 
-
-<button id="submitBtn" class="submit-btn">
-SUBMIT
-</button>
-
-<p id="feedback" class="feedback">
-&nbsp;
-</p>
-
+<button id="submitBtn" class="submit">SUBMIT</button>
 </section>
 
+<section id="results" class="hidden">
+<h2 id="resultTitle"></h2>
 
-<section id="results" class="screen hidden">
+<div id="resultScore" class="big-result"></div>
 
-<h1 id="resultTitle">
-Finished!
-</h1>
+<p>Time: <strong id="resultTime"></strong></p>
 
+<p id="resultBest" class="best"></p>
 
-<div class="result-card">
+<div id="mistakes"></div>
 
-<div class="result-big" id="resultScore">
-0 / 10
+<button id="againBtn" class="primary">Play Again</button>
+<button id="homeBtn" class="secondary">Home</button>
+</section>
+
+<section id="bankView" class="hidden">
+<button id="backBankBtn" class="back">← Home</button>
+
+<h2>Question Bank</h2>
+
+<p id="bankCount"></p>
+
+<div class="add-card">
+<h3>Add Your Own Question</h3>
+
+<input id="customQuestion" placeholder="Example: 25-7">
+
+<input id="customAnswer" inputmode="numeric" placeholder="Correct answer">
+
+<button id="addBtn" class="submit small-submit">Add Question</button>
 </div>
 
-<div class="result-row">
-<span>Correct</span>
-<strong id="resultCorrect">0</strong>
-</div>
-
-<div class="result-row">
-<span>Incorrect</span>
-<strong id="resultWrong">0</strong>
-</div>
-
-<div class="result-row">
-<span>Total time</span>
-<strong id="resultTime">0.00 s</strong>
-</div>
-
-<div class="result-row">
-<span>Average</span>
-<strong id="resultAverage">0.00 s</strong>
-</div>
-
-</div>
-
-
-<button class="menu-btn" id="againBtn">
-Try Again
-</button>
-
-<button class="menu-btn secondary" id="homeBtn">
-Home
-</button>
-
+<div id="questionList"></div>
 </section>
 
 </main>
 
 <script src="script.js"></script>
-
 </body>
 </html>
