@@ -1,422 +1,42 @@
 // ==========================================
 // MATHS MEMORY TRAINER
-// iPHONE-RELIABLE TOUCH VERSION
+// iPHONE FAST TOUCH + WRONG ANSWER REVIEW
 // ==========================================
 
 
 // ==========================================
-// YOUR ORIGINAL QUESTION BANK
+// QUESTION BANK
 // ==========================================
 
-const QUESTIONS = [
+const QUESTIONS = [];
 
-  // ----------------------------------------
-  // SUBTRACTION
-  // ----------------------------------------
+// SUBTRACTION
+// Same set/order as your original app.
+for (let a = 18; a >= 0; a--) {
+  const highestB = Math.min(9, a);
 
-  ["18-9",9],
-  ["17-9",8],
-  ["17-8",9],
-  ["16-9",7],
-  ["16-8",8],
-  ["16-7",9],
-  ["15-9",6],
-  ["15-8",7],
-  ["15-7",8],
-  ["15-6",9],
-  ["14-9",5],
-  ["14-8",6],
-  ["14-7",7],
-  ["14-6",8],
-  ["14-5",9],
-  ["13-9",4],
-  ["13-8",5],
-  ["13-7",6],
-  ["13-6",7],
-  ["13-5",8],
-  ["13-4",9],
-  ["12-9",3],
-  ["12-8",4],
-  ["12-7",5],
-  ["12-6",6],
-  ["12-5",7],
-  ["12-4",8],
-  ["12-3",9],
-  ["11-9",2],
-  ["11-8",3],
-  ["11-7",4],
-  ["11-6",5],
-  ["11-5",6],
-  ["11-4",7],
-  ["11-3",8],
-  ["11-2",9],
-  ["10-9",1],
-  ["10-8",2],
-  ["10-7",3],
-  ["10-6",4],
-  ["10-5",5],
-  ["10-4",6],
-  ["10-3",7],
-  ["10-2",8],
-  ["10-1",9],
-  ["9-9",0],
-  ["9-8",1],
-  ["9-7",2],
-  ["9-6",3],
-  ["9-5",4],
-  ["9-4",5],
-  ["9-3",6],
-  ["9-2",7],
-  ["9-1",8],
-  ["9-0",9],
-  ["8-8",0],
-  ["8-7",1],
-  ["8-6",2],
-  ["8-5",3],
-  ["8-4",4],
-  ["8-3",5],
-  ["8-2",6],
-  ["8-1",7],
-  ["8-0",8],
-  ["7-7",0],
-  ["7-6",1],
-  ["7-5",2],
-  ["7-4",3],
-  ["7-3",4],
-  ["7-2",5],
-  ["7-1",6],
-  ["7-0",7],
-  ["6-6",0],
-  ["6-5",1],
-  ["6-4",2],
-  ["6-3",3],
-  ["6-2",4],
-  ["6-1",5],
-  ["6-0",6],
-  ["5-5",0],
-  ["5-4",1],
-  ["5-3",2],
-  ["5-2",3],
-  ["5-1",4],
-  ["5-0",5],
-  ["4-4",0],
-  ["4-3",1],
-  ["4-2",2],
-  ["4-1",3],
-  ["4-0",4],
-  ["3-3",0],
-  ["3-2",1],
-  ["3-1",2],
-  ["3-0",3],
-  ["2-2",0],
-  ["2-1",1],
-  ["2-0",2],
-  ["1-1",0],
-  ["1-0",1],
-  ["0-0",0],
+  for (let b = highestB; b >= 0; b--) {
+    QUESTIONS.push([`${a}-${b}`, a - b]);
+  }
+}
 
 
-  // ----------------------------------------
-  // MULTIPLICATION 0-12
-  // ----------------------------------------
-
-  ["0×0",0],
-  ["0×1",0],
-  ["0×2",0],
-  ["0×3",0],
-  ["0×4",0],
-  ["0×5",0],
-  ["0×6",0],
-  ["0×7",0],
-  ["0×8",0],
-  ["0×9",0],
-  ["0×10",0],
-  ["0×11",0],
-  ["0×12",0],
-
-  ["1×0",0],
-  ["1×1",1],
-  ["1×2",2],
-  ["1×3",3],
-  ["1×4",4],
-  ["1×5",5],
-  ["1×6",6],
-  ["1×7",7],
-  ["1×8",8],
-  ["1×9",9],
-  ["1×10",10],
-  ["1×11",11],
-  ["1×12",12],
-
-  ["2×0",0],
-  ["2×1",2],
-  ["2×2",4],
-  ["2×3",6],
-  ["2×4",8],
-  ["2×5",10],
-  ["2×6",12],
-  ["2×7",14],
-  ["2×8",16],
-  ["2×9",18],
-  ["2×10",20],
-  ["2×11",22],
-  ["2×12",24],
-
-  ["3×0",0],
-  ["3×1",3],
-  ["3×2",6],
-  ["3×3",9],
-  ["3×4",12],
-  ["3×5",15],
-  ["3×6",18],
-  ["3×7",21],
-  ["3×8",24],
-  ["3×9",27],
-  ["3×10",30],
-  ["3×11",33],
-  ["3×12",36],
-
-  ["4×0",0],
-  ["4×1",4],
-  ["4×2",8],
-  ["4×3",12],
-  ["4×4",16],
-  ["4×5",20],
-  ["4×6",24],
-  ["4×7",28],
-  ["4×8",32],
-  ["4×9",36],
-  ["4×10",40],
-  ["4×11",44],
-  ["4×12",48],
-
-  ["5×0",0],
-  ["5×1",5],
-  ["5×2",10],
-  ["5×3",15],
-  ["5×4",20],
-  ["5×5",25],
-  ["5×6",30],
-  ["5×7",35],
-  ["5×8",40],
-  ["5×9",45],
-  ["5×10",50],
-  ["5×11",55],
-  ["5×12",60],
-
-  ["6×0",0],
-  ["6×1",6],
-  ["6×2",12],
-  ["6×3",18],
-  ["6×4",24],
-  ["6×5",30],
-  ["6×6",36],
-  ["6×7",42],
-  ["6×8",48],
-  ["6×9",54],
-  ["6×10",60],
-  ["6×11",66],
-  ["6×12",72],
-
-  ["7×0",0],
-  ["7×1",7],
-  ["7×2",14],
-  ["7×3",21],
-  ["7×4",28],
-  ["7×5",35],
-  ["7×6",42],
-  ["7×7",49],
-  ["7×8",56],
-  ["7×9",63],
-  ["7×10",70],
-  ["7×11",77],
-  ["7×12",84],
-
-  ["8×0",0],
-  ["8×1",8],
-  ["8×2",16],
-  ["8×3",24],
-  ["8×4",32],
-  ["8×5",40],
-  ["8×6",48],
-  ["8×7",56],
-  ["8×8",64],
-  ["8×9",72],
-  ["8×10",80],
-  ["8×11",88],
-  ["8×12",96],
-
-  ["9×0",0],
-  ["9×1",9],
-  ["9×2",18],
-  ["9×3",27],
-  ["9×4",36],
-  ["9×5",45],
-  ["9×6",54],
-  ["9×7",63],
-  ["9×8",72],
-  ["9×9",81],
-  ["9×10",90],
-  ["9×11",99],
-  ["9×12",108],
-
-  ["10×0",0],
-  ["10×1",10],
-  ["10×2",20],
-  ["10×3",30],
-  ["10×4",40],
-  ["10×5",50],
-  ["10×6",60],
-  ["10×7",70],
-  ["10×8",80],
-  ["10×9",90],
-  ["10×10",100],
-  ["10×11",110],
-  ["10×12",120],
-
-  ["11×0",0],
-  ["11×1",11],
-  ["11×2",22],
-  ["11×3",33],
-  ["11×4",44],
-  ["11×5",55],
-  ["11×6",66],
-  ["11×7",77],
-  ["11×8",88],
-  ["11×9",99],
-  ["11×10",110],
-  ["11×11",121],
-  ["11×12",132],
-
-  ["12×0",0],
-  ["12×1",12],
-  ["12×2",24],
-  ["12×3",36],
-  ["12×4",48],
-  ["12×5",60],
-  ["12×6",72],
-  ["12×7",84],
-  ["12×8",96],
-  ["12×9",108],
-  ["12×10",120],
-  ["12×11",132],
-  ["12×12",144],
+// MULTIPLICATION 0-12
+for (let a = 0; a <= 12; a++) {
+  for (let b = 0; b <= 12; b++) {
+    QUESTIONS.push([`${a}×${b}`, a * b]);
+  }
+}
 
 
-  // ----------------------------------------
-  // ADDITION
-  // ----------------------------------------
-
-  ["0+0",0],["0+0+1",1],
-  ["0+1",1],["0+1+1",2],
-  ["0+2",2],["0+2+1",3],
-  ["0+3",3],["0+3+1",4],
-  ["0+4",4],["0+4+1",5],
-  ["0+5",5],["0+5+1",6],
-  ["0+6",6],["0+6+1",7],
-  ["0+7",7],["0+7+1",8],
-  ["0+8",8],["0+8+1",9],
-  ["0+9",9],["0+9+1",10],
-
-  ["1+0",1],["1+0+1",2],
-  ["1+1",2],["1+1+1",3],
-  ["1+2",3],["1+2+1",4],
-  ["1+3",4],["1+3+1",5],
-  ["1+4",5],["1+4+1",6],
-  ["1+5",6],["1+5+1",7],
-  ["1+6",7],["1+6+1",8],
-  ["1+7",8],["1+7+1",9],
-  ["1+8",9],["1+8+1",10],
-  ["1+9",10],["1+9+1",11],
-
-  ["2+0",2],["2+0+1",3],
-  ["2+1",3],["2+1+1",4],
-  ["2+2",4],["2+2+1",5],
-  ["2+3",5],["2+3+1",6],
-  ["2+4",6],["2+4+1",7],
-  ["2+5",7],["2+5+1",8],
-  ["2+6",8],["2+6+1",9],
-  ["2+7",9],["2+7+1",10],
-  ["2+8",10],["2+8+1",11],
-  ["2+9",11],["2+9+1",12],
-
-  ["3+0",3],["3+0+1",4],
-  ["3+1",4],["3+1+1",5],
-  ["3+2",5],["3+2+1",6],
-  ["3+3",6],["3+3+1",7],
-  ["3+4",7],["3+4+1",8],
-  ["3+5",8],["3+5+1",9],
-  ["3+6",9],["3+6+1",10],
-  ["3+7",10],["3+7+1",11],
-  ["3+8",11],["3+8+1",12],
-  ["3+9",12],["3+9+1",13],
-
-  ["4+0",4],["4+0+1",5],
-  ["4+1",5],["4+1+1",6],
-  ["4+2",6],["4+2+1",7],
-  ["4+3",7],["4+3+1",8],
-  ["4+4",8],["4+4+1",9],
-  ["4+5",9],["4+5+1",10],
-  ["4+6",10],["4+6+1",11],
-  ["4+7",11],["4+7+1",12],
-  ["4+8",12],["4+8+1",13],
-  ["4+9",13],["4+9+1",14],
-
-  ["5+0",5],["5+0+1",6],
-  ["5+1",6],["5+1+1",7],
-  ["5+2",7],["5+2+1",8],
-  ["5+3",8],["5+3+1",9],
-  ["5+4",9],["5+4+1",10],
-  ["5+5",10],["5+5+1",11],
-  ["5+6",11],["5+6+1",12],
-  ["5+7",12],["5+7+1",13],
-  ["5+8",13],["5+8+1",14],
-  ["5+9",14],["5+9+1",15],
-
-  ["6+0",6],["6+0+1",7],
-  ["6+1",7],["6+1+1",8],
-  ["6+2",8],["6+2+1",9],
-  ["6+3",9],["6+3+1",10],
-  ["6+4",10],["6+4+1",11],
-  ["6+5",11],["6+5+1",12],
-  ["6+6",12],["6+6+1",13],
-  ["6+7",13],["6+7+1",14],
-  ["6+8",14],["6+8+1",15],
-  ["6+9",15],["6+9+1",16],
-
-  ["7+0",7],["7+0+1",8],
-  ["7+1",8],["7+1+1",9],
-  ["7+2",9],["7+2+1",10],
-  ["7+3",10],["7+3+1",11],
-  ["7+4",11],["7+4+1",12],
-  ["7+5",12],["7+5+1",13],
-  ["7+6",13],["7+6+1",14],
-  ["7+7",14],["7+7+1",15],
-  ["7+8",15],["7+8+1",16],
-  ["7+9",16],["7+9+1",17],
-
-  ["8+0",8],["8+0+1",9],
-  ["8+1",9],["8+1+1",10],
-  ["8+2",10],["8+2+1",11],
-  ["8+3",11],["8+3+1",12],
-  ["8+4",12],["8+4+1",13],
-  ["8+5",13],["8+5+1",14],
-  ["8+6",14],["8+6+1",15],
-  ["8+7",15],["8+7+1",16],
-  ["8+8",16],["8+8+1",17],
-  ["8+9",17],["8+9+1",18],
-
-  ["9+0",9],["9+0+1",10],
-  ["9+1",10],["9+1+1",11],
-  ["9+2",11],["9+2+1",12],
-  ["9+3",12],["9+3+1",13],
-  ["9+4",13],["9+4+1",14],
-  ["9+5",14],["9+5+1",15],
-  ["9+6",15],["9+6+1",16],
-  ["9+7",16],["9+7+1",17],
-  ["9+8",17],["9+8+1",18],
-  ["9+9",18],["9+9+1",19]
-];
+// ADDITION
+// Original questions plus the +1 versions.
+for (let a = 0; a <= 9; a++) {
+  for (let b = 0; b <= 9; b++) {
+    QUESTIONS.push([`${a}+${b}`, a + b]);
+    QUESTIONS.push([`${a}+${b}+1`, a + b + 1]);
+  }
+}
 
 
 // ==========================================
@@ -479,6 +99,9 @@ let currentStreak = 0;
 
 let streakStartedAt = 0;
 
+// NEW: records wrong answers during the round
+let mistakes = [];
+
 
 // ==========================================
 // HIGH SCORES
@@ -486,23 +109,17 @@ let streakStartedAt = 0;
 
 let speedBest =
   Number(
-    localStorage.getItem(
-      "mathSpeedBest"
-    )
+    localStorage.getItem("mathSpeedBest")
   ) || null;
 
 let practiceBest =
   Number(
-    localStorage.getItem(
-      "mathPracticeBest"
-    )
+    localStorage.getItem("mathPracticeBest")
   ) || 0;
 
 let practiceBestTime =
   Number(
-    localStorage.getItem(
-      "mathPracticeBestTime"
-    )
+    localStorage.getItem("mathPracticeBestTime")
   ) || 0;
 
 
@@ -512,8 +129,7 @@ let practiceBestTime =
 
 function shuffle(array) {
 
-  const copy =
-    array.slice();
+  const copy = array.slice();
 
   for (
     let i = copy.length - 1;
@@ -523,8 +139,7 @@ function shuffle(array) {
 
     const j =
       Math.floor(
-        Math.random() *
-        (i + 1)
+        Math.random() * (i + 1)
       );
 
     [
@@ -547,11 +162,9 @@ function shuffle(array) {
 
 function startGame(selectedMode) {
 
-  mode =
-    selectedMode;
+  mode = selectedMode;
 
-  pool =
-    shuffle(QUESTIONS);
+  pool = shuffle(QUESTIONS);
 
   current = null;
 
@@ -565,35 +178,24 @@ function startGame(selectedMode) {
 
   currentStreak = 0;
 
+  mistakes = [];
+
   locked = false;
 
-  home.classList.add(
-    "hidden"
-  );
+  home.classList.add("hidden");
 
-  results.classList.add(
-    "hidden"
-  );
+  results.classList.add("hidden");
 
-  game.classList.remove(
-    "hidden"
-  );
+  game.classList.remove("hidden");
 
-  startedAt =
-    performance.now();
+  startedAt = performance.now();
 
-  streakStartedAt =
-    startedAt;
+  streakStartedAt = startedAt;
 
-  clearInterval(
-    timerHandle
-  );
+  clearInterval(timerHandle);
 
   timerHandle =
-    setInterval(
-      updateTimer,
-      50
-    );
+    setInterval(updateTimer, 50);
 
   updateHighScoreDisplay();
 
@@ -607,8 +209,7 @@ function startGame(selectedMode) {
 
 function updateTimer() {
 
-  if (!startedAt)
-    return;
+  if (!startedAt) return;
 
   const elapsed =
     (
@@ -617,8 +218,7 @@ function updateTimer() {
     ) / 1000;
 
   timerEl.textContent =
-    elapsed.toFixed(2) +
-    "s";
+    elapsed.toFixed(2) + "s";
 }
 
 
@@ -628,13 +228,9 @@ function updateTimer() {
 
 function updateHighScoreDisplay() {
 
-  if (
-    mode === "speed"
-  ) {
+  if (mode === "speed") {
 
-    if (
-      speedBest !== null
-    ) {
+    if (speedBest !== null) {
 
       accuracyEl.textContent =
         `🏆 Best: ${speedBest.toFixed(2)}s`;
@@ -647,9 +243,7 @@ function updateHighScoreDisplay() {
 
   } else {
 
-    if (
-      practiceBest > 0
-    ) {
+    if (practiceBest > 0) {
 
       accuracyEl.textContent =
         `🏆 Best: ${practiceBest} in a row`;
@@ -675,7 +269,6 @@ function nextQuestion() {
   ) {
 
     finishSpeed();
-
     return;
   }
 
@@ -685,13 +278,11 @@ function nextQuestion() {
     pool.length === 0
   ) {
 
-    pool =
-      shuffle(QUESTIONS);
+    pool = shuffle(QUESTIONS);
   }
 
 
-  current =
-    pool.shift();
+  current = pool.shift();
 
   index++;
 
@@ -700,18 +291,12 @@ function nextQuestion() {
   locked = false;
 
   questionEl.textContent =
-    current[0].replaceAll(
-      "-",
-      "−"
-    );
+    current[0].replaceAll("-", "−");
 
-  answerDisplay.textContent =
-    "\u00a0";
+  answerDisplay.textContent = "\u00a0";
 
 
-  if (
-    mode === "speed"
-  ) {
+  if (mode === "speed") {
 
     progressEl.textContent =
       `Question ${index} / 10`;
@@ -723,29 +308,24 @@ function nextQuestion() {
   }
 
 
-  feedbackEl.textContent =
-    "\u00a0";
+  feedbackEl.textContent = "\u00a0";
 
   updateHighScoreDisplay();
 }
 
 
 // ==========================================
-// NUMBER INPUT
+// ENTER NUMBER
 // ==========================================
 
 function enterDigit(digit) {
 
-  if (locked)
-    return;
+  if (locked) return;
 
-  if (
-    answer.length >= 4
-  )
-    return;
+  // Your app allows a maximum of 4 digits.
+  if (answer.length >= 4) return;
 
-  answer +=
-    String(digit);
+  answer += String(digit);
 
   answerDisplay.textContent =
     answer;
@@ -753,19 +333,15 @@ function enterDigit(digit) {
 
 
 // ==========================================
-// DELETE LAST
+// DELETE LAST NUMBER
 // ==========================================
 
 function clearLast() {
 
-  if (locked)
-    return;
+  if (locked) return;
 
   answer =
-    answer.slice(
-      0,
-      -1
-    );
+    answer.slice(0, -1);
 
   answerDisplay.textContent =
     answer || "\u00a0";
@@ -773,13 +349,12 @@ function clearLast() {
 
 
 // ==========================================
-// CLEAR ALL
+// CLEAR ANSWER
 // ==========================================
 
 function clearAll() {
 
-  if (locked)
-    return;
+  if (locked) return;
 
   answer = "";
 
@@ -794,13 +369,9 @@ function clearAll() {
 
 function submitAnswer() {
 
-  if (locked)
-    return;
+  if (locked) return;
 
-  if (
-    answer === ""
-  )
-    return;
+  if (answer === "") return;
 
   locked = true;
 
@@ -811,8 +382,7 @@ function submitAnswer() {
     current[1];
 
   const isCorrect =
-    entered ===
-    correctAnswer;
+    entered === correctAnswer;
 
 
   if (isCorrect) {
@@ -825,9 +395,7 @@ function submitAnswer() {
       "✓ Correct";
 
 
-    if (
-      mode === "speed"
-    ) {
+    if (mode === "speed") {
 
       nextQuestion();
 
@@ -844,15 +412,24 @@ function submitAnswer() {
   }
 
 
+  // ========================================
+  // WRONG ANSWER
+  // ========================================
+
   wrong++;
+
+  mistakes.push({
+    question: current[0],
+    yourAnswer: entered,
+    correctAnswer: correctAnswer
+  });
+
 
   feedbackEl.textContent =
     `✗ Answer: ${correctAnswer}`;
 
 
-  if (
-    mode === "practice"
-  ) {
+  if (mode === "practice") {
 
     finishPractice();
 
@@ -865,17 +442,114 @@ function submitAnswer() {
 
 
 // ==========================================
+// SHOW WRONG ANSWERS
+// ==========================================
+
+function displayMistakes() {
+
+  let box =
+    document.getElementById(
+      "mistakesDisplay"
+    );
+
+
+  if (!box) {
+
+    box =
+      document.createElement("div");
+
+    box.id =
+      "mistakesDisplay";
+
+    box.style.marginTop =
+      "20px";
+
+    box.style.textAlign =
+      "left";
+
+    box.style.width =
+      "100%";
+
+    box.style.boxSizing =
+      "border-box";
+
+    const resultCard =
+      document.querySelector(
+        ".result-card"
+      );
+
+    if (resultCard) {
+
+      resultCard.appendChild(box);
+
+    } else {
+
+      results.appendChild(box);
+    }
+  }
+
+
+  if (mistakes.length === 0) {
+
+    box.innerHTML = `
+      <div style="
+        text-align:center;
+        font-size:20px;
+        font-weight:800;
+        margin-top:20px;
+      ">
+        🎯 No mistakes!
+      </div>
+    `;
+
+    return;
+  }
+
+
+  let html = `
+    <div style="
+      font-size:21px;
+      font-weight:800;
+      margin-bottom:12px;
+      text-align:center;
+    ">
+      ❌ Questions to review
+    </div>
+  `;
+
+
+  mistakes.forEach(
+    (mistake, i) => {
+
+      html += `
+        <div style="
+          padding:12px;
+          margin-bottom:8px;
+          border-radius:10px;
+          background:rgba(255,0,0,0.08);
+        ">
+          <strong>${i + 1}. ${mistake.question}</strong><br>
+          ❌ Your answer: ${mistake.yourAnswer}<br>
+          ✅ Correct answer: ${mistake.correctAnswer}
+        </div>
+      `;
+    }
+  );
+
+
+  box.innerHTML = html;
+}
+
+
+// ==========================================
 // SPEED RESULTS
 // ==========================================
 
 function finishSpeed() {
 
-  clearInterval(
-    timerHandle
-  );
+  clearInterval(timerHandle);
 
-  timerHandle =
-    null;
+  timerHandle = null;
 
   const totalTime =
     (
@@ -886,8 +560,7 @@ function finishSpeed() {
   const perfect =
     correct === 10;
 
-  let newRecord =
-    false;
+  let newRecord = false;
 
 
   if (perfect) {
@@ -905,19 +578,14 @@ function finishSpeed() {
         String(speedBest)
       );
 
-      newRecord =
-        true;
+      newRecord = true;
     }
   }
 
 
-  game.classList.add(
-    "hidden"
-  );
+  game.classList.add("hidden");
 
-  results.classList.remove(
-    "hidden"
-  );
+  results.classList.remove("hidden");
 
 
   document.getElementById(
@@ -951,8 +619,7 @@ function finishSpeed() {
   document.getElementById(
     "resultTime"
   ).textContent =
-    totalTime.toFixed(2) +
-    " s";
+    totalTime.toFixed(2) + " s";
 
 
   document.getElementById(
@@ -960,8 +627,7 @@ function finishSpeed() {
   ).textContent =
     (
       totalTime / 10
-    ).toFixed(2) +
-    " s";
+    ).toFixed(2) + " s";
 
 
   showBestResult(
@@ -969,6 +635,10 @@ function finishSpeed() {
       ? `🏆 Best 10/10 time: ${speedBest.toFixed(2)} s`
       : "🏆 Best 10/10 time: Not set"
   );
+
+
+  // NEW: show every mistake
+  displayMistakes();
 }
 
 
@@ -978,12 +648,9 @@ function finishSpeed() {
 
 function finishPractice() {
 
-  clearInterval(
-    timerHandle
-  );
+  clearInterval(timerHandle);
 
-  timerHandle =
-    null;
+  timerHandle = null;
 
   const streakTime =
     (
@@ -991,8 +658,7 @@ function finishPractice() {
       streakStartedAt
     ) / 1000;
 
-  let newRecord =
-    false;
+  let newRecord = false;
 
 
   if (
@@ -1016,17 +682,15 @@ function finishPractice() {
       String(practiceBestTime)
     );
 
-    newRecord =
-      true;
+    newRecord = true;
+
 
   } else if (
-    currentStreak ===
-    practiceBest &&
+    currentStreak === practiceBest &&
     currentStreak > 0 &&
     (
       practiceBestTime === 0 ||
-      streakTime <
-      practiceBestTime
+      streakTime < practiceBestTime
     )
   ) {
 
@@ -1040,13 +704,9 @@ function finishPractice() {
   }
 
 
-  game.classList.add(
-    "hidden"
-  );
+  game.classList.add("hidden");
 
-  results.classList.remove(
-    "hidden"
-  );
+  results.classList.remove("hidden");
 
 
   document.getElementById(
@@ -1078,8 +738,7 @@ function finishPractice() {
   document.getElementById(
     "resultTime"
   ).textContent =
-    streakTime.toFixed(2) +
-    " s";
+    streakTime.toFixed(2) + " s";
 
 
   document.getElementById(
@@ -1089,8 +748,7 @@ function finishPractice() {
       ? (
           streakTime /
           currentStreak
-        ).toFixed(2) +
-        " s"
+        ).toFixed(2) + " s"
       : "0.00 s";
 
 
@@ -1100,11 +758,15 @@ function finishPractice() {
          ⏱️ Best time: ${practiceBestTime.toFixed(2)} s`
       : "🏆 Best streak: Not set"
   );
+
+
+  // NEW: show the question you got wrong
+  displayMistakes();
 }
 
 
 // ==========================================
-// RESULTS HIGH SCORE
+// HIGH SCORE ON RESULTS SCREEN
 // ==========================================
 
 function showBestResult(text) {
@@ -1113,6 +775,9 @@ function showBestResult(text) {
     document.querySelector(
       ".result-card"
     );
+
+  if (!resultCard) return;
+
 
   let bestDisplay =
     document.getElementById(
@@ -1123,9 +788,7 @@ function showBestResult(text) {
   if (!bestDisplay) {
 
     bestDisplay =
-      document.createElement(
-        "div"
-      );
+      document.createElement("div");
 
     bestDisplay.id =
       "bestScoreDisplay";
@@ -1157,21 +820,45 @@ function showBestResult(text) {
 
 
 // ==========================================
-// 📱 RELIABLE iPHONE TOUCH BUTTONS
+// 📱 EXTRA-RELIABLE IPHONE TOUCH HANDLING
 // ==========================================
+//
+// Touchstart = immediate response.
+// Click = backup if touchstart doesn't fire.
+// The duplicate guard prevents one physical
+// touch from entering two numbers.
+//
 
 function fastButton(
   element,
   action
 ) {
 
-  if (!element)
-    return;
+  if (!element) return;
 
 
-  let touchActive =
+  let touchHandled =
     false;
 
+
+  // Make Safari treat this as a touch
+  // control rather than a normal link/button.
+  element.style.touchAction =
+    "manipulation";
+
+  element.style.webkitTapHighlightColor =
+    "transparent";
+
+  element.style.userSelect =
+    "none";
+
+  element.style.webkitUserSelect =
+    "none";
+
+
+  // ========================================
+  // FIRST LINE OF DEFENCE
+  // ========================================
 
   element.addEventListener(
     "touchstart",
@@ -1179,11 +866,10 @@ function fastButton(
 
       event.preventDefault();
 
-      if (touchActive)
+      if (touchHandled)
         return;
 
-      touchActive =
-        true;
+      touchHandled = true;
 
       action();
 
@@ -1194,14 +880,26 @@ function fastButton(
   );
 
 
+  // ========================================
+  // RESET TOUCH STATE
+  // ========================================
+
   element.addEventListener(
     "touchend",
     function(event) {
 
       event.preventDefault();
 
-      touchActive =
-        false;
+      // Keep the flag alive briefly so Safari's
+      // synthetic click doesn't double-trigger.
+      setTimeout(
+        function() {
+
+          touchHandled = false;
+
+        },
+        80
+      );
 
     },
     {
@@ -1214,27 +912,27 @@ function fastButton(
     "touchcancel",
     function() {
 
-      touchActive =
-        false;
+      touchHandled = false;
 
     }
   );
 
 
-  // Mouse / trackpad fallback.
+  // ========================================
+  // BACKUP CLICK
+  // ========================================
+
   element.addEventListener(
-    "pointerdown",
+    "click",
     function(event) {
 
-      if (
-        event.pointerType !==
-        "touch"
-      ) {
+      event.preventDefault();
 
-        event.preventDefault();
+      if (touchHandled)
+        return;
 
-        action();
-      }
+      action();
+
     },
     {
       passive: false
@@ -1244,7 +942,7 @@ function fastButton(
 
 
 // ==========================================
-// KEYPAD
+// KEYPAD BUTTONS
 // ==========================================
 
 document
@@ -1283,7 +981,7 @@ document
 
 
 // ==========================================
-// SUBMIT
+// SUBMIT BUTTON
 // ==========================================
 
 fastButton(
@@ -1295,7 +993,7 @@ fastButton(
 
 
 // ==========================================
-// HOME BUTTONS
+// SPEED MODE
 // ==========================================
 
 fastButton(
@@ -1304,12 +1002,15 @@ fastButton(
   ),
   function() {
 
-    startGame(
-      "speed"
-    );
+    startGame("speed");
+
   }
 );
 
+
+// ==========================================
+// PRACTICE MODE
+// ==========================================
 
 fastButton(
   document.getElementById(
@@ -1317,12 +1018,15 @@ fastButton(
   ),
   function() {
 
-    startGame(
-      "practice"
-    );
+    startGame("practice");
+
   }
 );
 
+
+// ==========================================
+// PLAY AGAIN
+// ==========================================
 
 fastButton(
   document.getElementById(
@@ -1330,12 +1034,15 @@ fastButton(
   ),
   function() {
 
-    startGame(
-      mode
-    );
+    startGame(mode);
+
   }
 );
 
+
+// ==========================================
+// HOME BUTTON
+// ==========================================
 
 fastButton(
   document.getElementById(
@@ -1343,27 +1050,23 @@ fastButton(
   ),
   function() {
 
-    clearInterval(
-      timerHandle
-    );
+    clearInterval(timerHandle);
 
-    timerHandle =
-      null;
+    timerHandle = null;
 
-    results.classList.add(
-      "hidden"
-    );
+    results.classList.add("hidden");
 
-    game.classList.add(
-      "hidden"
-    );
+    game.classList.add("hidden");
 
-    home.classList.remove(
-      "hidden"
-    );
+    home.classList.remove("hidden");
+
   }
 );
 
+
+// ==========================================
+// BACK BUTTON
+// ==========================================
 
 fastButton(
   document.getElementById(
@@ -1371,26 +1074,20 @@ fastButton(
   ),
   function() {
 
-    clearInterval(
-      timerHandle
-    );
+    clearInterval(timerHandle);
 
-    timerHandle =
-      null;
+    timerHandle = null;
 
-    game.classList.add(
-      "hidden"
-    );
+    game.classList.add("hidden");
 
-    home.classList.remove(
-      "hidden"
-    );
+    home.classList.remove("hidden");
+
   }
 );
 
 
 // ==========================================
-// PHYSICAL KEYBOARD
+// PHYSICAL KEYBOARD SUPPORT
 // ==========================================
 
 document.addEventListener(
@@ -1402,27 +1099,22 @@ document.addEventListener(
       event.key <= "9"
     ) {
 
-      enterDigit(
-        event.key
-      );
+      enterDigit(event.key);
 
     } else if (
-      event.key ===
-      "Backspace"
+      event.key === "Backspace"
     ) {
 
       clearLast();
 
     } else if (
-      event.key ===
-      "Escape"
+      event.key === "Escape"
     ) {
 
       clearAll();
 
     } else if (
-      event.key ===
-      "Enter"
+      event.key === "Enter"
     ) {
 
       submitAnswer();
