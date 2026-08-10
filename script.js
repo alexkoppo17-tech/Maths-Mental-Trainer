@@ -1,12 +1,15 @@
 // ==========================================
 // MATHS MEMORY TRAINER
-// FINAL VERSION
-// 469 ORIGINAL QUESTIONS + MY QUESTIONS
+// LEVEL SYSTEM VERSION
+//
+// LEVEL 1 = ORIGINAL 469 QUESTIONS
+// LEVEL 2+ = USER CREATED DECKS
 // ==========================================
 
 
 // ==========================================
-// ORIGINAL 469 QUESTION BANK
+// LEVEL 1 — ORIGINAL 469 QUESTIONS
+// DO NOT MODIFY
 // ==========================================
 
 const QUESTIONS = [];
@@ -73,24 +76,88 @@ for (let a = 0; a <= 9; a++) {
 }
 
 
-// SAFETY CHECK
+// ------------------------------------------
+// LEVEL 1 SAFETY CHECK
+// ------------------------------------------
+
 if (QUESTIONS.length !== 469) {
 
   throw new Error(
-    "Question bank error: expected exactly 469 questions."
+    "LEVEL 1 ERROR: Original question bank is not exactly 469 questions."
   );
 
 }
 
 
 // ==========================================
-// CUSTOM QUESTION BANK
+// USER LEVELS
 // ==========================================
 
-let customQuestions =
-  JSON.parse(
-    localStorage.getItem("mathCustomQuestions") || "[]"
-  );
+let userLevels = [];
+
+try {
+
+  userLevels =
+    JSON.parse(
+      localStorage.getItem("mathLevels") || "[]"
+    );
+
+} catch (error) {
+
+  userLevels = [];
+
+}
+
+
+// ==========================================
+// HIGH SCORES
+// ==========================================
+
+let levelScores = {};
+
+try {
+
+  levelScores =
+    JSON.parse(
+      localStorage.getItem("mathLevelScores") || "{}"
+    );
+
+} catch (error) {
+
+  levelScores = {};
+
+}
+
+
+// ==========================================
+// GAME STATE
+// ==========================================
+
+let mode = "speed";
+
+let currentLevel = 1;
+
+let pool = [];
+
+let current = null;
+
+let answer = "";
+
+let index = 0;
+
+let correct = 0;
+
+let currentStreak = 0;
+
+let startedAt = 0;
+
+let streakStartedAt = 0;
+
+let timerHandle = null;
+
+let locked = false;
+
+let mistakes = [];
 
 
 // ==========================================
@@ -132,58 +199,72 @@ const mistakesEl =
 
 
 // ==========================================
-// HIGH SCORES
+// SAVE LEVELS
 // ==========================================
 
-let speedBest =
-  Number(
-    localStorage.getItem("mathSpeedBest")
-  ) || null;
+function saveLevels() {
+
+  localStorage.setItem(
+    "mathLevels",
+    JSON.stringify(userLevels)
+  );
+
+}
 
 
-let practiceBest =
-  Number(
-    localStorage.getItem("mathPracticeBest")
-  ) || 0;
+function saveScores() {
 
+  localStorage.setItem(
+    "mathLevelScores",
+    JSON.stringify(levelScores)
+  );
 
-let practiceBestTime =
-  Number(
-    localStorage.getItem("mathPracticeBestTime")
-  ) || 0;
+}
 
 
 // ==========================================
-// GAME STATE
+// GET LEVEL
 // ==========================================
 
-let mode = "speed";
+function getLevel(levelNumber) {
 
-let questionSource = "original";
+  if (levelNumber === 1) {
 
-let pool = [];
+    return {
 
-let current = null;
+      id: 1,
 
-let answer = "";
+      name: "Level 1 — Original 469",
 
-let index = 0;
+      reverse: false,
 
-let correct = 0;
+      questions:
+        QUESTIONS.map(
+          (q, i) => ({
 
-let wrong = 0;
+            id:
+              `level1-${i}`,
 
-let currentStreak = 0;
+            text:
+              q[0],
 
-let startedAt = 0;
+            answer:
+              q[1]
 
-let streakStartedAt = 0;
+          })
+        )
 
-let timerHandle = null;
+    };
 
-let locked = false;
+  }
 
-let mistakes = [];
+
+  return userLevels.find(
+    level =>
+      level.id === levelNumber
+  );
+
+}
 
 
 // ==========================================
@@ -192,7 +273,8 @@ let mistakes = [];
 
 function shuffle(array) {
 
-  const copy = array.slice();
+  const copy =
+    array.slice();
 
   for (
     let i = copy.length - 1;
@@ -217,36 +299,6 @@ function shuffle(array) {
   }
 
   return copy;
-}
-
-
-// ==========================================
-// CUSTOM QUESTIONS
-// ==========================================
-
-function getCustomQuestions() {
-
-  return customQuestions.map(
-    (q, i) => ({
-
-      id: `custom-${i}`,
-
-      text: q.text,
-
-      answer: q.answer
-
-    })
-  );
-
-}
-
-
-function saveCustomQuestions() {
-
-  localStorage.setItem(
-    "mathCustomQuestions",
-    JSON.stringify(customQuestions)
-  );
 
 }
 
@@ -271,67 +323,73 @@ function showScreen(screen) {
 
 
 // ==========================================
-// START GAME
+// LEVEL SCORE KEY
 // ==========================================
 
-function startGame(
-  selectedMode,
-  selectedSource = "original"
+function scoreKey(
+  levelNumber,
+  scoreMode
 ) {
 
-  mode = selectedMode;
+  return `${levelNumber}-${scoreMode}`;
 
-  questionSource = selectedSource;
-
-  let sourceQuestions;
+}
 
 
-  if (
-    questionSource === "custom"
-  ) {
+// ==========================================
+// START LEVEL
+// ==========================================
 
-    sourceQuestions =
-      getCustomQuestions();
+function startLevel(
+  levelNumber,
+  selectedMode
+) {
 
-    if (
-      sourceQuestions.length === 0
-    ) {
+  const level =
+    getLevel(levelNumber);
 
-      alert(
-        "You haven't added any questions to My Questions yet."
-      );
 
-      return;
+  if (!level) {
 
-    }
+    alert(
+      "That level does not exist."
+    );
 
-  } else {
-
-    sourceQuestions =
-      QUESTIONS.map(
-        (q, i) => ({
-
-          id: `original-${i}`,
-
-          text: q[0],
-
-          answer: q[1]
-
-        })
-      );
+    return;
 
   }
 
 
+  if (
+    !level.questions ||
+    level.questions.length === 0
+  ) {
+
+    alert(
+      "This level has no questions yet."
+    );
+
+    return;
+
+  }
+
+
+  currentLevel =
+    levelNumber;
+
+  mode =
+    selectedMode;
+
+
   pool =
-    shuffle(sourceQuestions);
+    shuffle(
+      level.questions
+    );
 
 
   index = 0;
 
   correct = 0;
-
-  wrong = 0;
 
   currentStreak = 0;
 
@@ -352,7 +410,9 @@ function startGame(
     startedAt;
 
 
-  clearInterval(timerHandle);
+  clearInterval(
+    timerHandle
+  );
 
 
   timerHandle =
@@ -397,21 +457,45 @@ function updateTimer() {
 
 function updateBestDisplay() {
 
-  if (mode === "speed") {
+  const speedKey =
+    scoreKey(
+      currentLevel,
+      "speed"
+    );
+
+  const practiceKey =
+    scoreKey(
+      currentLevel,
+      "practice"
+    );
+
+
+  if (
+    mode === "speed"
+  ) {
+
+    const best =
+      levelScores[speedKey];
+
 
     bestEl.textContent =
-      speedBest === null
+
+      best == null
 
         ? "🏆 Best 10/10: Not set"
 
-        : `🏆 Best 10/10: ${speedBest.toFixed(2)}s`;
+        : `🏆 Best 10/10: ${Number(best).toFixed(2)}s`;
 
   } else {
 
-    if (practiceBest > 0) {
+    const best =
+      levelScores[practiceKey];
+
+
+    if (best) {
 
       bestEl.textContent =
-        `🏆 Best streak: ${practiceBest} correct • ${practiceBestTime.toFixed(2)}s`;
+        `🏆 Best streak: ${best.streak} correct • ${Number(best.time).toFixed(2)}s`;
 
     } else {
 
@@ -443,23 +527,22 @@ function nextQuestion() {
   }
 
 
-  if (pool.length === 0) {
+  if (
+    pool.length === 0
+  ) {
+
+    const level =
+      getLevel(currentLevel);
+
 
     if (
-      mode === "practice"
+      mode === "practice" &&
+      level
     ) {
 
       pool =
         shuffle(
-          questionSource === "custom"
-            ? getCustomQuestions()
-            : QUESTIONS.map(
-                (q, i) => ({
-                  id: `original-${i}`,
-                  text: q[0],
-                  answer: q[1]
-                })
-              )
+          level.questions
         );
 
     }
@@ -480,7 +563,9 @@ function nextQuestion() {
 
 
   questionEl.textContent =
-    current.text.replaceAll(
+    String(
+      current.text
+    ).replaceAll(
       "-",
       "−"
     );
@@ -490,15 +575,17 @@ function nextQuestion() {
     "\u00a0";
 
 
-  if (mode === "speed") {
+  if (
+    mode === "speed"
+  ) {
 
     progressEl.textContent =
-      `Question ${index} / 10`;
+      `Level ${currentLevel} • Question ${index} / 10`;
 
   } else {
 
     progressEl.textContent =
-      `Streak: ${currentStreak}`;
+      `Level ${currentLevel} • Streak: ${currentStreak}`;
 
   }
 
@@ -513,19 +600,43 @@ function nextQuestion() {
 
 
 // ==========================================
-// ENTER NUMBER
+// ENTER DIGIT
 // ==========================================
 
-function enterDigit(digit) {
+function enterDigit(
+  digit
+) {
 
   if (locked) return;
 
 
-  // Maximum 4 digits.
-  if (answer.length >= 4) return;
+  if (
+    answer.length >= 4
+  ) return;
 
 
-  answer += String(digit);
+  const level =
+    getLevel(currentLevel);
+
+
+  // LEVEL 1 stays normal.
+  //
+  // Level 2+ can use reverse entry.
+  if (
+    level &&
+    level.reverse
+  ) {
+
+    answer =
+      String(digit) +
+      answer;
+
+  } else {
+
+    answer +=
+      String(digit);
+
+  }
 
 
   answerDisplay.textContent =
@@ -535,7 +646,7 @@ function enterDigit(digit) {
 
 
 // ==========================================
-// DELETE LAST NUMBER
+// DELETE LAST DIGIT
 // ==========================================
 
 function clearLast() {
@@ -543,8 +654,27 @@ function clearLast() {
   if (locked) return;
 
 
-  answer =
-    answer.slice(0, -1);
+  const level =
+    getLevel(currentLevel);
+
+
+  if (
+    level &&
+    level.reverse
+  ) {
+
+    // Reverse mode:
+    // remove the first digit because
+    // that was the most recently entered.
+    answer =
+      answer.slice(1);
+
+  } else {
+
+    answer =
+      answer.slice(0, -1);
+
+  }
 
 
   answerDisplay.textContent =
@@ -554,7 +684,7 @@ function clearLast() {
 
 
 // ==========================================
-// CLEAR ANSWER
+// CLEAR ALL
 // ==========================================
 
 function clearAll() {
@@ -572,14 +702,16 @@ function clearAll() {
 
 
 // ==========================================
-// SUBMIT ANSWER
+// SUBMIT
 // ==========================================
 
 function submitAnswer() {
 
   if (locked) return;
 
-  if (answer === "") return;
+  if (
+    answer === ""
+  ) return;
 
 
   locked = true;
@@ -613,12 +745,7 @@ function submitAnswer() {
   }
 
 
-  // ----------------------------------------
   // WRONG ANSWER
-  // ----------------------------------------
-
-  wrong++;
-
 
   mistakes.push({
 
@@ -638,7 +765,6 @@ function submitAnswer() {
     `✗ Correct answer: ${correctAnswer}`;
 
 
-  // Practice mode ends immediately.
   if (
     mode === "practice"
   ) {
@@ -650,7 +776,6 @@ function submitAnswer() {
   }
 
 
-  // Speed mode continues.
   nextQuestion();
 
 }
@@ -662,7 +787,9 @@ function submitAnswer() {
 
 function finishSpeed() {
 
-  clearInterval(timerHandle);
+  clearInterval(
+    timerHandle
+  );
 
   timerHandle = null;
 
@@ -678,27 +805,36 @@ function finishSpeed() {
     correct === 10;
 
 
-  let newRecord = false;
+  const key =
+    scoreKey(
+      currentLevel,
+      "speed"
+    );
+
+
+  let newRecord =
+    false;
 
 
   if (perfect) {
 
+    const oldBest =
+      levelScores[key];
+
+
     if (
-      speedBest === null ||
-      totalTime < speedBest
+      oldBest == null ||
+      totalTime < Number(oldBest)
     ) {
 
-      speedBest =
+      levelScores[key] =
         totalTime;
 
 
-      localStorage.setItem(
-        "mathSpeedBest",
-        String(speedBest)
-      );
+      saveScores();
 
-
-      newRecord = true;
+      newRecord =
+        true;
 
     }
 
@@ -732,18 +868,22 @@ function finishSpeed() {
   document.getElementById(
     "resultTime"
   ).textContent =
-    totalTime.toFixed(2) + " s";
+    `${totalTime.toFixed(2)} s`;
+
+
+  const best =
+    levelScores[key];
 
 
   document.getElementById(
     "resultBest"
   ).textContent =
 
-    speedBest === null
+    best == null
 
       ? "🏆 Best 10/10: Not set"
 
-      : `🏆 Best 10/10: ${speedBest.toFixed(2)} s`;
+      : `🏆 Level ${currentLevel} Best: ${Number(best).toFixed(2)} s`;
 
 
   displayMistakes();
@@ -752,12 +892,14 @@ function finishSpeed() {
 
 
 // ==========================================
-// FINISH PRACTICE MODE
+// FINISH PRACTICE
 // ==========================================
 
 function finishPractice() {
 
-  clearInterval(timerHandle);
+  clearInterval(
+    timerHandle
+  );
 
   timerHandle = null;
 
@@ -769,59 +911,48 @@ function finishPractice() {
     ) / 1000;
 
 
-  let newRecord = false;
+  const key =
+    scoreKey(
+      currentLevel,
+      "practice"
+    );
+
+
+  const oldBest =
+    levelScores[key];
+
+
+  let newRecord =
+    false;
 
 
   if (
+    !oldBest ||
     currentStreak >
-    practiceBest
-  ) {
-
-    practiceBest =
-      currentStreak;
-
-
-    practiceBestTime =
-      streakTime;
-
-
-    localStorage.setItem(
-      "mathPracticeBest",
-      String(practiceBest)
-    );
-
-
-    localStorage.setItem(
-      "mathPracticeBestTime",
-      String(practiceBestTime)
-    );
-
-
-    newRecord = true;
-
-
-  } else if (
-
-    currentStreak ===
-    practiceBest &&
-
-    currentStreak > 0 &&
-
+      Number(oldBest.streak) ||
     (
-      practiceBestTime === 0 ||
-      streakTime < practiceBestTime
+      currentStreak ===
+        Number(oldBest.streak) &&
+      streakTime <
+        Number(oldBest.time)
     )
-
   ) {
 
-    practiceBestTime =
-      streakTime;
+    levelScores[key] = {
+
+      streak:
+        currentStreak,
+
+      time:
+        streakTime
+
+    };
 
 
-    localStorage.setItem(
-      "mathPracticeBestTime",
-      String(practiceBestTime)
-    );
+    saveScores();
+
+    newRecord =
+      true;
 
   }
 
@@ -849,16 +980,20 @@ function finishPractice() {
   document.getElementById(
     "resultTime"
   ).textContent =
-    streakTime.toFixed(2) + " s";
+    `${streakTime.toFixed(2)} s`;
+
+
+  const best =
+    levelScores[key];
 
 
   document.getElementById(
     "resultBest"
   ).textContent =
 
-    practiceBest > 0
+    best
 
-      ? `🏆 Best streak: ${practiceBest} correct • ${practiceBestTime.toFixed(2)} s`
+      ? `🏆 Level ${currentLevel} Best: ${best.streak} correct • ${Number(best.time).toFixed(2)} s`
 
       : "🏆 Best streak: Not set";
 
@@ -869,7 +1004,7 @@ function finishPractice() {
 
 
 // ==========================================
-// SHOW WRONG ANSWERS
+// WRONG ANSWERS
 // ==========================================
 
 function displayMistakes() {
@@ -890,7 +1025,6 @@ function displayMistakes() {
 
 
   let html =
-
     "<h3>Questions to review</h3>";
 
 
@@ -902,7 +1036,7 @@ function displayMistakes() {
         <div class="mistake">
 
           <strong>
-            ${i + 1}. ${mistake.question}
+            ${i + 1}. ${escapeHtml(mistake.question)}
           </strong>
 
           <br>
@@ -930,53 +1064,270 @@ function displayMistakes() {
 
 
 // ==========================================
-// QUESTION BANK
+// LEVEL MANAGER
 // ==========================================
 
-function renderQuestionBank() {
+function renderLevelManager() {
 
   showScreen(bankView);
 
 
-  const list =
-    document.getElementById(
-      "questionList"
-    );
+  bankView.innerHTML = `
 
+    <button
+      id="levelHomeButton"
+      class="back"
+    >
+      ← Home
+    </button>
 
-  const custom =
-    getCustomQuestions();
+    <h2>📚 Levels</h2>
 
+    <p>
+      Level 1 is protected.
+      Create separate decks for Level 2+
+    </p>
 
-  document.getElementById(
-    "bankCount"
-  ).textContent =
+    <div id="levelList"></div>
 
-    `Original: ${QUESTIONS.length} • My Questions: ${custom.length}`;
+    <div class="add-card">
 
+      <h3>➕ Create New Level</h3>
 
-  let html = `
+      <input
+        id="newLevelName"
+        placeholder="Example: Level 2 — Addition"
+      >
 
-    <h3>
-      Original 469 Questions
-    </h3>
+      <p>
+        Entry direction
+      </p>
 
-    <div class="question-grid">
+      <select
+        id="newLevelReverse"
+        style="
+          width:100%;
+          height:52px;
+          border-radius:12px;
+          padding:0 10px;
+          font-size:18px;
+          margin-bottom:10px;
+        "
+      >
+
+        <option value="false">
+          Normal Entry — left to right
+        </option>
+
+        <option value="true">
+          Reverse Entry — last digit first
+        </option>
+
+      </select>
+
+      <button
+        id="createLevelButton"
+        class="submit small-submit"
+      >
+        CREATE LEVEL
+      </button>
+
+    </div>
 
   `;
 
 
-  QUESTIONS.forEach(
-    (question, i) => {
+  document
+    .getElementById(
+      "levelHomeButton"
+    )
+    .addEventListener(
+      "click",
+      () => showScreen(home)
+    );
+
+
+  document
+    .getElementById(
+      "createLevelButton"
+    )
+    .addEventListener(
+      "click",
+      createLevel
+    );
+
+
+  renderLevels();
+
+}
+
+
+// ==========================================
+// RENDER LEVELS
+// ==========================================
+
+function renderLevels() {
+
+  const list =
+    document.getElementById(
+      "levelList"
+    );
+
+
+  if (!list) return;
+
+
+  let html = `
+
+    <div class="add-card">
+
+      <h3>
+        🔒 Level 1 — Original 469
+      </h3>
+
+      <p>
+        Protected original question bank.
+      </p>
+
+      <button
+        id="level1Speed"
+        class="primary"
+      >
+        ⚡ Level 1 — 10 Questions
+      </button>
+
+      <button
+        id="level1Practice"
+        class="primary"
+      >
+        🎯 Level 1 — Practice
+      </button>
+
+      <button
+        id="viewLevel1"
+        class="secondary"
+      >
+        👁 View Level 1 Questions
+      </button>
+
+    </div>
+
+  `;
+
+
+  if (
+    userLevels.length === 0
+  ) {
+
+    html += `
+
+      <div class="add-card">
+
+        <strong>
+          No new levels yet.
+        </strong>
+
+        <p>
+          Create Level 2 below.
+        </p>
+
+      </div>
+
+    `;
+
+  }
+
+
+  userLevels.forEach(
+    level => {
+
+      const speed =
+        levelScores[
+          scoreKey(
+            level.id,
+            "speed"
+          )
+        ];
+
+
+      const practice =
+        levelScores[
+          scoreKey(
+            level.id,
+            "practice"
+          )
+        ];
+
 
       html += `
 
-        <div>
+        <div class="add-card">
 
-          ${i + 1}.
-          ${escapeHtml(question[0])}
-          =
-          ${question[1]}
+          <h3>
+            ${escapeHtml(level.name)}
+          </h3>
+
+          <p>
+            ${level.questions.length}
+            questions
+            •
+            ${
+              level.reverse
+                ? "🔄 Reverse Entry"
+                : "Normal Entry"
+            }
+          </p>
+
+          <p>
+            ${
+              speed == null
+                ? "⚡ Best 10/10: Not set"
+                : `⚡ Best 10/10: ${Number(speed).toFixed(2)}s`
+            }
+          </p>
+
+          <p>
+            ${
+              practice
+                ? `🎯 Best streak: ${practice.streak} • ${Number(practice.time).toFixed(2)}s`
+                : "🎯 Best streak: Not set"
+            }
+          </p>
+
+          <button
+            class="primary level-speed"
+            data-level="${level.id}"
+          >
+            ⚡ 10 Question Mode
+          </button>
+
+          <button
+            class="primary level-practice"
+            data-level="${level.id}"
+          >
+            🎯 Practice Mode
+          </button>
+
+          <button
+            class="secondary level-import"
+            data-level="${level.id}"
+          >
+            📋 Paste / Replace Deck
+          </button>
+
+          <button
+            class="secondary level-view"
+            data-level="${level.id}"
+          >
+            👁 View Questions
+          </button>
+
+          <button
+            class="secondary level-settings"
+            data-level="${level.id}"
+          >
+            ⚙️ Level Settings
+          </button>
 
         </div>
 
@@ -986,71 +1337,58 @@ function renderQuestionBank() {
   );
 
 
-  html += `
-
-    </div>
-
-    <h3>
-      My Questions (${custom.length})
-    </h3>
-
-  `;
-
-
-  if (
-    custom.length === 0
-  ) {
-
-    html +=
-      "<p>No custom questions yet.</p>";
-
-  } else {
-
-    html +=
-      `<div class="question-grid">`;
-
-
-    custom.forEach(
-      (question, i) => {
-
-        html += `
-
-          <div>
-
-            ${i + 1}.
-            ${escapeHtml(question.text)}
-            =
-            ${question.answer}
-
-            <button
-              class="tiny danger"
-              data-delete="${i}"
-            >
-              Delete
-            </button>
-
-          </div>
-
-        `;
-
-      }
-    );
-
-
-    html +=
-      "</div>";
-
-  }
-
-
   list.innerHTML =
     html;
 
 
-  // Delete custom questions.
+  // Level 1
+
+  document
+    .getElementById(
+      "level1Speed"
+    )
+    .addEventListener(
+      "click",
+      () =>
+        startLevel(
+          1,
+          "speed"
+        )
+    );
+
+
+  document
+    .getElementById(
+      "level1Practice"
+    )
+    .addEventListener(
+      "click",
+      () =>
+        startLevel(
+          1,
+          "practice"
+        )
+    );
+
+
+  document
+    .getElementById(
+      "viewLevel1"
+    )
+    .addEventListener(
+      "click",
+      () =>
+        viewLevelQuestions(
+          1
+        )
+    );
+
+
+  // User levels
+
   list
     .querySelectorAll(
-      "[data-delete]"
+      ".level-speed"
     )
     .forEach(
       button => {
@@ -1059,22 +1397,109 @@ function renderQuestionBank() {
           "click",
           () => {
 
-            const number =
+            startLevel(
               Number(
-                button.dataset.delete
-              );
-
-
-            customQuestions.splice(
-              number,
-              1
+                button.dataset.level
+              ),
+              "speed"
             );
 
+          }
+        );
 
-            saveCustomQuestions();
+      }
+    );
 
 
-            renderQuestionBank();
+  list
+    .querySelectorAll(
+      ".level-practice"
+    )
+    .forEach(
+      button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            startLevel(
+              Number(
+                button.dataset.level
+              ),
+              "practice"
+            );
+
+          }
+        );
+
+      }
+    );
+
+
+  list
+    .querySelectorAll(
+      ".level-import"
+    )
+    .forEach(
+      button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            importDeck(
+              Number(
+                button.dataset.level
+              )
+            );
+
+          }
+        );
+
+      }
+    );
+
+
+  list
+    .querySelectorAll(
+      ".level-view"
+    )
+    .forEach(
+      button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            viewLevelQuestions(
+              Number(
+                button.dataset.level
+              )
+            );
+
+          }
+        );
+
+      }
+    );
+
+
+  list
+    .querySelectorAll(
+      ".level-settings"
+    )
+    .forEach(
+      button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            levelSettings(
+              Number(
+                button.dataset.level
+              )
+            );
 
           }
         );
@@ -1086,38 +1511,31 @@ function renderQuestionBank() {
 
 
 // ==========================================
-// ADD CUSTOM QUESTION
+// CREATE LEVEL
 // ==========================================
 
-function addCustomQuestion() {
+function createLevel() {
 
-  const questionInput =
+  const nameInput =
     document.getElementById(
-      "customQuestion"
+      "newLevelName"
     );
 
 
-  const answerInput =
+  const reverseInput =
     document.getElementById(
-      "customAnswer"
+      "newLevelReverse"
     );
 
 
-  const question =
-    questionInput.value.trim();
+  const name =
+    nameInput.value.trim();
 
 
-  const answerValue =
-    answerInput.value.trim();
-
-
-  if (
-    !question ||
-    answerValue === ""
-  ) {
+  if (!name) {
 
     alert(
-      "Enter both the question and correct answer."
+      "Give the level a name first."
     );
 
     return;
@@ -1125,18 +1543,432 @@ function addCustomQuestion() {
   }
 
 
-  const numericAnswer =
-    Number(answerValue);
+  const nextId =
+    userLevels.length === 0
+
+      ? 2
+
+      : Math.max(
+          ...userLevels.map(
+            level =>
+              Number(level.id)
+          )
+        ) + 1;
+
+
+  const newLevel = {
+
+    id:
+      nextId,
+
+    name:
+      name,
+
+    reverse:
+      reverseInput.value === "true",
+
+    questions:
+      []
+
+  };
+
+
+  userLevels.push(
+    newLevel
+  );
+
+
+  saveLevels();
+
+
+  alert(
+    `${name} created. Now paste your question deck into it.`
+  );
+
+
+  renderLevelManager();
+
+
+  setTimeout(
+    () => {
+
+      importDeck(
+        nextId
+      );
+
+    },
+    50
+  );
+
+}
+
+
+// ==========================================
+// IMPORT WHOLE DECK
+// ==========================================
+
+function importDeck(
+  levelNumber
+) {
+
+  const level =
+    getLevel(levelNumber);
+
+
+  if (!level) return;
+
+
+  const instructions = `
+
+Paste your entire question deck below.
+
+One question per line.
+
+Accepted examples:
+
+169+345=514
+25-7=18
+12×8=96
+
+You can also use:
+
+169 + 345 = 514
+25 - 7 = 18
+12 x 8 = 96
+
+This will REPLACE the current questions
+in ${level.name}.
+
+  `;
+
+
+  const pasted =
+    prompt(
+      instructions,
+      ""
+    );
 
 
   if (
-    !Number.isFinite(
-      numericAnswer
+    pasted === null
+  ) return;
+
+
+  const lines =
+    pasted
+      .split(/\r?\n/)
+      .map(
+        line =>
+          line.trim()
+      )
+      .filter(
+        line =>
+          line.length > 0
+      );
+
+
+  const imported = [];
+
+
+  for (
+    const line of lines
+  ) {
+
+    const parsed =
+      parseQuestionLine(
+        line
+      );
+
+
+    if (parsed) {
+
+      imported.push({
+
+        id:
+          `level-${levelNumber}-${Date.now()}-${imported.length}`,
+
+        text:
+          parsed.text,
+
+        answer:
+          parsed.answer
+
+      });
+
+    }
+
+  }
+
+
+  if (
+    imported.length === 0
+  ) {
+
+    alert(
+      "I couldn't find any valid questions. Use this format: 169+345=514"
+    );
+
+    return;
+
+  }
+
+
+  const invalid =
+    lines.length -
+    imported.length;
+
+
+  level.questions =
+    imported;
+
+
+  saveLevels();
+
+
+  let message =
+    `Imported ${imported.length} questions into ${level.name}.`;
+
+
+  if (invalid > 0) {
+
+    message +=
+      `\n\n${invalid} lines were skipped because they were not in a recognised format.`;
+
+  }
+
+
+  alert(
+    message
+  );
+
+
+  renderLevelManager();
+
+}
+
+
+// ==========================================
+// PARSE QUESTION
+// ==========================================
+
+function parseQuestionLine(
+  line
+) {
+
+  let cleaned =
+    line.trim();
+
+
+  // Remove leading numbering.
+  cleaned =
+    cleaned.replace(
+      /^\d+[\).\s]+/,
+      ""
+    );
+
+
+  // Remove commas from answers.
+  cleaned =
+    cleaned.replaceAll(
+      ",",
+      ""
+    );
+
+
+  // Look for = answer.
+  const equals =
+    cleaned.match(
+      /^(.+?)\s*=\s*(-?\d+(?:\.\d+)?)$/
+    );
+
+
+  if (equals) {
+
+    const text =
+      equals[1].trim();
+
+    const answerValue =
+      Number(
+        equals[2]
+      );
+
+
+    if (
+      text &&
+      Number.isFinite(
+        answerValue
+      )
+    ) {
+
+      return {
+
+        text:
+          text,
+
+        answer:
+          answerValue
+
+      };
+
+    }
+
+  }
+
+
+  // Also accept "question : answer".
+  const colon =
+    cleaned.match(
+      /^(.+?)\s*:\s*(-?\d+(?:\.\d+)?)$/
+    );
+
+
+  if (colon) {
+
+    const text =
+      colon[1].trim();
+
+    const answerValue =
+      Number(
+        colon[2]
+      );
+
+
+    if (
+      text &&
+      Number.isFinite(
+        answerValue
+      )
+    ) {
+
+      return {
+
+        text:
+          text,
+
+        answer:
+          answerValue
+
+      };
+
+    }
+
+  }
+
+
+  return null;
+
+}
+
+
+// ==========================================
+// VIEW QUESTIONS
+// ==========================================
+
+function viewLevelQuestions(
+  levelNumber
+) {
+
+  const level =
+    getLevel(levelNumber);
+
+
+  if (!level) return;
+
+
+  showScreen(bankView);
+
+
+  let html = `
+
+    <button
+      id="questionBack"
+      class="back"
+    >
+      ← Levels
+    </button>
+
+    <h2>
+      ${escapeHtml(level.name)}
+    </h2>
+
+    <p>
+      ${
+        levelNumber === 1
+          ? "🔒 Protected original deck"
+          : level.reverse
+            ? "🔄 Reverse Entry"
+            : "Normal Entry"
+      }
+    </p>
+
+    <p>
+      ${level.questions.length} questions
+    </p>
+
+    <div class="question-grid">
+
+  `;
+
+
+  level.questions.forEach(
+    (question, i) => {
+
+      html += `
+
+        <div>
+
+          ${i + 1}.
+          ${escapeHtml(question.text)}
+          =
+          ${question.answer}
+
+        </div>
+
+      `;
+
+    }
+  );
+
+
+  html +=
+    "</div>";
+
+
+  bankView.innerHTML =
+    html;
+
+
+  document
+    .getElementById(
+      "questionBack"
     )
+    .addEventListener(
+      "click",
+      renderLevelManager
+    );
+
+}
+
+
+// ==========================================
+// LEVEL SETTINGS
+// ==========================================
+
+function levelSettings(
+  levelNumber
+) {
+
+  const level =
+    getLevel(levelNumber);
+
+
+  if (
+    !level ||
+    levelNumber === 1
   ) {
 
     alert(
-      "The correct answer must be a number."
+      "Level 1 is protected and cannot be changed."
     );
 
     return;
@@ -1144,26 +1976,30 @@ function addCustomQuestion() {
   }
 
 
-  customQuestions.push({
+  const reverse =
+    confirm(
+      `Entry direction for ${level.name}:
 
-    text:
-      question,
-
-    answer:
-      numericAnswer
-
-  });
+OK = Reverse Entry (last digit first)
+Cancel = Normal Entry`
+    );
 
 
-  saveCustomQuestions();
+  level.reverse =
+    reverse;
 
 
-  questionInput.value = "";
-
-  answerInput.value = "";
+  saveLevels();
 
 
-  renderQuestionBank();
+  alert(
+    reverse
+      ? "Reverse Entry enabled."
+      : "Normal Entry enabled."
+  );
+
+
+  renderLevelManager();
 
 }
 
@@ -1172,7 +2008,9 @@ function addCustomQuestion() {
 // HTML SAFETY
 // ==========================================
 
-function escapeHtml(value) {
+function escapeHtml(
+  value
+) {
 
   return String(value)
     .replace(
@@ -1196,7 +2034,7 @@ function escapeHtml(value) {
 
 
 // ==========================================
-// FAST IPHONE TOUCH BUTTONS
+// FAST TOUCH INPUT
 // ==========================================
 
 function fastButton(
@@ -1208,9 +2046,7 @@ function fastButton(
 
 
   element.addEventListener(
-
     "pointerdown",
-
     event => {
 
       event.preventDefault();
@@ -1218,18 +2054,16 @@ function fastButton(
       action();
 
     },
-
     {
       passive: false
     }
-
   );
 
 }
 
 
 // ==========================================
-// NUMBER KEYPAD
+// KEYPAD
 // ==========================================
 
 document
@@ -1259,7 +2093,9 @@ document
 
           } else {
 
-            enterDigit(key);
+            enterDigit(
+              key
+            );
 
           }
 
@@ -1271,29 +2107,21 @@ document
 
 
 // ==========================================
-// BUTTONS
+// HOME BUTTONS
 // ==========================================
 
-fastButton(
-  document.getElementById(
-    "submitBtn"
-  ),
-  submitAnswer
-);
-
+// Level 1 buttons remain exactly
+// where they already are.
 
 fastButton(
   document.getElementById(
     "speedBtn"
   ),
-  () => {
-
-    startGame(
-      "speed",
-      "original"
-    );
-
-  }
+  () =>
+    startLevel(
+      1,
+      "speed"
+    )
 );
 
 
@@ -1301,29 +2129,22 @@ fastButton(
   document.getElementById(
     "practiceBtn"
   ),
-  () => {
-
-    startGame(
-      "practice",
-      "original"
-    );
-
-  }
+  () =>
+    startLevel(
+      1,
+      "practice"
+    )
 );
 
+
+// The old "My Questions" buttons now
+// open the separate level system.
 
 fastButton(
   document.getElementById(
     "customSpeedBtn"
   ),
-  () => {
-
-    startGame(
-      "speed",
-      "custom"
-    );
-
-  }
+  renderLevelManager
 );
 
 
@@ -1331,14 +2152,7 @@ fastButton(
   document.getElementById(
     "customPracticeBtn"
   ),
-  () => {
-
-    startGame(
-      "practice",
-      "custom"
-    );
-
-  }
+  renderLevelManager
 );
 
 
@@ -1346,60 +2160,19 @@ fastButton(
   document.getElementById(
     "bankBtn"
   ),
-  renderQuestionBank
+  renderLevelManager
 );
 
 
-fastButton(
-  document.getElementById(
-    "addBtn"
-  ),
-  addCustomQuestion
-);
-
+// ==========================================
+// GAME BUTTONS
+// ==========================================
 
 fastButton(
   document.getElementById(
-    "backBankBtn"
+    "submitBtn"
   ),
-  () => {
-
-    showScreen(home);
-
-  }
-);
-
-
-fastButton(
-  document.getElementById(
-    "againBtn"
-  ),
-  () => {
-
-    startGame(
-      mode,
-      questionSource
-    );
-
-  }
-);
-
-
-fastButton(
-  document.getElementById(
-    "homeBtn"
-  ),
-  () => {
-
-    clearInterval(
-      timerHandle
-    );
-
-    timerHandle = null;
-
-    showScreen(home);
-
-  }
+  submitAnswer
 );
 
 
@@ -1421,8 +2194,38 @@ fastButton(
 );
 
 
+fastButton(
+  document.getElementById(
+    "againBtn"
+  ),
+  () =>
+    startLevel(
+      currentLevel,
+      mode
+    )
+);
+
+
+fastButton(
+  document.getElementById(
+    "homeBtn"
+  ),
+  () => {
+
+    clearInterval(
+      timerHandle
+    );
+
+    timerHandle = null;
+
+    showScreen(home);
+
+  }
+);
+
+
 // ==========================================
-// PHYSICAL KEYBOARD SUPPORT
+// PHYSICAL KEYBOARD
 // ==========================================
 
 document.addEventListener(
