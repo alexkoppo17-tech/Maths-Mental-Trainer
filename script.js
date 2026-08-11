@@ -1,7 +1,8 @@
 // ==========================================
 // MATHS MEMORY TRAINER
-// LEVEL SYSTEM VERSION
+// LEVEL SYSTEM + REVERSE ENTRY
 // ==========================================
+
 
 // ==========================================
 // LEVEL 1 — ORIGINAL 469 QUESTIONS
@@ -9,6 +10,11 @@
 // ==========================================
 
 const QUESTIONS = [];
+
+
+// ------------------------------------------
+// SUBTRACTION
+// ------------------------------------------
 
 for (let a = 18; a >= 1; a--) {
 
@@ -25,12 +31,16 @@ for (let a = 18; a >= 1; a--) {
   }
 }
 
-QUESTIONS.push(["0-0", 0]);
+
+QUESTIONS.push([
+  "0-0",
+  0
+]);
 
 
-// ==========================================
+// ------------------------------------------
 // MULTIPLICATION 0-12
-// ==========================================
+// ------------------------------------------
 
 for (let a = 0; a <= 12; a++) {
 
@@ -45,9 +55,9 @@ for (let a = 0; a <= 12; a++) {
 }
 
 
-// ==========================================
+// ------------------------------------------
 // ADDITION
-// ==========================================
+// ------------------------------------------
 
 for (let a = 0; a <= 9; a++) {
 
@@ -64,7 +74,6 @@ for (let a = 0; a <= 9; a++) {
     ]);
 
   }
-
 }
 
 
@@ -91,7 +100,9 @@ try {
 
   userLevels =
     JSON.parse(
-      localStorage.getItem("mathLevels") || "[]"
+      localStorage.getItem(
+        "mathLevels"
+      ) || "[]"
     );
 
 } catch (error) {
@@ -111,7 +122,9 @@ try {
 
   levelScores =
     JSON.parse(
-      localStorage.getItem("mathLevelScores") || "{}"
+      localStorage.getItem(
+        "mathLevelScores"
+      ) || "{}"
     );
 
 } catch (error) {
@@ -193,7 +206,7 @@ const mistakesEl =
 
 
 // ==========================================
-// SAVE
+// SAVE LEVELS
 // ==========================================
 
 function saveLevels() {
@@ -206,6 +219,10 @@ function saveLevels() {
 }
 
 
+// ==========================================
+// SAVE SCORES
+// ==========================================
+
 function saveScores() {
 
   localStorage.setItem(
@@ -217,12 +234,14 @@ function saveScores() {
 
 
 // ==========================================
-// LEVEL 1 OBJECT
+// GET LEVEL
 // ==========================================
 
 function getLevel(levelNumber) {
 
-  if (levelNumber === 1) {
+  if (
+    levelNumber === 1
+  ) {
 
     return {
 
@@ -263,7 +282,7 @@ function getLevel(levelNumber) {
 
 
 // ==========================================
-// ALL QUESTIONS FOR MIXED
+// GET ALL QUESTIONS FOR MIXED
 // ==========================================
 
 function getAllQuestions() {
@@ -271,18 +290,15 @@ function getAllQuestions() {
   let all = [];
 
 
-  // Level 1
-
   const level1 =
     getLevel(1);
+
 
   all =
     all.concat(
       level1.questions
     );
 
-
-  // Level 2+
 
   userLevels.forEach(
     level => {
@@ -310,6 +326,7 @@ function shuffle(array) {
   const copy =
     array.slice();
 
+
   for (
     let i = copy.length - 1;
     i > 0;
@@ -318,8 +335,10 @@ function shuffle(array) {
 
     const j =
       Math.floor(
-        Math.random() * (i + 1)
+        Math.random() *
+        (i + 1)
       );
+
 
     [
       copy[i],
@@ -331,6 +350,7 @@ function shuffle(array) {
     ];
 
   }
+
 
   return copy;
 
@@ -365,11 +385,14 @@ function scoreKey(
   scoreMode
 ) {
 
-  if (levelNumber === "mixed") {
+  if (
+    levelNumber === "mixed"
+  ) {
 
     return `mixed-${scoreMode}`;
 
   }
+
 
   return `${levelNumber}-${scoreMode}`;
 
@@ -382,7 +405,9 @@ function scoreKey(
 
 function getLevelName(levelNumber) {
 
-  if (levelNumber === "mixed") {
+  if (
+    levelNumber === "mixed"
+  ) {
 
     return "Mixed";
 
@@ -532,7 +557,8 @@ function updateTimer() {
 
 
   timerEl.textContent =
-    elapsed.toFixed(2) + "s";
+    elapsed.toFixed(2) +
+    "s";
 
 }
 
@@ -645,7 +671,6 @@ function nextQuestion() {
 
   index++;
 
-
   answer = "";
 
   locked = false;
@@ -692,9 +717,7 @@ function nextQuestion() {
 // ENTER DIGIT
 // ==========================================
 
-function enterDigit(
-  digit
-) {
+function enterDigit(digit) {
 
   if (locked) return;
 
@@ -707,6 +730,10 @@ function enterDigit(
   let reverse = false;
 
 
+  // ----------------------------------------
+  // LEVEL 1 IS ALWAYS NORMAL
+  // ----------------------------------------
+
   if (
     currentLevel !== 1 &&
     currentLevel !== "mixed"
@@ -718,12 +745,27 @@ function enterDigit(
       );
 
 
-    reverse =
-      level &&
-      level.reverse;
+    if (level) {
+
+      reverse =
+        level.reverse === true;
+
+    }
 
   }
 
+
+  // ----------------------------------------
+  // REVERSE ENTRY
+  //
+  // Example:
+  //
+  // Correct answer = 514
+  //
+  // Tap 4 → 4
+  // Tap 1 → 14
+  // Tap 5 → 514
+  // ----------------------------------------
 
   if (reverse) {
 
@@ -733,6 +775,10 @@ function enterDigit(
 
   } else {
 
+    // Normal Level 1 entry:
+    //
+    // 5 → 51 → 514
+
     answer +=
       String(digit);
 
@@ -740,7 +786,8 @@ function enterDigit(
 
 
   answerDisplay.textContent =
-    answer;
+    answer ||
+    "\u00a0";
 
 }
 
@@ -768,19 +815,30 @@ function clearLast() {
       );
 
 
-    reverse =
-      level &&
-      level.reverse;
+    if (level) {
+
+      reverse =
+        level.reverse === true;
+
+    }
 
   }
 
 
   if (reverse) {
 
+    // Reverse entry:
+    //
+    // 514 → delete 5 → 14
+
     answer =
       answer.slice(1);
 
   } else {
+
+    // Normal entry:
+    //
+    // 514 → delete 4 → 51
 
     answer =
       answer.slice(
@@ -823,6 +881,7 @@ function clearAll() {
 function submitAnswer() {
 
   if (locked) return;
+
 
   if (
     answer === ""
@@ -895,7 +954,7 @@ function submitAnswer() {
 
 
 // ==========================================
-// SPEED FINISH
+// FINISH SPEED
 // ==========================================
 
 function finishSpeed() {
@@ -925,8 +984,7 @@ function finishSpeed() {
     );
 
 
-  let newRecord =
-    false;
+  let newRecord = false;
 
 
   if (perfect) {
@@ -937,16 +995,17 @@ function finishSpeed() {
 
     if (
       oldBest == null ||
-      totalTime < Number(oldBest)
+      totalTime <
+        Number(oldBest)
     ) {
 
       levelScores[key] =
         totalTime;
 
+
       saveScores();
 
-      newRecord =
-        true;
+      newRecord = true;
 
     }
 
@@ -1004,7 +1063,7 @@ function finishSpeed() {
 
 
 // ==========================================
-// PRACTICE FINISH
+// FINISH PRACTICE
 // ==========================================
 
 function finishPractice() {
@@ -1034,8 +1093,7 @@ function finishPractice() {
     levelScores[key];
 
 
-  let newRecord =
-    false;
+  let newRecord = false;
 
 
   if (
@@ -1063,8 +1121,7 @@ function finishPractice() {
 
     saveScores();
 
-    newRecord =
-      true;
+    newRecord = true;
 
   }
 
@@ -1203,7 +1260,9 @@ function renderHome() {
     );
 
 
+  // ----------------------------------------
   // LEVEL 1
+  // ----------------------------------------
 
   const level1Button =
     document.createElement(
@@ -1231,7 +1290,9 @@ function renderHome() {
   );
 
 
+  // ----------------------------------------
   // LEVEL 2+
+  // ----------------------------------------
 
   userLevels.forEach(
     level => {
@@ -1267,7 +1328,38 @@ function renderHome() {
   );
 
 
+  // ----------------------------------------
+  // CREATE NEW LEVEL
+  // ----------------------------------------
+
+  const createButton =
+    document.createElement(
+      "button"
+    );
+
+
+  createButton.className =
+    "secondary";
+
+
+  createButton.textContent =
+    "➕ CREATE NEW LEVEL";
+
+
+  fastButton(
+    createButton,
+    createNewLevel
+  );
+
+
+  list.appendChild(
+    createButton
+  );
+
+
+  // ----------------------------------------
   // MIXED AT THE BOTTOM
+  // ----------------------------------------
 
   const mixedButton =
     document.createElement(
@@ -1342,25 +1434,41 @@ function showLevelMenu(
     extra = `
 
       <p>
+
         ${
           levelNumber === 1
+
             ? "🔒 Original 469 questions"
+
             : `${level.questions.length} questions`
+
         }
+
       </p>
+
 
       ${
         levelNumber !== 1
+
           ? `
+
             <p>
+
               ${
                 level.reverse
+
                   ? "🔄 Reverse Entry enabled"
+
                   : "Normal Entry"
+
               }
+
             </p>
+
           `
+
           : ""
+
       }
 
     `;
@@ -1377,9 +1485,11 @@ function showLevelMenu(
       ← Levels
     </button>
 
+
     <h2>
       ${escapeHtml(levelName)}
     </h2>
+
 
     ${extra}
 
@@ -1420,6 +1530,7 @@ function showLevelMenu(
           >
             ➕ Add / Replace Questions
           </button>
+
 
           <button
             id="levelMenuSettings"
@@ -1516,10 +1627,24 @@ function showLevelMenu(
 
 function createNewLevel() {
 
+  const nextId =
+
+    userLevels.length === 0
+
+      ? 2
+
+      : Math.max(
+          ...userLevels.map(
+            level =>
+              Number(level.id)
+          )
+        ) + 1;
+
+
   const name =
     prompt(
-      "What do you want to call this level?",
-      `Level ${userLevels.length + 2}`
+      `Name Level ${nextId}:`,
+      `Level ${nextId}`
     );
 
 
@@ -1543,22 +1668,20 @@ function createNewLevel() {
   }
 
 
-  const nextId =
-    userLevels.length === 0
-
-      ? 2
-
-      : Math.max(
-          ...userLevels.map(
-            level =>
-              Number(level.id)
-          )
-        ) + 1;
-
-
   const reverse =
     confirm(
-      "Use Reverse Entry?\n\nOK = Last digit first\nCancel = Normal Entry"
+
+      `How should answers be entered in ${trimmed}?
+
+OK = REVERSE ENTRY
+Units digit first
+
+Example:
+514 → 4 → 1 → 5
+
+Cancel = NORMAL ENTRY
+5 → 1 → 4`
+
     );
 
 
@@ -1623,14 +1746,17 @@ function importDeck(
 
 One question per line.
 
-Examples:
+Example:
 
 169+345=514
-25-7=18
-12×8=96
+427-183=244
+58+27=85
+96-48=48
 
 The existing questions in ${level.name}
-will be replaced.`,
+will be replaced.
+
+Level 1 cannot be changed.`,
 
       ""
 
@@ -1850,13 +1976,16 @@ function viewLevelQuestions(
       ← ${escapeHtml(levelName)}
     </button>
 
+
     <h2>
       ${escapeHtml(levelName)} Questions
     </h2>
 
+
     <p>
       ${questions.length} questions
     </p>
+
 
     <div class="question-grid">
 
@@ -1933,8 +2062,10 @@ function levelSettings(
 
       `Entry direction for ${level.name}:
 
-OK = Reverse Entry
-Cancel = Normal Entry`
+OK = REVERSE ENTRY
+Units digit first
+
+Cancel = NORMAL ENTRY`
 
     );
 
@@ -1947,9 +2078,13 @@ Cancel = Normal Entry`
 
 
   alert(
+
     reverse
+
       ? "Reverse Entry enabled."
+
       : "Normal Entry enabled."
+
   );
 
 
@@ -2001,11 +2136,90 @@ function fastButton(
   if (!element) return;
 
 
+  element.style.touchAction =
+    "manipulation";
+
+  element.style.webkitTapHighlightColor =
+    "transparent";
+
+  element.style.userSelect =
+    "none";
+
+  element.style.webkitUserSelect =
+    "none";
+
+
+  let touchHandled = false;
+
+
   element.addEventListener(
-    "pointerdown",
+    "touchstart",
     event => {
 
       event.preventDefault();
+
+
+      if (
+        touchHandled
+      ) return;
+
+
+      touchHandled = true;
+
+
+      action();
+
+    },
+    {
+      passive: false
+    }
+  );
+
+
+  element.addEventListener(
+    "touchend",
+    event => {
+
+      event.preventDefault();
+
+
+      setTimeout(
+        () => {
+
+          touchHandled = false;
+
+        },
+        80
+      );
+
+    },
+    {
+      passive: false
+    }
+  );
+
+
+  element.addEventListener(
+    "touchcancel",
+    () => {
+
+      touchHandled = false;
+
+    }
+  );
+
+
+  element.addEventListener(
+    "click",
+    event => {
+
+      event.preventDefault();
+
+
+      if (
+        touchHandled
+      ) return;
+
 
       action();
 
@@ -2063,7 +2277,7 @@ document
 
 
 // ==========================================
-// GAME BUTTONS
+// SUBMIT BUTTON
 // ==========================================
 
 fastButton(
@@ -2073,6 +2287,10 @@ fastButton(
   submitAnswer
 );
 
+
+// ==========================================
+// GAME BACK
+// ==========================================
 
 fastButton(
   document.getElementById(
@@ -2092,6 +2310,10 @@ fastButton(
 );
 
 
+// ==========================================
+// PLAY AGAIN
+// ==========================================
+
 fastButton(
   document.getElementById(
     "againBtn"
@@ -2103,6 +2325,10 @@ fastButton(
     )
 );
 
+
+// ==========================================
+// RESULTS HOME
+// ==========================================
 
 fastButton(
   document.getElementById(
@@ -2164,7 +2390,7 @@ document.addEventListener(
 
 
 // ==========================================
-// INITIAL HOME SCREEN
+// START
 // ==========================================
 
 renderHome();
