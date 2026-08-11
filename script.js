@@ -1967,6 +1967,11 @@ function viewLevelQuestions(
     );
 
 
+  const canEdit =
+    levelNumber !== 1 &&
+    levelNumber !== "mixed";
+
+
   let html = `
 
     <button
@@ -1997,12 +2002,44 @@ function viewLevelQuestions(
 
       html += `
 
-        <div>
+        <div class="question-item">
 
-          ${i + 1}.
+          <strong>
+            ${i + 1}.
+          </strong>
+
           ${escapeHtml(question.text)}
           =
           ${question.answer}
+
+          ${
+            canEdit
+
+              ? `
+
+                <div class="question-actions">
+
+                  <button
+                    class="secondary edit-question"
+                    data-index="${i}"
+                  >
+                    ✏️ Edit
+                  </button>
+
+                  <button
+                    class="secondary delete-question"
+                    data-index="${i}"
+                  >
+                    🗑️ Delete
+                  </button>
+
+                </div>
+
+              `
+
+              : ""
+
+          }
 
         </div>
 
@@ -2028,6 +2065,257 @@ function viewLevelQuestions(
       showLevelMenu(
         levelNumber
       )
+  );
+
+
+  // ----------------------------------------
+  // EDIT BUTTONS
+  // ----------------------------------------
+
+  document
+    .querySelectorAll(
+      ".edit-question"
+    )
+    .forEach(
+      button => {
+
+        fastButton(
+          button,
+          () => {
+
+            editQuestion(
+              levelNumber,
+              Number(
+                button.dataset.index
+              )
+            );
+
+          }
+        );
+
+      }
+    );
+
+
+  // ----------------------------------------
+  // DELETE BUTTONS
+  // ----------------------------------------
+
+  document
+    .querySelectorAll(
+      ".delete-question"
+    )
+    .forEach(
+      button => {
+
+        fastButton(
+          button,
+          () => {
+
+            deleteQuestion(
+              levelNumber,
+              Number(
+                button.dataset.index
+              )
+            );
+
+          }
+        );
+
+      }
+    );
+
+}
+
+
+// ==========================================
+// EDIT QUESTION
+// ==========================================
+
+function editQuestion(
+  levelNumber,
+  questionIndex
+) {
+
+  // LEVEL 1 IS PROTECTED
+  if (
+    levelNumber === 1
+  ) {
+
+    alert(
+      "Level 1 is protected. Its 469 original questions cannot be edited."
+    );
+
+    return;
+
+  }
+
+
+  const level =
+    getLevel(
+      levelNumber
+    );
+
+
+  if (!level) return;
+
+
+  const question =
+    level.questions[
+      questionIndex
+    ];
+
+
+  if (!question) return;
+
+
+  const newText =
+    prompt(
+      "Edit the question:",
+      question.text
+    );
+
+
+  if (
+    newText === null
+  ) return;
+
+
+  const trimmedText =
+    newText.trim();
+
+
+  if (!trimmedText) {
+
+    alert(
+      "The question cannot be empty."
+    );
+
+    return;
+
+  }
+
+
+  const newAnswer =
+    prompt(
+      "Edit the correct answer:",
+      String(
+        question.answer
+      )
+    );
+
+
+  if (
+    newAnswer === null
+  ) return;
+
+
+  const parsedAnswer =
+    Number(
+      newAnswer.trim()
+    );
+
+
+  if (
+    !Number.isFinite(
+      parsedAnswer
+    )
+  ) {
+
+    alert(
+      "Please enter a valid number."
+    );
+
+    return;
+
+  }
+
+
+  question.text =
+    trimmedText;
+
+
+  question.answer =
+    parsedAnswer;
+
+
+  saveLevels();
+
+
+  viewLevelQuestions(
+    levelNumber
+  );
+
+}
+
+
+// ==========================================
+// DELETE QUESTION
+// ==========================================
+
+function deleteQuestion(
+  levelNumber,
+  questionIndex
+) {
+
+  // LEVEL 1 IS PROTECTED
+  if (
+    levelNumber === 1
+  ) {
+
+    alert(
+      "Level 1 is protected. Its 469 original questions cannot be deleted."
+    );
+
+    return;
+
+  }
+
+
+  const level =
+    getLevel(
+      levelNumber
+    );
+
+
+  if (!level) return;
+
+
+  const question =
+    level.questions[
+      questionIndex
+    ];
+
+
+  if (!question) return;
+
+
+  const confirmed =
+    confirm(
+
+      `Delete this question?
+
+${question.text} = ${question.answer}
+
+This cannot be undone.`
+
+    );
+
+
+  if (!confirmed) return;
+
+
+  level.questions.splice(
+    questionIndex,
+    1
+  );
+
+
+  saveLevels();
+
+
+  viewLevelQuestions(
+    levelNumber
   );
 
 }
