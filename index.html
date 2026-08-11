@@ -1,100 +1,324 @@
 <!doctype html>
 <html lang="en">
+
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="apple-mobile-web-app-capable" content="yes">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1,viewport-fit=cover"
+>
+
+<meta
+  name="apple-mobile-web-app-capable"
+  content="yes"
+>
+
 <title>Maths Memory Trainer</title>
-<link rel="stylesheet" href="style.css">
+
+<link
+  rel="stylesheet"
+  href="style.css"
+>
+
 </head>
+
+
 <body>
+
 <main class="app">
 
-<section id="home">
-<h1>Maths Memory Trainer</h1>
-<p class="subtitle">469 original questions</p>
 
-<button id="speedBtn" class="primary">⚡ 10 Question Mode</button>
-<button id="practiceBtn" class="primary">🎯 Practice Mode</button>
-<button id="customSpeedBtn" class="secondary">⚡ My Questions — 10</button>
-<button id="customPracticeBtn" class="secondary">🎯 My Questions — Practice</button>
-<button id="bankBtn" class="secondary">📚 Question Bank</button>
+<!-- ======================================
+     HOME
+====================================== -->
+
+<section id="home">
+
+<h1>Maths Memory Trainer</h1>
+
+<p class="subtitle">
+Choose a level
+</p>
+
+
+<!-- LEVEL 1 -->
+
+<button
+  id="speedBtn"
+  class="primary"
+>
+LEVEL 1
+</button>
+
+
+<!-- LEVEL 2+ / LEVEL MANAGER -->
+
+<button
+  id="customSpeedBtn"
+  class="primary"
+>
+LEVEL 2
+</button>
+
+
+<button
+  id="customPracticeBtn"
+  class="primary"
+>
+LEVEL 3
+</button>
+
+
+<button
+  id="bankBtn"
+  class="primary"
+>
+🔀 MIXED
+</button>
+
 </section>
 
+
+
+<!-- ======================================
+     GAME
+====================================== -->
+
 <section id="game" class="hidden">
-<button id="backBtn" class="back">← Home</button>
+
+<button
+  id="backBtn"
+  class="back"
+>
+← Levels
+</button>
+
 
 <div class="stats">
+
 <span id="progress"></span>
-<span id="timer">0.00s</span>
+
+<span id="timer">
+0.00s
+</span>
+
 </div>
 
-<div id="best" class="best"></div>
+
+<div
+  id="best"
+  class="best"
+></div>
+
 
 <h2 id="question"></h2>
 
-<div id="answerDisplay" class="answer-display">&nbsp;</div>
 
-<div id="feedback" class="feedback">&nbsp;</div>
-
-<div class="keypad">
-<button class="key" data-key="1">1</button>
-<button class="key" data-key="2">2</button>
-<button class="key" data-key="3">3</button>
-
-<button class="key" data-key="4">4</button>
-<button class="key" data-key="5">5</button>
-<button class="key" data-key="6">6</button>
-
-<button class="key" data-key="7">7</button>
-<button class="key" data-key="8">8</button>
-<button class="key" data-key="9">9</button>
-
-<button class="key action" data-key="clear">⌫</button>
-<button class="key" data-key="0">0</button>
-<button class="key action" data-key="clearAll">C</button>
+<div
+  id="answerDisplay"
+  class="answer-display"
+>
+&nbsp;
 </div>
 
-<button id="submitBtn" class="submit">SUBMIT</button>
+
+<div
+  id="feedback"
+  class="feedback"
+>
+&nbsp;
+</div>
+
+
+<div class="keypad">
+
+<button
+  class="key"
+  data-key="1"
+>
+1
+</button>
+
+<button
+  class="key"
+  data-key="2"
+>
+2
+</button>
+
+<button
+  class="key"
+  data-key="3"
+>
+3
+</button>
+
+
+<button
+  class="key"
+  data-key="4"
+>
+4
+</button>
+
+<button
+  class="key"
+  data-key="5"
+>
+5
+</button>
+
+<button
+  class="key"
+  data-key="6"
+>
+6
+</button>
+
+
+<button
+  class="key"
+  data-key="7"
+>
+7
+</button>
+
+<button
+  class="key"
+  data-key="8"
+>
+8
+</button>
+
+<button
+  class="key"
+  data-key="9"
+>
+9
+</button>
+
+
+<button
+  class="key action"
+  data-key="clear"
+>
+⌫
+</button>
+
+<button
+  class="key"
+  data-key="0"
+>
+0
+</button>
+
+<button
+  class="key action"
+  data-key="clearAll"
+>
+C
+</button>
+
+</div>
+
+
+<button
+  id="submitBtn"
+  class="submit"
+>
+SUBMIT
+</button>
+
 </section>
 
+
+
+<!-- ======================================
+     RESULTS
+====================================== -->
+
 <section id="results" class="hidden">
+
 <h2 id="resultTitle"></h2>
 
-<div id="resultScore" class="big-result"></div>
 
-<p>Time: <strong id="resultTime"></strong></p>
+<div
+  id="resultScore"
+  class="big-result"
+></div>
 
-<p id="resultBest" class="best"></p>
+
+<p>
+Time:
+<strong id="resultTime"></strong>
+</p>
+
+
+<p
+  id="resultBest"
+  class="best"
+></p>
+
 
 <div id="mistakes"></div>
 
-<button id="againBtn" class="primary">Play Again</button>
-<button id="homeBtn" class="secondary">Home</button>
+
+<button
+  id="againBtn"
+  class="primary"
+>
+Play Again
+</button>
+
+
+<button
+  id="homeBtn"
+  class="secondary"
+>
+Levels
+</button>
+
 </section>
 
-<section id="bankView" class="hidden">
-<button id="backBankBtn" class="back">← Home</button>
 
-<h2>Question Bank</h2>
+
+<!-- ======================================
+     LEVEL / QUESTION VIEW
+====================================== -->
+
+<section
+  id="bankView"
+  class="hidden"
+>
+
+<button
+  id="backBankBtn"
+  class="back"
+>
+← Levels
+</button>
+
+
+<h2>
+Levels
+</h2>
+
 
 <p id="bankCount"></p>
 
-<div class="add-card">
-<h3>Add Your Own Question</h3>
-
-<input id="customQuestion" placeholder="Example: 25-7">
-
-<input id="customAnswer" inputmode="numeric" placeholder="Correct answer">
-
-<button id="addBtn" class="submit small-submit">Add Question</button>
-</div>
 
 <div id="questionList"></div>
+
 </section>
+
 
 </main>
 
+
 <script src="script.js"></script>
+
 </body>
+
 </html>
