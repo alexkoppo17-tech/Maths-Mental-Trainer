@@ -1,11 +1,7 @@
 // ==========================================
 // MATHS MEMORY TRAINER
 // LEVEL SYSTEM VERSION
-//
-// LEVEL 1 = ORIGINAL 469 QUESTIONS
-// LEVEL 2+ = USER CREATED DECKS
 // ==========================================
-
 
 // ==========================================
 // LEVEL 1 — ORIGINAL 469 QUESTIONS
@@ -13,11 +9,6 @@
 // ==========================================
 
 const QUESTIONS = [];
-
-
-// ------------------------------------------
-// SUBTRACTION
-// ------------------------------------------
 
 for (let a = 18; a >= 1; a--) {
 
@@ -37,9 +28,9 @@ for (let a = 18; a >= 1; a--) {
 QUESTIONS.push(["0-0", 0]);
 
 
-// ------------------------------------------
+// ==========================================
 // MULTIPLICATION 0-12
-// ------------------------------------------
+// ==========================================
 
 for (let a = 0; a <= 12; a++) {
 
@@ -54,9 +45,9 @@ for (let a = 0; a <= 12; a++) {
 }
 
 
-// ------------------------------------------
+// ==========================================
 // ADDITION
-// ------------------------------------------
+// ==========================================
 
 for (let a = 0; a <= 9; a++) {
 
@@ -73,12 +64,13 @@ for (let a = 0; a <= 9; a++) {
     ]);
 
   }
+
 }
 
 
-// ------------------------------------------
+// ==========================================
 // LEVEL 1 SAFETY CHECK
-// ------------------------------------------
+// ==========================================
 
 if (QUESTIONS.length !== 469) {
 
@@ -159,6 +151,8 @@ let locked = false;
 
 let mistakes = [];
 
+let mixedMode = false;
+
 
 // ==========================================
 // ELEMENTS
@@ -199,7 +193,7 @@ const mistakesEl =
 
 
 // ==========================================
-// SAVE LEVELS
+// SAVE
 // ==========================================
 
 function saveLevels() {
@@ -223,7 +217,7 @@ function saveScores() {
 
 
 // ==========================================
-// GET LEVEL
+// LEVEL 1 OBJECT
 // ==========================================
 
 function getLevel(levelNumber) {
@@ -234,7 +228,7 @@ function getLevel(levelNumber) {
 
       id: 1,
 
-      name: "Level 1 — Original 469",
+      name: "Level 1",
 
       reverse: false,
 
@@ -261,8 +255,48 @@ function getLevel(levelNumber) {
 
   return userLevels.find(
     level =>
-      level.id === levelNumber
+      Number(level.id) ===
+      Number(levelNumber)
   );
+
+}
+
+
+// ==========================================
+// ALL QUESTIONS FOR MIXED
+// ==========================================
+
+function getAllQuestions() {
+
+  let all = [];
+
+
+  // Level 1
+
+  const level1 =
+    getLevel(1);
+
+  all =
+    all.concat(
+      level1.questions
+    );
+
+
+  // Level 2+
+
+  userLevels.forEach(
+    level => {
+
+      all =
+        all.concat(
+          level.questions
+        );
+
+    }
+  );
+
+
+  return all;
 
 }
 
@@ -304,7 +338,7 @@ function shuffle(array) {
 
 
 // ==========================================
-// SHOW SCREEN
+// SCREEN CONTROL
 // ==========================================
 
 function showScreen(screen) {
@@ -323,7 +357,7 @@ function showScreen(screen) {
 
 
 // ==========================================
-// LEVEL SCORE KEY
+// SCORE KEY
 // ==========================================
 
 function scoreKey(
@@ -331,7 +365,37 @@ function scoreKey(
   scoreMode
 ) {
 
+  if (levelNumber === "mixed") {
+
+    return `mixed-${scoreMode}`;
+
+  }
+
   return `${levelNumber}-${scoreMode}`;
+
+}
+
+
+// ==========================================
+// LEVEL NAME
+// ==========================================
+
+function getLevelName(levelNumber) {
+
+  if (levelNumber === "mixed") {
+
+    return "Mixed";
+
+  }
+
+
+  const level =
+    getLevel(levelNumber);
+
+
+  return level
+    ? level.name
+    : `Level ${levelNumber}`;
 
 }
 
@@ -345,24 +409,46 @@ function startLevel(
   selectedMode
 ) {
 
-  const level =
-    getLevel(levelNumber);
+  let questions = [];
 
 
-  if (!level) {
+  if (
+    levelNumber === "mixed"
+  ) {
 
-    alert(
-      "That level does not exist."
-    );
+    questions =
+      getAllQuestions();
 
-    return;
+    mixedMode = true;
+
+  } else {
+
+    const level =
+      getLevel(levelNumber);
+
+
+    if (!level) {
+
+      alert(
+        "That level does not exist."
+      );
+
+      return;
+
+    }
+
+
+    questions =
+      level.questions;
+
+    mixedMode = false;
 
   }
 
 
   if (
-    !level.questions ||
-    level.questions.length === 0
+    !questions ||
+    questions.length === 0
   ) {
 
     alert(
@@ -383,7 +469,7 @@ function startLevel(
 
   pool =
     shuffle(
-      level.questions
+      questions
     );
 
 
@@ -452,31 +538,25 @@ function updateTimer() {
 
 
 // ==========================================
-// HIGH SCORE DISPLAY
+// BEST DISPLAY
 // ==========================================
 
 function updateBestDisplay() {
 
-  const speedKey =
+  const key =
     scoreKey(
       currentLevel,
-      "speed"
+      mode
     );
 
-  const practiceKey =
-    scoreKey(
-      currentLevel,
-      "practice"
-    );
+
+  const best =
+    levelScores[key];
 
 
   if (
     mode === "speed"
   ) {
-
-    const best =
-      levelScores[speedKey];
-
 
     bestEl.textContent =
 
@@ -488,21 +568,13 @@ function updateBestDisplay() {
 
   } else {
 
-    const best =
-      levelScores[practiceKey];
+    bestEl.textContent =
 
+      best
 
-    if (best) {
+        ? `🏆 Best streak: ${best.streak} correct • ${Number(best.time).toFixed(2)}s`
 
-      bestEl.textContent =
-        `🏆 Best streak: ${best.streak} correct • ${Number(best.time).toFixed(2)}s`;
-
-    } else {
-
-      bestEl.textContent =
-        "🏆 Best streak: Not set";
-
-    }
+        : "🏆 Best streak: Not set";
 
   }
 
@@ -531,21 +603,38 @@ function nextQuestion() {
     pool.length === 0
   ) {
 
-    const level =
-      getLevel(currentLevel);
+    let refill = [];
 
 
     if (
-      mode === "practice" &&
-      level
+      mixedMode
     ) {
 
-      pool =
-        shuffle(
-          level.questions
+      refill =
+        getAllQuestions();
+
+    } else {
+
+      const level =
+        getLevel(
+          currentLevel
         );
 
+
+      if (level) {
+
+        refill =
+          level.questions;
+
+      }
+
     }
+
+
+    pool =
+      shuffle(
+        refill
+      );
 
   }
 
@@ -580,12 +669,12 @@ function nextQuestion() {
   ) {
 
     progressEl.textContent =
-      `Level ${currentLevel} • Question ${index} / 10`;
+      `${getLevelName(currentLevel)} • Question ${index} / 10`;
 
   } else {
 
     progressEl.textContent =
-      `Level ${currentLevel} • Streak: ${currentStreak}`;
+      `${getLevelName(currentLevel)} • Streak: ${currentStreak}`;
 
   }
 
@@ -615,17 +704,28 @@ function enterDigit(
   ) return;
 
 
-  const level =
-    getLevel(currentLevel);
+  let reverse = false;
 
 
-  // LEVEL 1 stays normal.
-  //
-  // Level 2+ can use reverse entry.
   if (
-    level &&
-    level.reverse
+    currentLevel !== 1 &&
+    currentLevel !== "mixed"
   ) {
+
+    const level =
+      getLevel(
+        currentLevel
+      );
+
+
+    reverse =
+      level &&
+      level.reverse;
+
+  }
+
+
+  if (reverse) {
 
     answer =
       String(digit) +
@@ -646,7 +746,7 @@ function enterDigit(
 
 
 // ==========================================
-// DELETE LAST DIGIT
+// CLEAR LAST
 // ==========================================
 
 function clearLast() {
@@ -654,31 +754,46 @@ function clearLast() {
   if (locked) return;
 
 
-  const level =
-    getLevel(currentLevel);
+  let reverse = false;
 
 
   if (
-    level &&
-    level.reverse
+    currentLevel !== 1 &&
+    currentLevel !== "mixed"
   ) {
 
-    // Reverse mode:
-    // remove the first digit because
-    // that was the most recently entered.
+    const level =
+      getLevel(
+        currentLevel
+      );
+
+
+    reverse =
+      level &&
+      level.reverse;
+
+  }
+
+
+  if (reverse) {
+
     answer =
       answer.slice(1);
 
   } else {
 
     answer =
-      answer.slice(0, -1);
+      answer.slice(
+        0,
+        -1
+      );
 
   }
 
 
   answerDisplay.textContent =
-    answer || "\u00a0";
+    answer ||
+    "\u00a0";
 
 }
 
@@ -745,8 +860,6 @@ function submitAnswer() {
   }
 
 
-  // WRONG ANSWER
-
   mistakes.push({
 
     question:
@@ -782,7 +895,7 @@ function submitAnswer() {
 
 
 // ==========================================
-// FINISH SPEED MODE
+// SPEED FINISH
 // ==========================================
 
 function finishSpeed() {
@@ -829,7 +942,6 @@ function finishSpeed() {
 
       levelScores[key] =
         totalTime;
-
 
       saveScores();
 
@@ -883,7 +995,7 @@ function finishSpeed() {
 
       ? "🏆 Best 10/10: Not set"
 
-      : `🏆 Level ${currentLevel} Best: ${Number(best).toFixed(2)} s`;
+      : `🏆 ${getLevelName(currentLevel)} Best: ${Number(best).toFixed(2)} s`;
 
 
   displayMistakes();
@@ -892,7 +1004,7 @@ function finishSpeed() {
 
 
 // ==========================================
-// FINISH PRACTICE
+// PRACTICE FINISH
 // ==========================================
 
 function finishPractice() {
@@ -993,7 +1105,7 @@ function finishPractice() {
 
     best
 
-      ? `🏆 Level ${currentLevel} Best: ${best.streak} correct • ${Number(best.time).toFixed(2)} s`
+      ? `🏆 ${getLevelName(currentLevel)} Best: ${best.streak} correct • ${Number(best.time).toFixed(2)} s`
 
       : "🏆 Best streak: Not set";
 
@@ -1004,7 +1116,7 @@ function finishPractice() {
 
 
 // ==========================================
-// WRONG ANSWERS
+// MISTAKES
 // ==========================================
 
 function displayMistakes() {
@@ -1064,478 +1176,366 @@ function displayMistakes() {
 
 
 // ==========================================
-// LEVEL MANAGER
+// HOME SCREEN
 // ==========================================
 
-function renderLevelManager() {
+function renderHome() {
 
-  showScreen(bankView);
+  showScreen(home);
 
 
-  bankView.innerHTML = `
+  home.innerHTML = `
 
-    <button
-      id="levelHomeButton"
-      class="back"
-    >
-      ← Home
-    </button>
+    <h1>Maths Memory Trainer</h1>
 
-    <h2>📚 Levels</h2>
-
-    <p>
-      Level 1 is protected.
-      Create separate decks for Level 2+
+    <p class="subtitle">
+      Choose a level
     </p>
 
-    <div id="levelList"></div>
-
-    <div class="add-card">
-
-      <h3>➕ Create New Level</h3>
-
-      <input
-        id="newLevelName"
-        placeholder="Example: Level 2 — Addition"
-      >
-
-      <p>
-        Entry direction
-      </p>
-
-      <select
-        id="newLevelReverse"
-        style="
-          width:100%;
-          height:52px;
-          border-radius:12px;
-          padding:0 10px;
-          font-size:18px;
-          margin-bottom:10px;
-        "
-      >
-
-        <option value="false">
-          Normal Entry — left to right
-        </option>
-
-        <option value="true">
-          Reverse Entry — last digit first
-        </option>
-
-      </select>
-
-      <button
-        id="createLevelButton"
-        class="submit small-submit"
-      >
-        CREATE LEVEL
-      </button>
-
-    </div>
+    <div id="levelHomeList"></div>
 
   `;
 
 
-  document
-    .getElementById(
-      "levelHomeButton"
-    )
-    .addEventListener(
-      "click",
-      () => showScreen(home)
+  const list =
+    document.getElementById(
+      "levelHomeList"
     );
 
 
-  document
-    .getElementById(
-      "createLevelButton"
-    )
-    .addEventListener(
-      "click",
-      createLevel
+  // LEVEL 1
+
+  const level1Button =
+    document.createElement(
+      "button"
     );
 
 
-  renderLevels();
+  level1Button.className =
+    "primary";
+
+
+  level1Button.textContent =
+    "LEVEL 1";
+
+
+  fastButton(
+    level1Button,
+    () =>
+      showLevelMenu(1)
+  );
+
+
+  list.appendChild(
+    level1Button
+  );
+
+
+  // LEVEL 2+
+
+  userLevels.forEach(
+    level => {
+
+      const button =
+        document.createElement(
+          "button"
+        );
+
+
+      button.className =
+        "primary";
+
+
+      button.textContent =
+        `LEVEL ${level.id}`;
+
+
+      fastButton(
+        button,
+        () =>
+          showLevelMenu(
+            level.id
+          )
+      );
+
+
+      list.appendChild(
+        button
+      );
+
+    }
+  );
+
+
+  // MIXED AT THE BOTTOM
+
+  const mixedButton =
+    document.createElement(
+      "button"
+    );
+
+
+  mixedButton.className =
+    "secondary";
+
+
+  mixedButton.textContent =
+    "🔀 MIXED";
+
+
+  fastButton(
+    mixedButton,
+    () =>
+      showLevelMenu(
+        "mixed"
+      )
+  );
+
+
+  list.appendChild(
+    mixedButton
+  );
 
 }
 
 
 // ==========================================
-// RENDER LEVELS
+// LEVEL MENU
 // ==========================================
 
-function renderLevels() {
+function showLevelMenu(
+  levelNumber
+) {
 
-  const list =
-    document.getElementById(
-      "levelList"
+  const levelName =
+    getLevelName(
+      levelNumber
     );
 
 
-  if (!list) return;
+  showScreen(bankView);
 
 
-  let html = `
-
-    <div class="add-card">
-
-      <h3>
-        🔒 Level 1 — Original 469
-      </h3>
-
-      <p>
-        Protected original question bank.
-      </p>
-
-      <button
-        id="level1Speed"
-        class="primary"
-      >
-        ⚡ Level 1 — 10 Questions
-      </button>
-
-      <button
-        id="level1Practice"
-        class="primary"
-      >
-        🎯 Level 1 — Practice
-      </button>
-
-      <button
-        id="viewLevel1"
-        class="secondary"
-      >
-        👁 View Level 1 Questions
-      </button>
-
-    </div>
-
-  `;
+  let extra = "";
 
 
   if (
-    userLevels.length === 0
+    levelNumber === "mixed"
   ) {
 
-    html += `
+    extra = `
 
-      <div class="add-card">
+      <p>
+        All levels combined
+      </p>
 
-        <strong>
-          No new levels yet.
-        </strong>
+    `;
 
-        <p>
-          Create Level 2 below.
-        </p>
+  } else {
 
-      </div>
+    const level =
+      getLevel(
+        levelNumber
+      );
+
+
+    extra = `
+
+      <p>
+        ${
+          levelNumber === 1
+            ? "🔒 Original 469 questions"
+            : `${level.questions.length} questions`
+        }
+      </p>
+
+      ${
+        levelNumber !== 1
+          ? `
+            <p>
+              ${
+                level.reverse
+                  ? "🔄 Reverse Entry enabled"
+                  : "Normal Entry"
+              }
+            </p>
+          `
+          : ""
+      }
 
     `;
 
   }
 
 
-  userLevels.forEach(
-    level => {
+  bankView.innerHTML = `
 
-      const speed =
-        levelScores[
-          scoreKey(
-            level.id,
-            "speed"
-          )
-        ];
+    <button
+      id="levelMenuBack"
+      class="back"
+    >
+      ← Levels
+    </button>
 
+    <h2>
+      ${escapeHtml(levelName)}
+    </h2>
 
-      const practice =
-        levelScores[
-          scoreKey(
-            level.id,
-            "practice"
-          )
-        ];
+    ${extra}
 
 
-      html += `
+    <button
+      id="levelMenuSpeed"
+      class="primary"
+    >
+      ⚡ 10 Questions
+    </button>
 
-        <div class="add-card">
 
-          <h3>
-            ${escapeHtml(level.name)}
-          </h3>
+    <button
+      id="levelMenuPractice"
+      class="primary"
+    >
+      🎯 Practice Mode
+    </button>
 
-          <p>
-            ${level.questions.length}
-            questions
-            •
-            ${
-              level.reverse
-                ? "🔄 Reverse Entry"
-                : "Normal Entry"
-            }
-          </p>
 
-          <p>
-            ${
-              speed == null
-                ? "⚡ Best 10/10: Not set"
-                : `⚡ Best 10/10: ${Number(speed).toFixed(2)}s`
-            }
-          </p>
+    <button
+      id="levelMenuQuestions"
+      class="secondary"
+    >
+      📋 View Questions
+    </button>
 
-          <p>
-            ${
-              practice
-                ? `🎯 Best streak: ${practice.streak} • ${Number(practice.time).toFixed(2)}s`
-                : "🎯 Best streak: Not set"
-            }
-          </p>
+
+    ${
+      levelNumber !== 1 &&
+      levelNumber !== "mixed"
+
+        ? `
 
           <button
-            class="primary level-speed"
-            data-level="${level.id}"
+            id="levelMenuAdd"
+            class="secondary"
           >
-            ⚡ 10 Question Mode
+            ➕ Add / Replace Questions
           </button>
 
           <button
-            class="primary level-practice"
-            data-level="${level.id}"
-          >
-            🎯 Practice Mode
-          </button>
-
-          <button
-            class="secondary level-import"
-            data-level="${level.id}"
-          >
-            📋 Paste / Replace Deck
-          </button>
-
-          <button
-            class="secondary level-view"
-            data-level="${level.id}"
-          >
-            👁 View Questions
-          </button>
-
-          <button
-            class="secondary level-settings"
-            data-level="${level.id}"
+            id="levelMenuSettings"
+            class="secondary"
           >
             ⚙️ Level Settings
           </button>
 
-        </div>
+        `
 
-      `;
-
+        : ""
     }
+
+  `;
+
+
+  fastButton(
+    document.getElementById(
+      "levelMenuBack"
+    ),
+    renderHome
   );
 
 
-  list.innerHTML =
-    html;
+  fastButton(
+    document.getElementById(
+      "levelMenuSpeed"
+    ),
+    () =>
+      startLevel(
+        levelNumber,
+        "speed"
+      )
+  );
 
 
-  // Level 1
+  fastButton(
+    document.getElementById(
+      "levelMenuPractice"
+    ),
+    () =>
+      startLevel(
+        levelNumber,
+        "practice"
+      )
+  );
 
-  document
-    .getElementById(
-      "level1Speed"
-    )
-    .addEventListener(
-      "click",
+
+  fastButton(
+    document.getElementById(
+      "levelMenuQuestions"
+    ),
+    () =>
+      viewLevelQuestions(
+        levelNumber
+      )
+  );
+
+
+  if (
+    levelNumber !== 1 &&
+    levelNumber !== "mixed"
+  ) {
+
+    fastButton(
+      document.getElementById(
+        "levelMenuAdd"
+      ),
       () =>
-        startLevel(
-          1,
-          "speed"
+        importDeck(
+          levelNumber
         )
     );
 
 
-  document
-    .getElementById(
-      "level1Practice"
-    )
-    .addEventListener(
-      "click",
+    fastButton(
+      document.getElementById(
+        "levelMenuSettings"
+      ),
       () =>
-        startLevel(
-          1,
-          "practice"
+        levelSettings(
+          levelNumber
         )
     );
 
-
-  document
-    .getElementById(
-      "viewLevel1"
-    )
-    .addEventListener(
-      "click",
-      () =>
-        viewLevelQuestions(
-          1
-        )
-    );
-
-
-  // User levels
-
-  list
-    .querySelectorAll(
-      ".level-speed"
-    )
-    .forEach(
-      button => {
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            startLevel(
-              Number(
-                button.dataset.level
-              ),
-              "speed"
-            );
-
-          }
-        );
-
-      }
-    );
-
-
-  list
-    .querySelectorAll(
-      ".level-practice"
-    )
-    .forEach(
-      button => {
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            startLevel(
-              Number(
-                button.dataset.level
-              ),
-              "practice"
-            );
-
-          }
-        );
-
-      }
-    );
-
-
-  list
-    .querySelectorAll(
-      ".level-import"
-    )
-    .forEach(
-      button => {
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            importDeck(
-              Number(
-                button.dataset.level
-              )
-            );
-
-          }
-        );
-
-      }
-    );
-
-
-  list
-    .querySelectorAll(
-      ".level-view"
-    )
-    .forEach(
-      button => {
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            viewLevelQuestions(
-              Number(
-                button.dataset.level
-              )
-            );
-
-          }
-        );
-
-      }
-    );
-
-
-  list
-    .querySelectorAll(
-      ".level-settings"
-    )
-    .forEach(
-      button => {
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            levelSettings(
-              Number(
-                button.dataset.level
-              )
-            );
-
-          }
-        );
-
-      }
-    );
+  }
 
 }
 
 
 // ==========================================
-// CREATE LEVEL
+// CREATE NEW LEVEL
 // ==========================================
 
-function createLevel() {
-
-  const nameInput =
-    document.getElementById(
-      "newLevelName"
-    );
-
-
-  const reverseInput =
-    document.getElementById(
-      "newLevelReverse"
-    );
-
+function createNewLevel() {
 
   const name =
-    nameInput.value.trim();
+    prompt(
+      "What do you want to call this level?",
+      `Level ${userLevels.length + 2}`
+    );
 
 
-  if (!name) {
+  if (
+    name === null
+  ) return;
+
+
+  const trimmed =
+    name.trim();
+
+
+  if (!trimmed) {
 
     alert(
-      "Give the level a name first."
+      "Please enter a level name."
     );
 
     return;
@@ -1556,16 +1556,22 @@ function createLevel() {
         ) + 1;
 
 
+  const reverse =
+    confirm(
+      "Use Reverse Entry?\n\nOK = Last digit first\nCancel = Normal Entry"
+    );
+
+
   const newLevel = {
 
     id:
       nextId,
 
     name:
-      name,
+      trimmed,
 
     reverse:
-      reverseInput.value === "true",
+      reverse,
 
     questions:
       []
@@ -1582,22 +1588,12 @@ function createLevel() {
 
 
   alert(
-    `${name} created. Now paste your question deck into it.`
+    `${trimmed} created.`
   );
 
 
-  renderLevelManager();
-
-
-  setTimeout(
-    () => {
-
-      importDeck(
-        nextId
-      );
-
-    },
-    50
+  showLevelMenu(
+    nextId
   );
 
 }
@@ -1612,40 +1608,32 @@ function importDeck(
 ) {
 
   const level =
-    getLevel(levelNumber);
+    getLevel(
+      levelNumber
+    );
 
 
   if (!level) return;
 
 
-  const instructions = `
+  const pasted =
+    prompt(
 
-Paste your entire question deck below.
+      `Paste the whole question deck here.
 
 One question per line.
 
-Accepted examples:
+Examples:
 
 169+345=514
 25-7=18
 12×8=96
 
-You can also use:
+The existing questions in ${level.name}
+will be replaced.`,
 
-169 + 345 = 514
-25 - 7 = 18
-12 x 8 = 96
-
-This will REPLACE the current questions
-in ${level.name}.
-
-  `;
-
-
-  const pasted =
-    prompt(
-      instructions,
       ""
+
     );
 
 
@@ -1705,17 +1693,12 @@ in ${level.name}.
   ) {
 
     alert(
-      "I couldn't find any valid questions. Use this format: 169+345=514"
+      "No valid questions found.\n\nUse:\n169+345=514"
     );
 
     return;
 
   }
-
-
-  const invalid =
-    lines.length -
-    imported.length;
 
 
   level.questions =
@@ -1725,24 +1708,14 @@ in ${level.name}.
   saveLevels();
 
 
-  let message =
-    `Imported ${imported.length} questions into ${level.name}.`;
-
-
-  if (invalid > 0) {
-
-    message +=
-      `\n\n${invalid} lines were skipped because they were not in a recognised format.`;
-
-  }
-
-
   alert(
-    message
+    `Imported ${imported.length} questions into ${level.name}.`
   );
 
 
-  renderLevelManager();
+  showLevelMenu(
+    levelNumber
+  );
 
 }
 
@@ -1759,7 +1732,6 @@ function parseQuestionLine(
     line.trim();
 
 
-  // Remove leading numbering.
   cleaned =
     cleaned.replace(
       /^\d+[\).\s]+/,
@@ -1767,7 +1739,6 @@ function parseQuestionLine(
     );
 
 
-  // Remove commas from answers.
   cleaned =
     cleaned.replaceAll(
       ",",
@@ -1775,7 +1746,6 @@ function parseQuestionLine(
     );
 
 
-  // Look for = answer.
   const equals =
     cleaned.match(
       /^(.+?)\s*=\s*(-?\d+(?:\.\d+)?)$/
@@ -1784,38 +1754,21 @@ function parseQuestionLine(
 
   if (equals) {
 
-    const text =
-      equals[1].trim();
+    return {
 
-    const answerValue =
-      Number(
-        equals[2]
-      );
+      text:
+        equals[1].trim(),
 
+      answer:
+        Number(
+          equals[2]
+        )
 
-    if (
-      text &&
-      Number.isFinite(
-        answerValue
-      )
-    ) {
-
-      return {
-
-        text:
-          text,
-
-        answer:
-          answerValue
-
-      };
-
-    }
+    };
 
   }
 
 
-  // Also accept "question : answer".
   const colon =
     cleaned.match(
       /^(.+?)\s*:\s*(-?\d+(?:\.\d+)?)$/
@@ -1824,33 +1777,17 @@ function parseQuestionLine(
 
   if (colon) {
 
-    const text =
-      colon[1].trim();
+    return {
 
-    const answerValue =
-      Number(
-        colon[2]
-      );
+      text:
+        colon[1].trim(),
 
+      answer:
+        Number(
+          colon[2]
+        )
 
-    if (
-      text &&
-      Number.isFinite(
-        answerValue
-      )
-    ) {
-
-      return {
-
-        text:
-          text,
-
-        answer:
-          answerValue
-
-      };
-
-    }
+    };
 
   }
 
@@ -1868,14 +1805,40 @@ function viewLevelQuestions(
   levelNumber
 ) {
 
-  const level =
-    getLevel(levelNumber);
+  let questions = [];
 
 
-  if (!level) return;
+  if (
+    levelNumber === "mixed"
+  ) {
+
+    questions =
+      getAllQuestions();
+
+  } else {
+
+    const level =
+      getLevel(
+        levelNumber
+      );
+
+
+    if (!level) return;
+
+
+    questions =
+      level.questions;
+
+  }
 
 
   showScreen(bankView);
+
+
+  const levelName =
+    getLevelName(
+      levelNumber
+    );
 
 
   let html = `
@@ -1884,25 +1847,15 @@ function viewLevelQuestions(
       id="questionBack"
       class="back"
     >
-      ← Levels
+      ← ${escapeHtml(levelName)}
     </button>
 
     <h2>
-      ${escapeHtml(level.name)}
+      ${escapeHtml(levelName)} Questions
     </h2>
 
     <p>
-      ${
-        levelNumber === 1
-          ? "🔒 Protected original deck"
-          : level.reverse
-            ? "🔄 Reverse Entry"
-            : "Normal Entry"
-      }
-    </p>
-
-    <p>
-      ${level.questions.length} questions
+      ${questions.length} questions
     </p>
 
     <div class="question-grid">
@@ -1910,7 +1863,7 @@ function viewLevelQuestions(
   `;
 
 
-  level.questions.forEach(
+  questions.forEach(
     (question, i) => {
 
       html += `
@@ -1938,14 +1891,15 @@ function viewLevelQuestions(
     html;
 
 
-  document
-    .getElementById(
+  fastButton(
+    document.getElementById(
       "questionBack"
-    )
-    .addEventListener(
-      "click",
-      renderLevelManager
-    );
+    ),
+    () =>
+      showLevelMenu(
+        levelNumber
+      )
+  );
 
 }
 
@@ -1959,17 +1913,15 @@ function levelSettings(
 ) {
 
   const level =
-    getLevel(levelNumber);
+    getLevel(
+      levelNumber
+    );
 
 
   if (
     !level ||
     levelNumber === 1
   ) {
-
-    alert(
-      "Level 1 is protected and cannot be changed."
-    );
 
     return;
 
@@ -1978,10 +1930,12 @@ function levelSettings(
 
   const reverse =
     confirm(
+
       `Entry direction for ${level.name}:
 
-OK = Reverse Entry (last digit first)
+OK = Reverse Entry
 Cancel = Normal Entry`
+
     );
 
 
@@ -1999,13 +1953,15 @@ Cancel = Normal Entry`
   );
 
 
-  renderLevelManager();
+  showLevelMenu(
+    levelNumber
+  );
 
 }
 
 
 // ==========================================
-// HTML SAFETY
+// ESCAPE HTML
 // ==========================================
 
 function escapeHtml(
@@ -2034,7 +1990,7 @@ function escapeHtml(
 
 
 // ==========================================
-// FAST TOUCH INPUT
+// FAST TOUCH BUTTON
 // ==========================================
 
 function fastButton(
@@ -2107,64 +2063,6 @@ document
 
 
 // ==========================================
-// HOME BUTTONS
-// ==========================================
-
-// Level 1 buttons remain exactly
-// where they already are.
-
-fastButton(
-  document.getElementById(
-    "speedBtn"
-  ),
-  () =>
-    startLevel(
-      1,
-      "speed"
-    )
-);
-
-
-fastButton(
-  document.getElementById(
-    "practiceBtn"
-  ),
-  () =>
-    startLevel(
-      1,
-      "practice"
-    )
-);
-
-
-// The old "My Questions" buttons now
-// open the separate level system.
-
-fastButton(
-  document.getElementById(
-    "customSpeedBtn"
-  ),
-  renderLevelManager
-);
-
-
-fastButton(
-  document.getElementById(
-    "customPracticeBtn"
-  ),
-  renderLevelManager
-);
-
-
-fastButton(
-  document.getElementById(
-    "bankBtn"
-  ),
-  renderLevelManager
-);
-
-
-// ==========================================
 // GAME BUTTONS
 // ==========================================
 
@@ -2188,7 +2086,7 @@ fastButton(
 
     timerHandle = null;
 
-    showScreen(home);
+    renderHome();
 
   }
 );
@@ -2218,7 +2116,7 @@ fastButton(
 
     timerHandle = null;
 
-    showScreen(home);
+    renderHome();
 
   }
 );
@@ -2263,3 +2161,10 @@ document.addEventListener(
 
   }
 );
+
+
+// ==========================================
+// INITIAL HOME SCREEN
+// ==========================================
+
+renderHome();
