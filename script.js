@@ -88,7 +88,141 @@ if (QUESTIONS.length !== 469) {
   );
 
 }
+// ==========================================
+// LEVEL 2 — AUTOMATIC MATHS BANK
+// DO NOT TOUCH LEVEL 1
+// ==========================================
 
+const LEVEL2_QUESTIONS = [];
+
+
+// ------------------------------------------
+// 2 DIGIT + 2 DIGIT
+// ------------------------------------------
+
+for (let a = 10; a <= 99; a++) {
+
+  for (let b = 10; b <= 99; b++) {
+
+    LEVEL2_QUESTIONS.push({
+
+      id: `level2-add2-${a}-${b}`,
+
+      text: `${a}+${b}`,
+
+      answer: a + b
+
+    });
+
+  }
+
+}
+
+
+// ------------------------------------------
+// 2 DIGIT + 1 DIGIT
+// ------------------------------------------
+
+for (let a = 10; a <= 99; a++) {
+
+  for (let b = 0; b <= 9; b++) {
+
+    LEVEL2_QUESTIONS.push({
+
+      id: `level2-add1-${a}-${b}`,
+
+      text: `${a}+${b}`,
+
+      answer: a + b
+
+    });
+
+  }
+
+}
+
+
+// ------------------------------------------
+// 2 DIGIT - 2 DIGIT
+// POSITIVE ANSWERS ONLY
+// ------------------------------------------
+
+for (let a = 10; a <= 99; a++) {
+
+  for (let b = 10; b < a; b++) {
+
+    LEVEL2_QUESTIONS.push({
+
+      id: `level2-sub2-${a}-${b}`,
+
+      text: `${a}-${b}`,
+
+      answer: a - b
+
+    });
+
+  }
+
+}
+
+
+// ------------------------------------------
+// 2 DIGIT - 1 DIGIT
+// ------------------------------------------
+
+for (let a = 10; a <= 99; a++) {
+
+  for (let b = 0; b <= 9; b++) {
+
+    LEVEL2_QUESTIONS.push({
+
+      id: `level2-sub1-${a}-${b}`,
+
+      text: `${a}-${b}`,
+
+      answer: a - b
+
+    });
+
+  }
+
+}
+
+
+// ------------------------------------------
+// 2 DIGIT × 1 DIGIT
+// ------------------------------------------
+
+for (let a = 10; a <= 99; a++) {
+
+  for (let b = 0; b <= 9; b++) {
+
+    LEVEL2_QUESTIONS.push({
+
+      id: `level2-mult-${a}-${b}`,
+
+      text: `${a}×${b}`,
+
+      answer: a * b
+
+    });
+
+  }
+
+}
+
+
+// ------------------------------------------
+// LEVEL 2 SAFETY CHECK
+// ------------------------------------------
+
+if (LEVEL2_QUESTIONS.length !== 14805) {
+
+  throw new Error(
+    `LEVEL 2 ERROR: Expected 14805 questions but generated ${LEVEL2_QUESTIONS.length}.`
+  );
+
+}
 
 // ==========================================
 // USER LEVELS
