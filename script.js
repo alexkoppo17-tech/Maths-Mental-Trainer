@@ -370,12 +370,13 @@ function saveScores() {
 // ==========================================
 // GET LEVEL
 // ==========================================
-
 function getLevel(levelNumber) {
 
-  if (
-    levelNumber === 1
-  ) {
+  // ========================================
+  // LEVEL 1 — ORIGINAL 469
+  // ========================================
+
+  if (Number(levelNumber) === 1) {
 
     return {
 
@@ -406,6 +407,33 @@ function getLevel(levelNumber) {
   }
 
 
+  // ========================================
+  // LEVEL 2 — AUTOMATIC BANK
+  // ========================================
+
+  if (Number(levelNumber) === 2) {
+
+    return {
+
+      id: 2,
+
+      name: "Level 2",
+
+      reverse: true,
+
+      questions:
+        LEVEL2_QUESTIONS
+
+    };
+
+  }
+
+
+  // ========================================
+  // LEVEL 3+
+  // USER CREATED LEVELS
+  // ========================================
+
   return userLevels.find(
     level =>
       Number(level.id) ===
@@ -413,7 +441,6 @@ function getLevel(levelNumber) {
   );
 
 }
-
 
 // ==========================================
 // GET ALL QUESTIONS FOR MIXED
