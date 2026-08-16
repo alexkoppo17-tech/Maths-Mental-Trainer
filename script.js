@@ -933,16 +933,17 @@ function enterDigit(digit) {
   // LEVEL 1 IS ALWAYS NORMAL
   // ----------------------------------------
 
-  if (
-    currentLevel !== 1 &&
-    currentLevel !== "mixed"
-  ) {
+if (currentLevel !== 1) {
+
+  if (currentLevel === "mixed") {
+
+    reverse =
+      String(current.id).startsWith("level2-");
+
+  } else {
 
     const level =
-      getLevel(
-        currentLevel
-      );
-
+      getLevel(currentLevel);
 
     if (level) {
 
@@ -952,6 +953,8 @@ function enterDigit(digit) {
     }
 
   }
+
+}
 
 
   // ----------------------------------------
@@ -994,25 +997,17 @@ function enterDigit(digit) {
 // ==========================================
 // CLEAR LAST
 // ==========================================
+if (currentLevel !== 1) {
 
-function clearLast() {
+  if (currentLevel === "mixed") {
 
-  if (locked) return;
+    reverse =
+      String(current.id).startsWith("level2-");
 
-
-  let reverse = false;
-
-
-  if (
-    currentLevel !== 1 &&
-    currentLevel !== "mixed"
-  ) {
+  } else {
 
     const level =
-      getLevel(
-        currentLevel
-      );
-
+      getLevel(currentLevel);
 
     if (level) {
 
@@ -1022,35 +1017,6 @@ function clearLast() {
     }
 
   }
-
-
-  if (reverse) {
-
-    // Reverse entry:
-    //
-    // 514 → delete 5 → 14
-
-    answer =
-      answer.slice(1);
-
-  } else {
-
-    // Normal entry:
-    //
-    // 514 → delete 4 → 51
-
-    answer =
-      answer.slice(
-        0,
-        -1
-      );
-
-  }
-
-
-  answerDisplay.textContent =
-    answer ||
-    "\u00a0";
 
 }
 
