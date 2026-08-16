@@ -450,19 +450,58 @@ function getAllQuestions() {
 
   let all = [];
 
+  // ========================================
+  // LEVEL 1 — ORIGINAL 469
+  // ========================================
 
   const level1 =
     getLevel(1);
 
+  if (level1) {
 
-  all =
-    all.concat(
-      level1.questions
-    );
+    all =
+      all.concat(
+        level1.questions
+      );
 
+  }
+
+
+  // ========================================
+  // LEVEL 2 — AUTOMATIC 14,805
+  // ========================================
+
+  const level2 =
+    getLevel(2);
+
+  if (level2) {
+
+    all =
+      all.concat(
+        level2.questions
+      );
+
+  }
+
+
+  // ========================================
+  // LEVEL 3+
+  // USER CREATED LEVELS
+  // ========================================
 
   userLevels.forEach(
     level => {
+
+      // Level 2 is already included above.
+      // Don't add it twice.
+
+      if (
+        Number(level.id) === 2
+      ) {
+
+        return;
+
+      }
 
       all =
         all.concat(
@@ -476,7 +515,6 @@ function getAllQuestions() {
   return all;
 
 }
-
 
 // ==========================================
 // SHUFFLE
