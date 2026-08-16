@@ -583,18 +583,134 @@ function scoreKey(
   levelNumber,
   scoreMode
 ) {
+if (
+  levelNumber === "mixed"
+) {
+
+  mixedMode = true;
+
+  const level1 =
+    getLevel(1);
+
+  const level2 =
+    getLevel(2);
 
   if (
-    levelNumber === "mixed"
+    !level1 ||
+    !level2 ||
+    level1.questions.length === 0 ||
+    level2.questions.length === 0
   ) {
 
-    return `mixed-${scoreMode}`;
+    alert(
+      "Level 1 and Level 2 must both contain questions."
+    );
+
+    return;
 
   }
 
 
-  return `${levelNumber}-${scoreMode}`;
+  // ========================================
+  // MIXED MODE
+  // 30% LEVEL 1
+  // 70% LEVEL 2
+  // ========================================
 
+  questions = [];
+
+
+  // Shuffle both banks independently
+
+  const level1Pool =
+    shuffle(
+      level1.questions
+    );
+
+  const level2Pool =
+    shuffle(
+      level2.questions
+    );
+
+
+  // ========================================
+  // 10 QUESTION MODE
+  // EXACTLY 3 LEVEL 1
+  // EXACTLY 7 LEVEL 2
+  // ========================================
+
+  if (
+    selectedMode === "speed"
+  ) {
+
+    questions =
+      questions.concat(
+        level1Pool.slice(0, 3)
+      );
+
+    questions =
+      questions.concat(
+        level2Pool.slice(0, 7)
+      );
+
+
+    // Mix the 3 + 7 together
+
+    questions =
+      shuffle(
+        questions
+      );
+
+  }
+
+
+  // ========================================
+  // PRACTICE MODE
+  // 30% / 70% SELECTION
+  // ========================================
+
+  else {
+
+    questions = [];
+
+
+    for (
+      let i = 0;
+      i < 1000;
+      i++
+    ) {
+
+      const useLevel1 =
+        Math.random() < 0.30;
+
+
+      if (
+        useLevel1
+      ) {
+
+        questions.push(
+          level1Pool[
+            i %
+            level1Pool.length
+          ]
+        );
+
+      } else {
+
+        questions.push(
+          level2Pool[
+            i %
+            level2Pool.length
+          ]
+        );
+
+      }
+
+    }
+
+  }
+
+}
 }
 
 
