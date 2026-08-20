@@ -1,20 +1,21 @@
-// ==========================================
+// ============================================================
 // MATHS MEMORY TRAINER
-// LEVEL SYSTEM + REVERSE ENTRY
-// ==========================================
+// COMPLETE LEVEL 1–5 BUILD
+// SECTION 1 — LEVEL 1 + LEVEL 2 QUESTION BANKS
+// ============================================================
 
 
-// ==========================================
+// ============================================================
 // LEVEL 1 — ORIGINAL 469 QUESTIONS
-// DO NOT MODIFY
-// ==========================================
+// 🔒 DO NOT MODIFY
+// ============================================================
 
 const QUESTIONS = [];
 
 
-// ------------------------------------------
+// ------------------------------------------------------------
 // SUBTRACTION
-// ------------------------------------------
+// ------------------------------------------------------------
 
 for (let a = 18; a >= 1; a--) {
 
@@ -29,6 +30,7 @@ for (let a = 18; a >= 1; a--) {
     ]);
 
   }
+
 }
 
 
@@ -38,9 +40,9 @@ QUESTIONS.push([
 ]);
 
 
-// ------------------------------------------
-// MULTIPLICATION 0-12
-// ------------------------------------------
+// ------------------------------------------------------------
+// MULTIPLICATION 0–12
+// ------------------------------------------------------------
 
 for (let a = 0; a <= 12; a++) {
 
@@ -52,12 +54,13 @@ for (let a = 0; a <= 12; a++) {
     ]);
 
   }
+
 }
 
 
-// ------------------------------------------
+// ------------------------------------------------------------
 // ADDITION
-// ------------------------------------------
+// ------------------------------------------------------------
 
 for (let a = 0; a <= 9; a++) {
 
@@ -74,12 +77,14 @@ for (let a = 0; a <= 9; a++) {
     ]);
 
   }
+
 }
 
 
-// ==========================================
+// ============================================================
 // LEVEL 1 SAFETY CHECK
-// ==========================================
+// 🔒 ORIGINAL BANK MUST REMAIN EXACTLY 469
+// ============================================================
 
 if (QUESTIONS.length !== 469) {
 
@@ -88,17 +93,40 @@ if (QUESTIONS.length !== 469) {
   );
 
 }
-// ==========================================
-// LEVEL 2 — AUTOMATIC MATHS BANK
-// DO NOT TOUCH LEVEL 1
-// ==========================================
+
+
+// ============================================================
+// LEVEL 2 — COMPLETE AUTOMATIC BANK
+// ============================================================
+//
+// Level 2 contains:
+//
+// • Every 2 digit + 2 digit combination
+// • Every 2 digit + 1 digit combination
+// • Every 2 digit - 2 digit combination
+//   where the answer is positive
+// • Every 2 digit - 1 digit combination
+// • Every 2 digit × 1 digit combination
+//
+// Answers use REVERSE ENTRY:
+// Units → Tens → Hundreds
+//
+// Example:
+// 169 + 345 = 514
+//
+// Tap:
+// 4 → 1 → 5
+//
+// Display:
+// 4 → 14 → 514
+// ============================================================
 
 const LEVEL2_QUESTIONS = [];
 
 
-// ------------------------------------------
+// ------------------------------------------------------------
 // 2 DIGIT + 2 DIGIT
-// ------------------------------------------
+// ------------------------------------------------------------
 
 for (let a = 10; a <= 99; a++) {
 
@@ -106,11 +134,23 @@ for (let a = 10; a <= 99; a++) {
 
     LEVEL2_QUESTIONS.push({
 
-      id: `level2-add2-${a}-${b}`,
+      id:
+        `level2-add2-${a}-${b}`,
 
-      text: `${a}+${b}`,
+      text:
+        `${a}+${b}`,
 
-      answer: a + b
+      answer:
+        a + b,
+
+      level:
+        2,
+
+      input:
+        "reverse",
+
+      type:
+        "keypad"
 
     });
 
@@ -119,9 +159,9 @@ for (let a = 10; a <= 99; a++) {
 }
 
 
-// ------------------------------------------
+// ------------------------------------------------------------
 // 2 DIGIT + 1 DIGIT
-// ------------------------------------------
+// ------------------------------------------------------------
 
 for (let a = 10; a <= 99; a++) {
 
@@ -129,11 +169,23 @@ for (let a = 10; a <= 99; a++) {
 
     LEVEL2_QUESTIONS.push({
 
-      id: `level2-add1-${a}-${b}`,
+      id:
+        `level2-add1-${a}-${b}`,
 
-      text: `${a}+${b}`,
+      text:
+        `${a}+${b}`,
 
-      answer: a + b
+      answer:
+        a + b,
+
+      level:
+        2,
+
+      input:
+        "reverse",
+
+      type:
+        "keypad"
 
     });
 
@@ -142,10 +194,10 @@ for (let a = 10; a <= 99; a++) {
 }
 
 
-// ------------------------------------------
+// ------------------------------------------------------------
 // 2 DIGIT - 2 DIGIT
 // POSITIVE ANSWERS ONLY
-// ------------------------------------------
+// ------------------------------------------------------------
 
 for (let a = 10; a <= 99; a++) {
 
@@ -153,11 +205,23 @@ for (let a = 10; a <= 99; a++) {
 
     LEVEL2_QUESTIONS.push({
 
-      id: `level2-sub2-${a}-${b}`,
+      id:
+        `level2-sub2-${a}-${b}`,
 
-      text: `${a}-${b}`,
+      text:
+        `${a}-${b}`,
 
-      answer: a - b
+      answer:
+        a - b,
+
+      level:
+        2,
+
+      input:
+        "reverse",
+
+      type:
+        "keypad"
 
     });
 
@@ -166,9 +230,9 @@ for (let a = 10; a <= 99; a++) {
 }
 
 
-// ------------------------------------------
+// ------------------------------------------------------------
 // 2 DIGIT - 1 DIGIT
-// ------------------------------------------
+// ------------------------------------------------------------
 
 for (let a = 10; a <= 99; a++) {
 
@@ -176,11 +240,23 @@ for (let a = 10; a <= 99; a++) {
 
     LEVEL2_QUESTIONS.push({
 
-      id: `level2-sub1-${a}-${b}`,
+      id:
+        `level2-sub1-${a}-${b}`,
 
-      text: `${a}-${b}`,
+      text:
+        `${a}-${b}`,
 
-      answer: a - b
+      answer:
+        a - b,
+
+      level:
+        2,
+
+      input:
+        "reverse",
+
+      type:
+        "keypad"
 
     });
 
@@ -189,9 +265,9 @@ for (let a = 10; a <= 99; a++) {
 }
 
 
-// ------------------------------------------
+// ------------------------------------------------------------
 // 2 DIGIT × 1 DIGIT
-// ------------------------------------------
+// ------------------------------------------------------------
 
 for (let a = 10; a <= 99; a++) {
 
@@ -199,11 +275,23 @@ for (let a = 10; a <= 99; a++) {
 
     LEVEL2_QUESTIONS.push({
 
-      id: `level2-mult-${a}-${b}`,
+      id:
+        `level2-mult-${a}-${b}`,
 
-      text: `${a}×${b}`,
+      text:
+        `${a}×${b}`,
 
-      answer: a * b
+      answer:
+        a * b,
+
+      level:
+        2,
+
+      input:
+        "reverse",
+
+      type:
+        "keypad"
 
     });
 
@@ -212,9 +300,9 @@ for (let a = 10; a <= 99; a++) {
 }
 
 
-// ------------------------------------------
+// ============================================================
 // LEVEL 2 SAFETY CHECK
-// ------------------------------------------
+// ============================================================
 
 if (LEVEL2_QUESTIONS.length !== 14805) {
 
@@ -223,10 +311,14 @@ if (LEVEL2_QUESTIONS.length !== 14805) {
   );
 
 }
+// ============================================================
+// SECTION 2 — STORAGE, GAME STATE & GENERATORS
+// ============================================================
 
-// ==========================================
-// USER LEVELS
-// ==========================================
+
+// ------------------------------------------------------------
+// USER LEVELS (LEVEL 6+ ONLY)
+// ------------------------------------------------------------
 
 let userLevels = [];
 
@@ -234,21 +326,24 @@ try {
 
   userLevels =
     JSON.parse(
-      localStorage.getItem(
-        "mathLevels"
-      ) || "[]"
+      localStorage.getItem("mathLevels") || "[]"
     );
 
-} catch (error) {
+} catch {
 
   userLevels = [];
 
 }
 
+userLevels =
+  userLevels.filter(
+    level => Number(level.id) > 5
+  );
 
-// ==========================================
+
+// ------------------------------------------------------------
 // HIGH SCORES
-// ==========================================
+// ------------------------------------------------------------
 
 let levelScores = {};
 
@@ -256,92 +351,64 @@ try {
 
   levelScores =
     JSON.parse(
-      localStorage.getItem(
-        "mathLevelScores"
-      ) || "{}"
+      localStorage.getItem("mathLevelScores") || "{}"
     );
 
-} catch (error) {
+} catch {
 
   levelScores = {};
 
 }
 
 
-// ==========================================
+// ------------------------------------------------------------
 // GAME STATE
-// ==========================================
+// ------------------------------------------------------------
 
 let mode = "speed";
-
 let currentLevel = 1;
+let mixedMode = false;
 
 let pool = [];
-
 let current = null;
 
 let answer = "";
-
 let index = 0;
-
 let correct = 0;
-
 let currentStreak = 0;
 
 let startedAt = 0;
-
 let streakStartedAt = 0;
-
 let timerHandle = null;
 
 let locked = false;
-
 let mistakes = [];
 
-let mixedMode = false;
+
+// ------------------------------------------------------------
+// HTML ELEMENTS
+// ------------------------------------------------------------
+
+const home = document.getElementById("home");
+const game = document.getElementById("game");
+const results = document.getElementById("results");
+const bankView = document.getElementById("bankView");
+
+const questionEl = document.getElementById("question");
+const answerDisplay = document.getElementById("answerDisplay");
+const progressEl = document.getElementById("progress");
+const timerEl = document.getElementById("timer");
+const bestEl = document.getElementById("best");
+const feedbackEl = document.getElementById("feedback");
+const mistakesEl = document.getElementById("mistakes");
+
+const keypad = document.querySelector(".keypad");
+const submitBtn = document.getElementById("submitBtn");
 
 
-// ==========================================
-// ELEMENTS
-// ==========================================
-
-const home =
-  document.getElementById("home");
-
-const game =
-  document.getElementById("game");
-
-const results =
-  document.getElementById("results");
-
-const bankView =
-  document.getElementById("bankView");
-
-const questionEl =
-  document.getElementById("question");
-
-const answerDisplay =
-  document.getElementById("answerDisplay");
-
-const progressEl =
-  document.getElementById("progress");
-
-const timerEl =
-  document.getElementById("timer");
-
-const bestEl =
-  document.getElementById("best");
-
-const feedbackEl =
-  document.getElementById("feedback");
-
-const mistakesEl =
-  document.getElementById("mistakes");
-
-
-// ==========================================
-// SAVE LEVELS
-// ==========================================
+// ------------------------------------------------------------
+// SAVE FUNCTIONS
+// ------------------------------------------------------------
 
 function saveLevels() {
 
@@ -351,11 +418,6 @@ function saveLevels() {
   );
 
 }
-
-
-// ==========================================
-// SAVE SCORES
-// ==========================================
 
 function saveScores() {
 
@@ -367,24 +429,734 @@ function saveScores() {
 }
 
 
-// ==========================================
-// GET LEVEL
-// ==========================================
-function getLevel(levelNumber) {
+// ------------------------------------------------------------
+// RANDOM HELPERS
+// ------------------------------------------------------------
 
-  // ========================================
-  // LEVEL 1 — ORIGINAL 469
-  // ========================================
+function randomInt(min, max) {
 
-  if (Number(levelNumber) === 1) {
+  return Math.floor(
+    Math.random() * (max - min + 1)
+  ) + min;
+
+}
+
+function shuffle(array) {
+
+  const copy = array.slice();
+
+  for (let i = copy.length - 1; i > 0; i--) {
+
+    const j =
+      Math.floor(
+        Math.random() * (i + 1)
+      );
+
+    [copy[i], copy[j]] =
+    [copy[j], copy[i]];
+
+  }
+
+  return copy;
+
+}
+
+
+// ------------------------------------------------------------
+// LEVEL 3 RANDOM QUESTION GENERATOR
+// ------------------------------------------------------------
+
+function generateLevel3Question() {
+
+  const type = randomInt(1, 5);
+
+  if (type === 1) {
+
+    const a = randomInt(100, 999);
+    const b = randomInt(100, 999);
+
+    return {
+      id: `level3-add33-${Date.now()}`,
+      text: `${a}+${b}`,
+      answer: a + b,
+      input: "reverse",
+      type: "keypad"
+    };
+
+  }
+
+  if (type === 2) {
+
+    const a = randomInt(100, 999);
+    const b = randomInt(10, 99);
+
+    return {
+      id: `level3-add32-${Date.now()}`,
+      text: `${a}+${b}`,
+      answer: a + b,
+      input: "reverse",
+      type: "keypad"
+    };
+
+  }
+
+  if (type === 3) {
+
+    let a, b;
+
+    do {
+
+      a = randomInt(100, 999);
+      b = randomInt(100, 999);
+
+    } while (a <= b);
+
+    return {
+      id: `level3-sub33-${Date.now()}`,
+      text: `${a}-${b}`,
+      answer: a - b,
+      input: "reverse",
+      type: "keypad"
+    };
+
+  }
+
+  if (type === 4) {
+
+    let a, b;
+
+    do {
+
+      a = randomInt(100, 999);
+      b = randomInt(10, 99);
+
+    } while (a <= b);
+
+    return {
+      id: `level3-sub32-${Date.now()}`,
+      text: `${a}-${b}`,
+      answer: a - b,
+      input: "reverse",
+      type: "keypad"
+    };
+
+  }
+
+  const a = randomInt(10, 99);
+  const b = randomInt(10, 99);
+
+  return {
+    id: `level3-mult22-${Date.now()}`,
+    text: `${a}×${b}`,
+    answer: a * b,
+    input: "reverse",
+    type: "keypad"
+  };
+
+}
+// ============================================================
+// SECTION 3 — LEVEL 4 & LEVEL 5 GENERATORS
+// ============================================================
+
+
+// ============================================================
+// LEVEL 4 — RANDOM QUESTION GENERATOR
+// ============================================================
+//
+// Level 4:
+//
+// • 4 digit + 4 digit
+// • 4 digit + 3 digit
+// • 4 digit - 4 digit, positive answer
+// • 4 digit - 3 digit
+// • 3 digit × 3 digit
+//
+// Addition/subtraction:
+// REVERSE ENTRY
+//
+// 3 × 3 multiplication:
+// MULTIPLE CHOICE
+// ============================================================
+
+function generateLevel4Question() {
+
+  const type =
+    randomInt(1, 5);
+
+
+  // ----------------------------------------------------------
+  // 4 DIGIT + 4 DIGIT
+  // ----------------------------------------------------------
+
+  if (type === 1) {
+
+    const a =
+      randomInt(1000, 9999);
+
+    const b =
+      randomInt(1000, 9999);
 
     return {
 
-      id: 1,
+      id:
+        `level4-add44-${Date.now()}-${Math.random()}`,
 
-      name: "Level 1",
+      text:
+        `${a}+${b}`,
 
-      reverse: false,
+      answer:
+        a + b,
+
+      input:
+        "reverse",
+
+      type:
+        "keypad"
+
+    };
+
+  }
+
+
+  // ----------------------------------------------------------
+  // 4 DIGIT + 3 DIGIT
+  // ----------------------------------------------------------
+
+  if (type === 2) {
+
+    const a =
+      randomInt(1000, 9999);
+
+    const b =
+      randomInt(100, 999);
+
+    return {
+
+      id:
+        `level4-add43-${Date.now()}-${Math.random()}`,
+
+      text:
+        `${a}+${b}`,
+
+      answer:
+        a + b,
+
+      input:
+        "reverse",
+
+      type:
+        "keypad"
+
+    };
+
+  }
+
+
+  // ----------------------------------------------------------
+  // 4 DIGIT - 4 DIGIT
+  // POSITIVE ANSWER ONLY
+  // ----------------------------------------------------------
+
+  if (type === 3) {
+
+    let a;
+    let b;
+
+    do {
+
+      a =
+        randomInt(1000, 9999);
+
+      b =
+        randomInt(1000, 9999);
+
+    } while (
+      a <= b
+    );
+
+    return {
+
+      id:
+        `level4-sub44-${Date.now()}-${Math.random()}`,
+
+      text:
+        `${a}-${b}`,
+
+      answer:
+        a - b,
+
+      input:
+        "reverse",
+
+      type:
+        "keypad"
+
+    };
+
+  }
+
+
+  // ----------------------------------------------------------
+  // 4 DIGIT - 3 DIGIT
+  // ----------------------------------------------------------
+
+  if (type === 4) {
+
+    const a =
+      randomInt(1000, 9999);
+
+    const b =
+      randomInt(100, 999);
+
+    return {
+
+      id:
+        `level4-sub43-${Date.now()}-${Math.random()}`,
+
+      text:
+        `${a}-${b}`,
+
+      answer:
+        a - b,
+
+      input:
+        "reverse",
+
+      type:
+        "keypad"
+
+    };
+
+  }
+
+
+  // ----------------------------------------------------------
+  // 3 DIGIT × 3 DIGIT
+  // MULTIPLE CHOICE
+  // ----------------------------------------------------------
+
+  const a =
+    randomInt(100, 999);
+
+  const b =
+    randomInt(100, 999);
+
+  return {
+
+    id:
+      `level4-mult33-${Date.now()}-${Math.random()}`,
+
+    text:
+      `${a}×${b}`,
+
+    answer:
+      a * b,
+
+    input:
+      "multipleChoice",
+
+    type:
+      "multipleChoice"
+
+  };
+
+}
+
+
+// ============================================================
+// LEVEL 5 — RANDOM QUESTION GENERATOR
+// ============================================================
+//
+// Level 5:
+//
+// ADDITION
+// • 4 digit + 4 digit
+// • 5 digit + 5 digit
+// • 6 digit + 6 digit
+//
+// SUBTRACTION
+// • 4 digit - 4 digit
+// • 5 digit - 5 digit
+// • 6 digit - 6 digit
+//
+// MULTIPLICATION
+// • 4 digit × 4 digit
+// • 5 digit × 5 digit
+// • 6 digit × 6 digit
+//
+// ALL LEVEL 5 ANSWERS:
+// MULTIPLE CHOICE
+// ============================================================
+
+function generateLevel5Question() {
+
+  const type =
+    randomInt(1, 9);
+
+
+  // ----------------------------------------------------------
+  // 4 DIGIT ADDITION
+  // ----------------------------------------------------------
+
+  if (type === 1) {
+
+    const a =
+      randomInt(1000, 9999);
+
+    const b =
+      randomInt(1000, 9999);
+
+    return {
+
+      id:
+        `level5-add4-${Date.now()}-${Math.random()}`,
+
+      text:
+        `${a}+${b}`,
+
+      answer:
+        a + b,
+
+      input:
+        "multipleChoice",
+
+      type:
+        "multipleChoice"
+
+    };
+
+  }
+
+
+  // ----------------------------------------------------------
+  // 5 DIGIT ADDITION
+  // ----------------------------------------------------------
+
+  if (type === 2) {
+
+    const a =
+      randomInt(10000, 99999);
+
+    const b =
+      randomInt(10000, 99999);
+
+    return {
+
+      id:
+        `level5-add5-${Date.now()}-${Math.random()}`,
+
+      text:
+        `${a}+${b}`,
+
+      answer:
+        a + b,
+
+      input:
+        "multipleChoice",
+
+      type:
+        "multipleChoice"
+
+    };
+
+  }
+
+
+  // ----------------------------------------------------------
+  // 6 DIGIT ADDITION
+  // ----------------------------------------------------------
+
+  if (type === 3) {
+
+    const a =
+      randomInt(100000, 999999);
+
+    const b =
+      randomInt(100000, 999999);
+
+    return {
+
+      id:
+        `level5-add6-${Date.now()}-${Math.random()}`,
+
+      text:
+        `${a}+${b}`,
+
+      answer:
+        a + b,
+
+      input:
+        "multipleChoice",
+
+      type:
+        "multipleChoice"
+
+    };
+
+  }
+
+
+  // ----------------------------------------------------------
+  // 4 DIGIT SUBTRACTION
+  // POSITIVE ANSWER ONLY
+  // ----------------------------------------------------------
+
+  if (type === 4) {
+
+    let a;
+    let b;
+
+    do {
+
+      a =
+        randomInt(1000, 9999);
+
+      b =
+        randomInt(1000, 9999);
+
+    } while (
+      a <= b
+    );
+
+    return {
+
+      id:
+        `level5-sub4-${Date.now()}-${Math.random()}`,
+
+      text:
+        `${a}-${b}`,
+
+      answer:
+        a - b,
+
+      input:
+        "multipleChoice",
+
+      type:
+        "multipleChoice"
+
+    };
+
+  }
+
+
+  // ----------------------------------------------------------
+  // 5 DIGIT SUBTRACTION
+  // POSITIVE ANSWER ONLY
+  // ----------------------------------------------------------
+
+  if (type === 5) {
+
+    let a;
+    let b;
+
+    do {
+
+      a =
+        randomInt(10000, 99999);
+
+      b =
+        randomInt(10000, 99999);
+
+    } while (
+      a <= b
+    );
+
+    return {
+
+      id:
+        `level5-sub5-${Date.now()}-${Math.random()}`,
+
+      text:
+        `${a}-${b}`,
+
+      answer:
+        a - b,
+
+      input:
+        "multipleChoice",
+
+      type:
+        "multipleChoice"
+
+    };
+
+  }
+
+
+  // ----------------------------------------------------------
+  // 6 DIGIT SUBTRACTION
+  // POSITIVE ANSWER ONLY
+  // ----------------------------------------------------------
+
+  if (type === 6) {
+
+    let a;
+    let b;
+
+    do {
+
+      a =
+        randomInt(100000, 999999);
+
+      b =
+        randomInt(100000, 999999);
+
+    } while (
+      a <= b
+    );
+
+    return {
+
+      id:
+        `level5-sub6-${Date.now()}-${Math.random()}`,
+
+      text:
+        `${a}-${b}`,
+
+      answer:
+        a - b,
+
+      input:
+        "multipleChoice",
+
+      type:
+        "multipleChoice"
+
+    };
+
+  }
+
+
+  // ----------------------------------------------------------
+  // 4 DIGIT × 4 DIGIT
+  // ----------------------------------------------------------
+
+  if (type === 7) {
+
+    const a =
+      randomInt(1000, 9999);
+
+    const b =
+      randomInt(1000, 9999);
+
+    return {
+
+      id:
+        `level5-mult4-${Date.now()}-${Math.random()}`,
+
+      text:
+        `${a}×${b}`,
+
+      answer:
+        a * b,
+
+      input:
+        "multipleChoice",
+
+      type:
+        "multipleChoice"
+
+    };
+
+  }
+
+
+  // ----------------------------------------------------------
+  // 5 DIGIT × 5 DIGIT
+  // ----------------------------------------------------------
+
+  if (type === 8) {
+
+    const a =
+      randomInt(10000, 99999);
+
+    const b =
+      randomInt(10000, 99999);
+
+    return {
+
+      id:
+        `level5-mult5-${Date.now()}-${Math.random()}`,
+
+      text:
+        `${a}×${b}`,
+
+      answer:
+        a * b,
+
+      input:
+        "multipleChoice",
+
+      type:
+        "multipleChoice"
+
+    };
+
+  }
+
+
+  // ----------------------------------------------------------
+  // 6 DIGIT × 6 DIGIT
+  // ----------------------------------------------------------
+
+  const a =
+    randomInt(100000, 999999);
+
+  const b =
+    randomInt(100000, 999999);
+
+  return {
+
+    id:
+      `level5-mult6-${Date.now()}-${Math.random()}`,
+
+    text:
+      `${a}×${b}`,
+
+    answer:
+      a * b,
+
+    input:
+      "multipleChoice",
+
+    type:
+      "multipleChoice"
+
+  };
+
+}
+// ============================================================
+// SECTION 4 — LEVEL DEFINITIONS + QUESTION SELECTION
+// ============================================================
+
+
+// ============================================================
+// GET LEVEL
+// ============================================================
+
+function getLevel(levelNumber) {
+
+  const n =
+    Number(levelNumber);
+
+
+  // ----------------------------------------------------------
+  // LEVEL 1 — PROTECTED
+  // ----------------------------------------------------------
+
+  if (n === 1) {
+
+    return {
+
+      id:
+        1,
+
+      name:
+        "Level 1",
+
+      input:
+        "normal",
 
       questions:
         QUESTIONS.map(
@@ -397,7 +1169,16 @@ function getLevel(levelNumber) {
               q[0],
 
             answer:
-              q[1]
+              q[1],
+
+            level:
+              1,
+
+            input:
+              "normal",
+
+            type:
+              "keypad"
 
           })
         )
@@ -407,19 +1188,22 @@ function getLevel(levelNumber) {
   }
 
 
-  // ========================================
-  // LEVEL 2 — AUTOMATIC BANK
-  // ========================================
+  // ----------------------------------------------------------
+  // LEVEL 2
+  // ----------------------------------------------------------
 
-  if (Number(levelNumber) === 2) {
+  if (n === 2) {
 
     return {
 
-      id: 2,
+      id:
+        2,
 
-      name: "Level 2",
+      name:
+        "Level 2",
 
-      reverse: true,
+      input:
+        "reverse",
 
       questions:
         LEVEL2_QUESTIONS
@@ -429,136 +1213,527 @@ function getLevel(levelNumber) {
   }
 
 
-  // ========================================
-  // LEVEL 3+
-  // USER CREATED LEVELS
-  // ========================================
+  // ----------------------------------------------------------
+  // LEVEL 3
+  // ----------------------------------------------------------
+
+  if (n === 3) {
+
+    return {
+
+      id:
+        3,
+
+      name:
+        "Level 3",
+
+      input:
+        "reverse",
+
+      generated:
+        true,
+
+      categories: [
+
+        "3 digit + 3 digit",
+
+        "3 digit + 2 digit",
+
+        "3 digit − 3 digit",
+
+        "3 digit − 2 digit",
+
+        "2 digit × 2 digit"
+
+      ]
+
+    };
+
+  }
+
+
+  // ----------------------------------------------------------
+  // LEVEL 4
+  // ----------------------------------------------------------
+
+  if (n === 4) {
+
+    return {
+
+      id:
+        4,
+
+      name:
+        "Level 4",
+
+      input:
+        "mixed",
+
+      generated:
+        true,
+
+      categories: [
+
+        "4 digit + 4 digit",
+
+        "4 digit + 3 digit",
+
+        "4 digit − 4 digit",
+
+        "4 digit − 3 digit",
+
+        "3 digit × 3 digit — Multiple Choice"
+
+      ]
+
+    };
+
+  }
+
+
+  // ----------------------------------------------------------
+  // LEVEL 5
+  // ----------------------------------------------------------
+
+  if (n === 5) {
+
+    return {
+
+      id:
+        5,
+
+      name:
+        "Level 5",
+
+      input:
+        "multipleChoice",
+
+      generated:
+        true,
+
+      categories: [
+
+        "4 digit addition",
+
+        "5 digit addition",
+
+        "6 digit addition",
+
+        "4 digit subtraction",
+
+        "5 digit subtraction",
+
+        "6 digit subtraction",
+
+        "4 digit multiplication",
+
+        "5 digit multiplication",
+
+        "6 digit multiplication"
+
+      ]
+
+    };
+
+  }
+
+
+  // ----------------------------------------------------------
+  // USER-CREATED LEVELS 6+
+  // ----------------------------------------------------------
 
   return userLevels.find(
     level =>
-      Number(level.id) ===
-      Number(levelNumber)
+      Number(level.id) === n
   );
 
 }
 
-// ==========================================
-// GET ALL QUESTIONS FOR MIXED
-// ==========================================
 
-function getAllQuestions() {
+// ============================================================
+// GET LEVEL NAME
+// ============================================================
 
-  let all = [];
+function getLevelName(levelNumber) {
 
-  // ========================================
-  // LEVEL 1 — ORIGINAL 469
-  // ========================================
-
-  const level1 =
-    getLevel(1);
-
-  if (level1) {
-
-    all =
-      all.concat(
-        level1.questions
-      );
-
-  }
-
-
-  // ========================================
-  // LEVEL 2 — AUTOMATIC 14,805
-  // ========================================
-
-  const level2 =
-    getLevel(2);
-
-  if (level2) {
-
-    all =
-      all.concat(
-        level2.questions
-      );
-
-  }
-
-
-  // ========================================
-  // LEVEL 3+
-  // USER CREATED LEVELS
-  // ========================================
-
-  userLevels.forEach(
-    level => {
-
-      // Level 2 is already included above.
-      // Don't add it twice.
-
-      if (
-        Number(level.id) === 2
-      ) {
-
-        return;
-
-      }
-
-      all =
-        all.concat(
-          level.questions
-        );
-
-    }
-  );
-
-
-  return all;
-
-}
-
-// ==========================================
-// SHUFFLE
-// ==========================================
-
-function shuffle(array) {
-
-  const copy =
-    array.slice();
-
-
-  for (
-    let i = copy.length - 1;
-    i > 0;
-    i--
+  if (
+    levelNumber === "mixed"
   ) {
 
-    const j =
-      Math.floor(
-        Math.random() *
-        (i + 1)
-      );
-
-
-    [
-      copy[i],
-      copy[j]
-    ] =
-    [
-      copy[j],
-      copy[i]
-    ];
+    return "Mixed";
 
   }
 
+  const level =
+    getLevel(
+      levelNumber
+    );
 
-  return copy;
+  return level
+    ? level.name
+    : `Level ${levelNumber}`;
 
 }
 
 
-// ==========================================
+// ============================================================
+// SCORE KEY
+// ============================================================
+
+function scoreKey(
+  levelNumber,
+  scoreMode
+) {
+
+  return (
+    `${levelNumber}-${scoreMode}`
+  );
+
+}
+
+
+// ============================================================
+// GET QUESTIONS FOR A LEVEL
+// ============================================================
+
+function getQuestionsForLevel(
+  levelNumber,
+  count
+) {
+
+  const n =
+    Number(levelNumber);
+
+
+  // ----------------------------------------------------------
+  // LEVEL 1
+  // ----------------------------------------------------------
+
+  if (n === 1) {
+
+    return shuffle(
+      getLevel(1).questions
+    );
+
+  }
+
+
+  // ----------------------------------------------------------
+  // LEVEL 2
+  // ----------------------------------------------------------
+
+  if (n === 2) {
+
+    return shuffle(
+      LEVEL2_QUESTIONS
+    );
+
+  }
+
+
+  // ----------------------------------------------------------
+  // LEVEL 3
+  // ----------------------------------------------------------
+
+  if (n === 3) {
+
+    const questions = [];
+
+    for (
+      let i = 0;
+      i < count;
+      i++
+    ) {
+
+      questions.push(
+        generateLevel3Question()
+      );
+
+    }
+
+    return questions;
+
+  }
+
+
+  // ----------------------------------------------------------
+  // LEVEL 4
+  // ----------------------------------------------------------
+
+  if (n === 4) {
+
+    const questions = [];
+
+    for (
+      let i = 0;
+      i < count;
+      i++
+    ) {
+
+      questions.push(
+        generateLevel4Question()
+      );
+
+    }
+
+    return questions;
+
+  }
+
+
+  // ----------------------------------------------------------
+  // LEVEL 5
+  // ----------------------------------------------------------
+
+  if (n === 5) {
+
+    const questions = [];
+
+    for (
+      let i = 0;
+      i < count;
+      i++
+    ) {
+
+      questions.push(
+        generateLevel5Question()
+      );
+
+    }
+
+    return questions;
+
+  }
+
+
+  // ----------------------------------------------------------
+  // USER-CREATED LEVELS 6+
+  // ----------------------------------------------------------
+
+  const level =
+    getLevel(n);
+
+  if (
+    level &&
+    level.questions
+  ) {
+
+    return shuffle(
+      level.questions
+    );
+
+  }
+
+
+  return [];
+
+}
+
+
+// ============================================================
+// MIXED MODE
+// ============================================================
+//
+// 10 QUESTION MODE:
+//
+// 3 questions from Level 1
+// 2 questions from Level 2
+// 2 questions from Level 3
+// 2 questions from Level 4
+// 1 question from Level 5
+//
+// This gives:
+//
+// Level 1 = 30%
+// Levels 2–5 = 70%
+//
+// The ten questions are then completely shuffled.
+//
+// Each question keeps its own input type, so:
+//
+// Level 1 → normal keypad
+// Level 2 → reverse keypad
+// Level 3 → reverse keypad
+// Level 4 +/− → reverse keypad
+// Level 4 multiplication → multiple choice
+// Level 5 → multiple choice
+// ============================================================
+
+function generateMixedQuestions(
+  selectedMode
+) {
+
+  // ----------------------------------------------------------
+  // SPEED MODE
+  // ----------------------------------------------------------
+
+  if (
+    selectedMode === "speed"
+  ) {
+
+    const questions = [];
+
+
+    // 3 × LEVEL 1
+
+    questions.push(
+      ...shuffle(
+        getLevel(1).questions
+      ).slice(0, 3)
+    );
+
+
+    // 2 × LEVEL 2
+
+    questions.push(
+      ...shuffle(
+        LEVEL2_QUESTIONS
+      ).slice(0, 2)
+    );
+
+
+    // 2 × LEVEL 3
+
+    questions.push(
+      generateLevel3Question(),
+      generateLevel3Question()
+    );
+
+
+    // 2 × LEVEL 4
+
+    questions.push(
+      generateLevel4Question(),
+      generateLevel4Question()
+    );
+
+
+    // 1 × LEVEL 5
+
+    questions.push(
+      generateLevel5Question()
+    );
+
+
+    // Mix all ten together
+
+    return shuffle(
+      questions
+    );
+
+  }
+
+
+  // ----------------------------------------------------------
+  // PRACTICE MODE
+  // ----------------------------------------------------------
+  //
+  // Practice continuously generates questions.
+  //
+  // 30% Level 1
+  // 70% Levels 2–5
+  // ----------------------------------------------------------
+
+  const questions = [];
+
+  for (
+    let i = 0;
+    i < 1000;
+    i++
+  ) {
+
+    const roll =
+      Math.random();
+
+
+    // LEVEL 1 — 30%
+
+    if (
+      roll < 0.30
+    ) {
+
+      const bank =
+        getLevel(1).questions;
+
+      questions.push(
+        bank[
+          randomInt(
+            0,
+            bank.length - 1
+          )
+        ]
+      );
+
+    }
+
+
+    // LEVEL 2 — 17.5%
+
+    else if (
+      roll < 0.475
+    ) {
+
+      questions.push(
+        LEVEL2_QUESTIONS[
+          randomInt(
+            0,
+            LEVEL2_QUESTIONS.length - 1
+          )
+        ]
+      );
+
+    }
+
+
+    // LEVEL 3 — 17.5%
+
+    else if (
+      roll < 0.65
+    ) {
+
+      questions.push(
+        generateLevel3Question()
+      );
+
+    }
+
+
+    // LEVEL 4 — 17.5%
+
+    else if (
+      roll < 0.825
+    ) {
+
+      questions.push(
+        generateLevel4Question()
+      );
+
+    }
+
+
+    // LEVEL 5 — 17.5%
+
+    else {
+
+      questions.push(
+        generateLevel5Question()
+      );
+
+    }
+
+  }
+
+  return questions;
+
+}
+// ============================================================
+// SECTION 5 — GAME START, TIMER & QUESTION FLOW
+// ============================================================
+
+
+// ============================================================
 // SCREEN CONTROL
-// ==========================================
+// ============================================================
 
 function showScreen(screen) {
 
@@ -575,220 +1750,58 @@ function showScreen(screen) {
 }
 
 
-// ==========================================
-// SCORE KEY
-// ==========================================
-
-function scoreKey(
-  levelNumber,
-  scoreMode
-) {
-if (
-  levelNumber === "mixed"
-) {
-
-  mixedMode = true;
-
-  const level1 =
-    getLevel(1);
-
-  const level2 =
-    getLevel(2);
-
-  if (
-    !level1 ||
-    !level2 ||
-    level1.questions.length === 0 ||
-    level2.questions.length === 0
-  ) {
-
-    alert(
-      "Level 1 and Level 2 must both contain questions."
-    );
-
-    return;
-
-  }
-
-
-  // ========================================
-  // MIXED MODE
-  // 30% LEVEL 1
-  // 70% LEVEL 2
-  // ========================================
-
-  questions = [];
-
-
-  // Shuffle both banks independently
-
-  const level1Pool =
-    shuffle(
-      level1.questions
-    );
-
-  const level2Pool =
-    shuffle(
-      level2.questions
-    );
-
-
-  // ========================================
-  // 10 QUESTION MODE
-  // EXACTLY 3 LEVEL 1
-  // EXACTLY 7 LEVEL 2
-  // ========================================
-
-  if (
-    selectedMode === "speed"
-  ) {
-
-    questions =
-      questions.concat(
-        level1Pool.slice(0, 3)
-      );
-
-    questions =
-      questions.concat(
-        level2Pool.slice(0, 7)
-      );
-
-
-    // Mix the 3 + 7 together
-
-    questions =
-      shuffle(
-        questions
-      );
-
-  }
-
-
-  // ========================================
-  // PRACTICE MODE
-  // 30% / 70% SELECTION
-  // ========================================
-
-  else {
-
-    questions = [];
-
-
-    for (
-      let i = 0;
-      i < 1000;
-      i++
-    ) {
-
-      const useLevel1 =
-        Math.random() < 0.30;
-
-
-      if (
-        useLevel1
-      ) {
-
-        questions.push(
-          level1Pool[
-            i %
-            level1Pool.length
-          ]
-        );
-
-      } else {
-
-        questions.push(
-          level2Pool[
-            i %
-            level2Pool.length
-          ]
-        );
-
-      }
-
-    }
-
-  }
-
-}
-}
-
-
-// ==========================================
-// LEVEL NAME
-// ==========================================
-
-function getLevelName(levelNumber) {
-
-  if (
-    levelNumber === "mixed"
-  ) {
-
-    return "Mixed";
-
-  }
-
-
-  const level =
-    getLevel(levelNumber);
-
-
-  return level
-    ? level.name
-    : `Level ${levelNumber}`;
-
-}
-
-
-// ==========================================
+// ============================================================
 // START LEVEL
-// ==========================================
+// ============================================================
 
 function startLevel(
   levelNumber,
   selectedMode
 ) {
 
-  let questions = [];
+  currentLevel =
+    levelNumber;
 
+  mode =
+    selectedMode;
+
+  mixedMode =
+    levelNumber === "mixed";
+
+
+  // ----------------------------------------------------------
+  // BUILD QUESTION POOL
+  // ----------------------------------------------------------
 
   if (
-    levelNumber === "mixed"
+    mixedMode
   ) {
 
-    questions =
-      getAllQuestions();
-
-    mixedMode = true;
+    pool =
+      generateMixedQuestions(
+        selectedMode
+      );
 
   } else {
 
-    const level =
-      getLevel(levelNumber);
-
-
-    if (!level) {
-
-      alert(
-        "That level does not exist."
+    pool =
+      getQuestionsForLevel(
+        Number(levelNumber),
+        selectedMode === "speed"
+          ? 10
+          : 1000
       );
-
-      return;
-
-    }
-
-
-    questions =
-      level.questions;
-
-    mixedMode = false;
 
   }
 
 
+  // ----------------------------------------------------------
+  // SAFETY CHECK
+  // ----------------------------------------------------------
+
   if (
-    !questions ||
-    questions.length === 0
+    !pool ||
+    pool.length === 0
   ) {
 
     alert(
@@ -800,34 +1813,41 @@ function startLevel(
   }
 
 
-  currentLevel =
-    levelNumber;
+  // ----------------------------------------------------------
+  // RESET GAME
+  // ----------------------------------------------------------
 
-  mode =
-    selectedMode;
+  index =
+    0;
 
+  correct =
+    0;
 
-  pool =
-    shuffle(
-      questions
-    );
+  currentStreak =
+    0;
 
+  mistakes =
+    [];
 
-  index = 0;
+  answer =
+    "";
 
-  correct = 0;
-
-  currentStreak = 0;
-
-  mistakes = [];
-
-  answer = "";
-
-  locked = false;
+  locked =
+    false;
 
 
-  showScreen(game);
+  // ----------------------------------------------------------
+  // SHOW GAME
+  // ----------------------------------------------------------
 
+  showScreen(
+    game
+  );
+
+
+  // ----------------------------------------------------------
+  // START TIMER
+  // ----------------------------------------------------------
 
   startedAt =
     performance.now();
@@ -850,18 +1870,29 @@ function startLevel(
 
   updateBestDisplay();
 
+
+  // ----------------------------------------------------------
+  // FIRST QUESTION
+  // ----------------------------------------------------------
+
   nextQuestion();
 
 }
 
 
-// ==========================================
+// ============================================================
 // TIMER
-// ==========================================
+// ============================================================
 
 function updateTimer() {
 
-  if (!startedAt) return;
+  if (
+    !startedAt
+  ) {
+
+    return;
+
+  }
 
 
   const elapsed =
@@ -878,9 +1909,9 @@ function updateTimer() {
 }
 
 
-// ==========================================
-// BEST DISPLAY
-// ==========================================
+// ============================================================
+// BEST SCORE DISPLAY
+// ============================================================
 
 function updateBestDisplay() {
 
@@ -895,6 +1926,10 @@ function updateBestDisplay() {
     levelScores[key];
 
 
+  // ----------------------------------------------------------
+  // SPEED
+  // ----------------------------------------------------------
+
   if (
     mode === "speed"
   ) {
@@ -907,26 +1942,88 @@ function updateBestDisplay() {
 
         : `🏆 Best 10/10: ${Number(best).toFixed(2)}s`;
 
-  } else {
-
-    bestEl.textContent =
-
-      best
-
-        ? `🏆 Best streak: ${best.streak} correct • ${Number(best.time).toFixed(2)}s`
-
-        : "🏆 Best streak: Not set";
+    return;
 
   }
+
+
+  // ----------------------------------------------------------
+  // PRACTICE
+  // ----------------------------------------------------------
+
+  bestEl.textContent =
+
+    best
+
+      ? `🏆 Best streak: ${best.streak} correct • ${Number(best.time).toFixed(2)}s`
+
+      : "🏆 Best streak: Not set";
 
 }
 
 
-// ==========================================
+// ============================================================
+// CURRENT INPUT TYPE
+// ============================================================
+//
+// Every question carries its own input type.
+//
+// normal:
+// Level 1
+//
+// reverse:
+// Levels 2 and 3
+// Level 4 addition/subtraction
+//
+// multipleChoice:
+// Level 4 multiplication
+// All Level 5
+//
+// This is especially important in MIXED mode.
+// ============================================================
+
+function currentInputType() {
+
+  if (
+    !current
+  ) {
+
+    return "normal";
+
+  }
+
+
+  return (
+    current.input ||
+    "normal"
+  );
+
+}
+
+
+// ============================================================
+// REVERSE ENTRY CHECK
+// ============================================================
+
+function usesReverseEntry() {
+
+  return (
+    currentInputType() ===
+    "reverse"
+  );
+
+}
+
+
+// ============================================================
 // NEXT QUESTION
-// ==========================================
+// ============================================================
 
 function nextQuestion() {
+
+  // ----------------------------------------------------------
+  // SPEED MODE — STOP AFTER 10
+  // ----------------------------------------------------------
 
   if (
     mode === "speed" &&
@@ -940,45 +2037,41 @@ function nextQuestion() {
   }
 
 
+  // ----------------------------------------------------------
+  // REFILL POOL IF NECESSARY
+  // ----------------------------------------------------------
+
   if (
     pool.length === 0
   ) {
-
-    let refill = [];
-
 
     if (
       mixedMode
     ) {
 
-      refill =
-        getAllQuestions();
+      pool =
+        generateMixedQuestions(
+          mode
+        );
 
     } else {
 
-      const level =
-        getLevel(
-          currentLevel
+      pool =
+        getQuestionsForLevel(
+          Number(currentLevel),
+          mode === "speed"
+            ? 10
+            : 1000
         );
-
-
-      if (level) {
-
-        refill =
-          level.questions;
-
-      }
 
     }
 
-
-    pool =
-      shuffle(
-        refill
-      );
-
   }
 
+
+  // ----------------------------------------------------------
+  // GET NEXT QUESTION
+  // ----------------------------------------------------------
 
   current =
     pool.shift();
@@ -986,10 +2079,17 @@ function nextQuestion() {
 
   index++;
 
-  answer = "";
 
-  locked = false;
+  answer =
+    "";
 
+  locked =
+    false;
+
+
+  // ----------------------------------------------------------
+  // DISPLAY QUESTION
+  // ----------------------------------------------------------
 
   questionEl.textContent =
     String(
@@ -1003,6 +2103,14 @@ function nextQuestion() {
   answerDisplay.textContent =
     "\u00a0";
 
+
+  feedbackEl.textContent =
+    "\u00a0";
+
+
+  // ----------------------------------------------------------
+  // PROGRESS
+  // ----------------------------------------------------------
 
   if (
     mode === "speed"
@@ -1019,83 +2127,163 @@ function nextQuestion() {
   }
 
 
-  feedbackEl.textContent =
-    "\u00a0";
+  // ----------------------------------------------------------
+  // UPDATE ANSWER CONTROLS
+  // ----------------------------------------------------------
+
+  renderAnswerControls();
 
 
   updateBestDisplay();
 
 }
+// ============================================================
+// SECTION 6 — ANSWER INPUT & CHECKING
+// ============================================================
 
 
-// ==========================================
-// ENTER DIGIT
-// ==========================================
+// ============================================================
+// RENDER ANSWER CONTROLS
+// ============================================================
 
-function enterDigit(digit) {
+function renderAnswerControls() {
 
-  if (locked) return;
+  const input =
+    currentInputType();
 
+
+  // ----------------------------------------------------------
+  // MULTIPLE CHOICE
+  // ----------------------------------------------------------
 
   if (
-    answer.length >= 4
-  ) return;
+    input === "multipleChoice"
+  ) {
 
+    if (keypad) {
 
-  let reverse = false;
-
-
-  // ----------------------------------------
-  // LEVEL 1 IS ALWAYS NORMAL
-  // ----------------------------------------
-
-if (currentLevel !== 1) {
-
-  if (currentLevel === "mixed") {
-
-    reverse =
-      String(current.id).startsWith("level2-");
-
-  } else {
-
-    const level =
-      getLevel(currentLevel);
-
-    if (level) {
-
-      reverse =
-        level.reverse === true;
+      keypad.classList.add(
+        "hidden"
+      );
 
     }
+
+    if (submitBtn) {
+
+      submitBtn.classList.add(
+        "hidden"
+      );
+
+    }
+
+    renderMultipleChoice();
+
+    return;
+
+  }
+
+
+  // ----------------------------------------------------------
+  // KEYPAD
+  // ----------------------------------------------------------
+
+  if (keypad) {
+
+    keypad.classList.remove(
+      "hidden"
+    );
+
+  }
+
+  if (submitBtn) {
+
+    submitBtn.classList.remove(
+      "hidden"
+    );
+
+  }
+
+
+  // Remove multiple-choice buttons
+  // if the previous question used them.
+
+  const existing =
+    document.getElementById(
+      "multipleChoice"
+    );
+
+  if (
+    existing
+  ) {
+
+    existing.remove();
 
   }
 
 }
 
 
-  // ----------------------------------------
-  // REVERSE ENTRY
-  //
-  // Example:
-  //
-  // Correct answer = 514
-  //
-  // Tap 4 → 4
-  // Tap 1 → 14
-  // Tap 5 → 514
-  // ----------------------------------------
+// ============================================================
+// ENTER DIGIT
+// ============================================================
+//
+// NORMAL:
+//
+// 5 → 51 → 514
+//
+// REVERSE:
+//
+// 4 → 14 → 514
+//
+// The input type comes from the current question,
+// so Mixed automatically handles Level 1 and Level 2
+// differently.
+// ============================================================
 
-  if (reverse) {
+function enterDigit(digit) {
+
+  if (
+    locked
+  ) {
+
+    return;
+
+  }
+
+
+  // Maximum answer length.
+  // Level 5 uses multiple choice, so keypad
+  // answers only need up to six digits.
+
+  if (
+    answer.length >= 6
+  ) {
+
+    return;
+
+  }
+
+
+  // ----------------------------------------------------------
+  // REVERSE ENTRY
+  // ----------------------------------------------------------
+
+  if (
+    usesReverseEntry()
+  ) {
 
     answer =
       String(digit) +
       answer;
 
-  } else {
+  }
 
-    // Normal Level 1 entry:
-    //
-    // 5 → 51 → 514
+
+  // ----------------------------------------------------------
+  // NORMAL ENTRY
+  // ----------------------------------------------------------
+
+  else {
 
     answer +=
       String(digit);
@@ -1110,43 +2298,72 @@ if (currentLevel !== 1) {
 }
 
 
-// ==========================================
-// CLEAR LAST
-// ==========================================
-if (currentLevel !== 1) {
+// ============================================================
+// CLEAR LAST DIGIT
+// ============================================================
+//
+// NORMAL:
+// 514 → 51
+//
+// REVERSE:
+// 514 → 14
+// ============================================================
 
-  if (currentLevel === "mixed") {
+function clearLast() {
 
-    reverse =
-      String(current.id).startsWith("level2-");
+  if (
+    locked
+  ) {
 
-  } else {
-
-    const level =
-      getLevel(currentLevel);
-
-    if (level) {
-
-      reverse =
-        level.reverse === true;
-
-    }
+    return;
 
   }
+
+
+  if (
+    usesReverseEntry()
+  ) {
+
+    answer =
+      answer.slice(1);
+
+  }
+
+  else {
+
+    answer =
+      answer.slice(
+        0,
+        -1
+      );
+
+  }
+
+
+  answerDisplay.textContent =
+    answer ||
+    "\u00a0";
 
 }
 
 
-// ==========================================
+// ============================================================
 // CLEAR ALL
-// ==========================================
+// ============================================================
 
 function clearAll() {
 
-  if (locked) return;
+  if (
+    locked
+  ) {
+
+    return;
+
+  }
 
 
-  answer = "";
+  answer =
+    "";
 
 
   answerDisplay.textContent =
@@ -1155,21 +2372,32 @@ function clearAll() {
 }
 
 
-// ==========================================
-// SUBMIT
-// ==========================================
+// ============================================================
+// SUBMIT KEYPAD ANSWER
+// ============================================================
 
 function submitAnswer() {
 
-  if (locked) return;
+  if (
+    locked
+  ) {
+
+    return;
+
+  }
 
 
   if (
     answer === ""
-  ) return;
+  ) {
+
+    return;
+
+  }
 
 
-  locked = true;
+  locked =
+    true;
 
 
   const entered =
@@ -1177,11 +2405,18 @@ function submitAnswer() {
 
 
   const correctAnswer =
-    current.answer;
+    Number(
+      current.answer
+    );
 
+
+  // ----------------------------------------------------------
+  // CORRECT
+  // ----------------------------------------------------------
 
   if (
-    entered === correctAnswer
+    entered ===
+    correctAnswer
   ) {
 
     correct++;
@@ -1195,10 +2430,15 @@ function submitAnswer() {
 
     nextQuestion();
 
+
     return;
 
   }
 
+
+  // ----------------------------------------------------------
+  // WRONG
+  // ----------------------------------------------------------
 
   mistakes.push({
 
@@ -1207,6 +2447,277 @@ function submitAnswer() {
 
     yourAnswer:
       entered,
+
+    correctAnswer:
+      correctAnswer
+
+  });
+
+
+  feedbackEl.textContent =
+    `✗ Correct answer: ${correctAnswer}`;
+
+
+  // ----------------------------------------------------------
+  // PRACTICE ENDS ON FIRST WRONG ANSWER
+  // ----------------------------------------------------------
+
+  if (
+    mode === "practice"
+  ) {
+
+    finishPractice();
+
+    return;
+
+  }
+
+
+  // ----------------------------------------------------------
+  // SPEED MODE CONTINUES
+  // ----------------------------------------------------------
+
+  nextQuestion();
+
+}
+
+
+// ============================================================
+// MULTIPLE CHOICE
+// ============================================================
+
+function renderMultipleChoice() {
+
+  // Remove old buttons first.
+
+  const old =
+    document.getElementById(
+      "multipleChoice"
+    );
+
+  if (
+    old
+  ) {
+
+    old.remove();
+
+  }
+
+
+  const container =
+    document.createElement(
+      "div"
+    );
+
+
+  container.id =
+    "multipleChoice";
+
+
+  container.className =
+    "multiple-choice";
+
+
+  // Generate four answer choices.
+
+  const choices =
+    makeChoices(
+      current.answer
+    );
+
+
+  choices.forEach(
+    value => {
+
+      const button =
+        document.createElement(
+          "button"
+        );
+
+
+      button.className =
+        "key primary";
+
+
+      button.textContent =
+        String(value);
+
+
+      fastButton(
+        button,
+        () =>
+          submitMultipleChoice(
+            value
+          )
+      );
+
+
+      container.appendChild(
+        button
+      );
+
+    }
+  );
+
+
+  game.appendChild(
+    container
+  );
+
+}
+
+
+// ============================================================
+// MULTIPLE CHOICE OPTIONS
+// ============================================================
+
+function makeChoices(
+  correctAnswer
+) {
+
+  const choices =
+    new Set();
+
+
+  const correctNumber =
+    Number(
+      correctAnswer
+    );
+
+
+  choices.add(
+    correctNumber
+  );
+
+
+  while (
+    choices.size < 4
+  ) {
+
+    const magnitude =
+      Math.max(
+        1,
+        Math.abs(
+          correctNumber
+        )
+      );
+
+
+    const offset =
+      randomInt(
+        1,
+        Math.max(
+          9,
+          Math.floor(
+            magnitude * 0.15
+          )
+        )
+      );
+
+
+    const sign =
+      Math.random() < 0.5
+        ? -1
+        : 1;
+
+
+    const candidate =
+      correctNumber +
+      sign * offset;
+
+
+    if (
+      candidate >= 0
+    ) {
+
+      choices.add(
+        candidate
+      );
+
+    }
+
+  }
+
+
+  return shuffle(
+    Array.from(
+      choices
+    )
+  );
+
+}
+
+
+// ============================================================
+// SUBMIT MULTIPLE CHOICE
+// ============================================================
+
+function submitMultipleChoice(
+  value
+) {
+
+  if (
+    locked
+  ) {
+
+    return;
+
+  }
+
+
+  locked =
+    true;
+
+
+  const selected =
+    Number(
+      value
+    );
+
+
+  const correctAnswer =
+    Number(
+      current.answer
+    );
+
+
+  // ----------------------------------------------------------
+  // CORRECT
+  // ----------------------------------------------------------
+
+  if (
+    selected ===
+    correctAnswer
+  ) {
+
+    correct++;
+
+    currentStreak++;
+
+
+    feedbackEl.textContent =
+      "✓ Correct";
+
+
+    nextQuestion();
+
+
+    return;
+
+  }
+
+
+  // ----------------------------------------------------------
+  // WRONG
+  // ----------------------------------------------------------
+
+  mistakes.push({
+
+    question:
+      current.text,
+
+    yourAnswer:
+      selected,
 
     correctAnswer:
       correctAnswer
@@ -1232,11 +2743,14 @@ function submitAnswer() {
   nextQuestion();
 
 }
+// ============================================================
+// SECTION 7 — RESULTS, HIGH SCORES & MISTAKE REVIEW
+// ============================================================
 
 
-// ==========================================
-// FINISH SPEED
-// ==========================================
+// ============================================================
+// FINISH SPEED MODE
+// ============================================================
 
 function finishSpeed() {
 
@@ -1244,7 +2758,8 @@ function finishSpeed() {
     timerHandle
   );
 
-  timerHandle = null;
+  timerHandle =
+    null;
 
 
   const totalTime =
@@ -1265,10 +2780,17 @@ function finishSpeed() {
     );
 
 
-  let newRecord = false;
+  let newRecord =
+    false;
 
 
-  if (perfect) {
+  // ----------------------------------------------------------
+  // SAVE PERFECT SCORE
+  // ----------------------------------------------------------
+
+  if (
+    perfect
+  ) {
 
     const oldBest =
       levelScores[key];
@@ -1286,14 +2808,22 @@ function finishSpeed() {
 
       saveScores();
 
-      newRecord = true;
+
+      newRecord =
+        true;
 
     }
 
   }
 
 
-  showScreen(results);
+  // ----------------------------------------------------------
+  // SHOW RESULTS
+  // ----------------------------------------------------------
+
+  showScreen(
+    results
+  );
 
 
   document.getElementById(
@@ -1343,9 +2873,19 @@ function finishSpeed() {
 }
 
 
-// ==========================================
-// FINISH PRACTICE
-// ==========================================
+// ============================================================
+// FINISH PRACTICE MODE
+// ============================================================
+//
+// Practice ends when the user gets a question wrong.
+//
+// The score is:
+//
+// Number of consecutive correct answers
+//
+// If the user beats the previous streak,
+// it becomes the new high score.
+// ============================================================
 
 function finishPractice() {
 
@@ -1353,7 +2893,8 @@ function finishPractice() {
     timerHandle
   );
 
-  timerHandle = null;
+  timerHandle =
+    null;
 
 
   const streakTime =
@@ -1374,19 +2915,35 @@ function finishPractice() {
     levelScores[key];
 
 
-  let newRecord = false;
+  let newRecord =
+    false;
 
+
+  // ----------------------------------------------------------
+  // SAVE NEW PRACTICE RECORD
+  // ----------------------------------------------------------
 
   if (
+
     !oldBest ||
+
     currentStreak >
-      Number(oldBest.streak) ||
+      Number(
+        oldBest.streak
+      ) ||
+
     (
       currentStreak ===
-        Number(oldBest.streak) &&
+        Number(
+          oldBest.streak
+        ) &&
+
       streakTime <
-        Number(oldBest.time)
+        Number(
+          oldBest.time
+        )
     )
+
   ) {
 
     levelScores[key] = {
@@ -1402,12 +2959,20 @@ function finishPractice() {
 
     saveScores();
 
-    newRecord = true;
+
+    newRecord =
+      true;
 
   }
 
 
-  showScreen(results);
+  // ----------------------------------------------------------
+  // SHOW RESULTS
+  // ----------------------------------------------------------
+
+  showScreen(
+    results
+  );
 
 
   document.getElementById(
@@ -1453,14 +3018,24 @@ function finishPractice() {
 }
 
 
-// ==========================================
-// MISTAKES
-// ==========================================
+// ============================================================
+// DISPLAY MISTAKES
+// ============================================================
 
 function displayMistakes() {
 
-  if (!mistakesEl) return;
+  if (
+    !mistakesEl
+  ) {
 
+    return;
+
+  }
+
+
+  // ----------------------------------------------------------
+  // NO MISTAKES
+  // ----------------------------------------------------------
 
   if (
     mistakes.length === 0
@@ -1474,6 +3049,10 @@ function displayMistakes() {
   }
 
 
+  // ----------------------------------------------------------
+  // BUILD REVIEW LIST
+  // ----------------------------------------------------------
+
   let html =
     "<h3>Questions to review</h3>";
 
@@ -1486,18 +3065,25 @@ function displayMistakes() {
         <div class="mistake">
 
           <strong>
-            ${i + 1}. ${escapeHtml(mistake.question)}
+            ${i + 1}.
+            ${escapeHtml(
+              mistake.question
+            )}
           </strong>
 
           <br>
 
           ❌ Your answer:
-          ${mistake.yourAnswer}
+          ${escapeHtml(
+            mistake.yourAnswer
+          )}
 
           <br>
 
           ✅ Correct answer:
-          ${mistake.correctAnswer}
+          ${escapeHtml(
+            mistake.correctAnswer
+          )}
 
         </div>
 
@@ -1511,11 +3097,14 @@ function displayMistakes() {
     html;
 
 }
+// ============================================================
+// SECTION 8 — HOME SCREEN, LEVEL MENUS & LEVEL CREATION
+// ============================================================
 
 
-// ==========================================
+// ============================================================
 // HOME SCREEN
-// ==========================================
+// ============================================================
 
 function renderHome() {
 
@@ -1541,39 +3130,49 @@ function renderHome() {
     );
 
 
-  // ----------------------------------------
-  // LEVEL 1
-  // ----------------------------------------
+  // ----------------------------------------------------------
+  // LEVELS 1–5
+  // ----------------------------------------------------------
 
-  const level1Button =
-    document.createElement(
-      "button"
+  for (
+    let levelNumber = 1;
+    levelNumber <= 5;
+    levelNumber++
+  ) {
+
+    const button =
+      document.createElement(
+        "button"
+      );
+
+
+    button.className =
+      "primary";
+
+
+    button.textContent =
+      `LEVEL ${levelNumber}`;
+
+
+    fastButton(
+      button,
+      () =>
+        showLevelMenu(
+          levelNumber
+        )
     );
 
 
-  level1Button.className =
-    "primary";
+    list.appendChild(
+      button
+    );
+
+  }
 
 
-  level1Button.textContent =
-    "LEVEL 1";
-
-
-  fastButton(
-    level1Button,
-    () =>
-      showLevelMenu(1)
-  );
-
-
-  list.appendChild(
-    level1Button
-  );
-
-
-  // ----------------------------------------
-  // LEVEL 2+
-  // ----------------------------------------
+  // ----------------------------------------------------------
+  // USER-CREATED LEVELS 6+
+  // ----------------------------------------------------------
 
   userLevels.forEach(
     level => {
@@ -1609,9 +3208,9 @@ function renderHome() {
   );
 
 
-  // ----------------------------------------
+  // ----------------------------------------------------------
   // CREATE NEW LEVEL
-  // ----------------------------------------
+  // ----------------------------------------------------------
 
   const createButton =
     document.createElement(
@@ -1638,9 +3237,10 @@ function renderHome() {
   );
 
 
-  // ----------------------------------------
-  // MIXED AT THE BOTTOM
-  // ----------------------------------------
+  // ----------------------------------------------------------
+  // MIXED
+  // ALWAYS AT THE BOTTOM
+  // ----------------------------------------------------------
 
   const mixedButton =
     document.createElement(
@@ -1672,13 +3272,43 @@ function renderHome() {
 }
 
 
-// ==========================================
+// ============================================================
 // LEVEL MENU
-// ==========================================
+// ============================================================
 
 function showLevelMenu(
   levelNumber
 ) {
+
+  const isMixed =
+    levelNumber === "mixed";
+
+
+  const level =
+    isMixed
+      ? null
+      : getLevel(
+          levelNumber
+        );
+
+
+  // ----------------------------------------------------------
+  // SAFETY CHECK
+  // ----------------------------------------------------------
+
+  if (
+    !isMixed &&
+    !level
+  ) {
+
+    alert(
+      "That level does not exist."
+    );
+
+    return;
+
+  }
+
 
   const levelName =
     getLevelName(
@@ -1686,76 +3316,196 @@ function showLevelMenu(
     );
 
 
-  showScreen(bankView);
+  showScreen(
+    bankView
+  );
 
 
-  let extra = "";
+  let description =
+    "";
 
+
+  // ----------------------------------------------------------
+  // MIXED DESCRIPTION
+  // ----------------------------------------------------------
 
   if (
-    levelNumber === "mixed"
+    isMixed
   ) {
 
-    extra = `
+    description = `
 
       <p>
-        All levels combined
+        30% Level 1
       </p>
-
-    `;
-
-  } else {
-
-    const level =
-      getLevel(
-        levelNumber
-      );
-
-
-    extra = `
 
       <p>
-
-        ${
-          levelNumber === 1
-
-            ? "🔒 Original 469 questions"
-
-            : `${level.questions.length} questions`
-
-        }
-
+        70% Levels 2–5
       </p>
 
-
-      ${
-        levelNumber !== 1
-
-          ? `
-
-            <p>
-
-              ${
-                level.reverse
-
-                  ? "🔄 Reverse Entry enabled"
-
-                  : "Normal Entry"
-
-              }
-
-            </p>
-
-          `
-
-          : ""
-
-      }
+      <p>
+        Each question automatically uses
+        the correct answer method.
+      </p>
 
     `;
 
   }
 
+
+  // ----------------------------------------------------------
+  // LEVEL 1
+  // ----------------------------------------------------------
+
+  else if (
+    Number(levelNumber) === 1
+  ) {
+
+    description = `
+
+      <p>
+        🔒 Original 469 questions
+      </p>
+
+      <p>
+        Normal Entry
+      </p>
+
+    `;
+
+  }
+
+
+  // ----------------------------------------------------------
+  // LEVEL 2
+  // ----------------------------------------------------------
+
+  else if (
+    Number(levelNumber) === 2
+  ) {
+
+    description = `
+
+      <p>
+        ${LEVEL2_QUESTIONS.length.toLocaleString()}
+        questions
+      </p>
+
+      <p>
+        🔄 Reverse Entry
+      </p>
+
+    `;
+
+  }
+
+
+  // ----------------------------------------------------------
+  // LEVEL 3
+  // ----------------------------------------------------------
+
+  else if (
+    Number(levelNumber) === 3
+  ) {
+
+    description = `
+
+      <p>
+        Questions generated automatically
+      </p>
+
+      <p>
+        🔄 Reverse Entry
+      </p>
+
+    `;
+
+  }
+
+
+  // ----------------------------------------------------------
+  // LEVEL 4
+  // ----------------------------------------------------------
+
+  else if (
+    Number(levelNumber) === 4
+  ) {
+
+    description = `
+
+      <p>
+        Questions generated automatically
+      </p>
+
+      <p>
+        🔄 Reverse Entry for addition/subtraction
+      </p>
+
+      <p>
+        🔘 Multiple Choice for multiplication
+      </p>
+
+    `;
+
+  }
+
+
+  // ----------------------------------------------------------
+  // LEVEL 5
+  // ----------------------------------------------------------
+
+  else if (
+    Number(levelNumber) === 5
+  ) {
+
+    description = `
+
+      <p>
+        4, 5 and 6 digit calculations
+      </p>
+
+      <p>
+        🔘 Multiple Choice
+      </p>
+
+    `;
+
+  }
+
+
+  // ----------------------------------------------------------
+  // USER LEVELS 6+
+  // ----------------------------------------------------------
+
+  else {
+
+    description = `
+
+      <p>
+        ${
+          level.questions
+            ? level.questions.length
+            : 0
+        }
+        questions
+      </p>
+
+      <p>
+        ${
+          level.reverse
+            ? "🔄 Reverse Entry"
+            : "Normal Entry"
+        }
+      </p>
+
+    `;
+
+  }
+
+
+  // ----------------------------------------------------------
+  // BUILD MENU
+  // ----------------------------------------------------------
 
   bankView.innerHTML = `
 
@@ -1768,11 +3518,13 @@ function showLevelMenu(
 
 
     <h2>
-      ${escapeHtml(levelName)}
+      ${escapeHtml(
+        levelName
+      )}
     </h2>
 
 
-    ${extra}
+    ${description}
 
 
     <button
@@ -1798,35 +3550,12 @@ function showLevelMenu(
       📋 View Questions
     </button>
 
-
-    ${
-      levelNumber !== 1 &&
-      levelNumber !== "mixed"
-
-        ? `
-
-          <button
-            id="levelMenuAdd"
-            class="secondary"
-          >
-            ➕ Add / Replace Questions
-          </button>
-
-
-          <button
-            id="levelMenuSettings"
-            class="secondary"
-          >
-            ⚙️ Level Settings
-          </button>
-
-        `
-
-        : ""
-    }
-
   `;
 
+
+  // ----------------------------------------------------------
+  // BACK
+  // ----------------------------------------------------------
 
   fastButton(
     document.getElementById(
@@ -1835,6 +3564,10 @@ function showLevelMenu(
     renderHome
   );
 
+
+  // ----------------------------------------------------------
+  // SPEED
+  // ----------------------------------------------------------
 
   fastButton(
     document.getElementById(
@@ -1848,6 +3581,10 @@ function showLevelMenu(
   );
 
 
+  // ----------------------------------------------------------
+  // PRACTICE
+  // ----------------------------------------------------------
+
   fastButton(
     document.getElementById(
       "levelMenuPractice"
@@ -1860,6 +3597,10 @@ function showLevelMenu(
   );
 
 
+  // ----------------------------------------------------------
+  // QUESTION LIST
+  // ----------------------------------------------------------
+
   fastButton(
     document.getElementById(
       "levelMenuQuestions"
@@ -1870,41 +3611,17 @@ function showLevelMenu(
       )
   );
 
-
-  if (
-    levelNumber !== 1 &&
-    levelNumber !== "mixed"
-  ) {
-
-    fastButton(
-      document.getElementById(
-        "levelMenuAdd"
-      ),
-      () =>
-        importDeck(
-          levelNumber
-        )
-    );
-
-
-    fastButton(
-      document.getElementById(
-        "levelMenuSettings"
-      ),
-      () =>
-        levelSettings(
-          levelNumber
-        )
-    );
-
-  }
-
 }
 
 
-// ==========================================
+// ============================================================
 // CREATE NEW LEVEL
-// ==========================================
+// ============================================================
+//
+// Levels 1–5 are built into the app.
+//
+// New user-created levels begin at Level 6.
+// ============================================================
 
 function createNewLevel() {
 
@@ -1912,9 +3629,10 @@ function createNewLevel() {
 
     userLevels.length === 0
 
-      ? 2
+      ? 6
 
       : Math.max(
+          5,
           ...userLevels.map(
             level =>
               Number(level.id)
@@ -1931,14 +3649,20 @@ function createNewLevel() {
 
   if (
     name === null
-  ) return;
+  ) {
+
+    return;
+
+  }
 
 
   const trimmed =
     name.trim();
 
 
-  if (!trimmed) {
+  if (
+    !trimmed
+  ) {
 
     alert(
       "Please enter a level name."
@@ -1960,8 +3684,7 @@ Units digit first
 Example:
 514 → 4 → 1 → 5
 
-Cancel = NORMAL ENTRY
-5 → 1 → 4`
+Cancel = NORMAL ENTRY`
 
     );
 
@@ -1996,250 +3719,25 @@ Cancel = NORMAL ENTRY
   );
 
 
-  showLevelMenu(
-    nextId
-  );
+  renderHome();
 
 }
+// ============================================================
+// SECTION 9 — QUESTION LISTS, HTML SAFETY & FAST TOUCH
+// ============================================================
 
 
-// ==========================================
-// IMPORT WHOLE DECK
-// ==========================================
-
-function importDeck(
-  levelNumber
-) {
-
-  const level =
-    getLevel(
-      levelNumber
-    );
-
-
-  if (!level) return;
-
-
-  const pasted =
-    prompt(
-
-      `Paste the whole question deck here.
-
-One question per line.
-
-Example:
-
-169+345=514
-427-183=244
-58+27=85
-96-48=48
-
-The existing questions in ${level.name}
-will be replaced.
-
-Level 1 cannot be changed.`,
-
-      ""
-
-    );
-
-
-  if (
-    pasted === null
-  ) return;
-
-
-  const lines =
-    pasted
-      .split(/\r?\n/)
-      .map(
-        line =>
-          line.trim()
-      )
-      .filter(
-        line =>
-          line.length > 0
-      );
-
-
-  const imported = [];
-
-
-  for (
-    const line of lines
-  ) {
-
-    const parsed =
-      parseQuestionLine(
-        line
-      );
-
-
-    if (parsed) {
-
-      imported.push({
-
-        id:
-          `level-${levelNumber}-${Date.now()}-${imported.length}`,
-
-        text:
-          parsed.text,
-
-        answer:
-          parsed.answer
-
-      });
-
-    }
-
-  }
-
-
-  if (
-    imported.length === 0
-  ) {
-
-    alert(
-      "No valid questions found.\n\nUse:\n169+345=514"
-    );
-
-    return;
-
-  }
-
-
-  level.questions =
-    imported;
-
-
-  saveLevels();
-
-
-  alert(
-    `Imported ${imported.length} questions into ${level.name}.`
-  );
-
-
-  showLevelMenu(
-    levelNumber
-  );
-
-}
-
-
-// ==========================================
-// PARSE QUESTION
-// ==========================================
-
-function parseQuestionLine(
-  line
-) {
-
-  let cleaned =
-    line.trim();
-
-
-  cleaned =
-    cleaned.replace(
-      /^\d+[\).\s]+/,
-      ""
-    );
-
-
-  cleaned =
-    cleaned.replaceAll(
-      ",",
-      ""
-    );
-
-
-  const equals =
-    cleaned.match(
-      /^(.+?)\s*=\s*(-?\d+(?:\.\d+)?)$/
-    );
-
-
-  if (equals) {
-
-    return {
-
-      text:
-        equals[1].trim(),
-
-      answer:
-        Number(
-          equals[2]
-        )
-
-    };
-
-  }
-
-
-  const colon =
-    cleaned.match(
-      /^(.+?)\s*:\s*(-?\d+(?:\.\d+)?)$/
-    );
-
-
-  if (colon) {
-
-    return {
-
-      text:
-        colon[1].trim(),
-
-      answer:
-        Number(
-          colon[2]
-        )
-
-    };
-
-  }
-
-
-  return null;
-
-}
-
-
-// ==========================================
+// ============================================================
 // VIEW QUESTIONS
-// ==========================================
+// ============================================================
 
 function viewLevelQuestions(
   levelNumber
 ) {
 
-  let questions = [];
-
-
-  if (
-    levelNumber === "mixed"
-  ) {
-
-    questions =
-      getAllQuestions();
-
-  } else {
-
-    const level =
-      getLevel(
-        levelNumber
-      );
-
-
-    if (!level) return;
-
-
-    questions =
-      level.questions;
-
-  }
-
-
-  showScreen(bankView);
+  showScreen(
+    bankView
+  );
 
 
   const levelName =
@@ -2248,95 +3746,318 @@ function viewLevelQuestions(
     );
 
 
-  const canEdit =
-    levelNumber !== 1 &&
-    levelNumber !== "mixed";
-
-
   let html = `
 
     <button
       id="questionBack"
       class="back"
     >
-      ← ${escapeHtml(levelName)}
+      ← ${escapeHtml(
+        levelName
+      )}
     </button>
 
-
     <h2>
-      ${escapeHtml(levelName)} Questions
+      ${escapeHtml(
+        levelName
+      )} Questions
     </h2>
-
-
-    <p>
-      ${questions.length} questions
-    </p>
-
-
-    <div class="question-grid">
 
   `;
 
 
-  questions.forEach(
-    (question, i) => {
+  // ==========================================================
+  // LEVEL 1
+  // ==========================================================
+  //
+  // Show all 469 original questions.
+  // ==========================================================
 
-      html += `
+  if (
+    Number(levelNumber) === 1
+  ) {
 
-        <div class="question-item">
+    const questions =
+      getLevel(1).questions;
 
-          <strong>
-            ${i + 1}.
-          </strong>
 
-          ${escapeHtml(question.text)}
-          =
-          ${question.answer}
+    html += `
 
-          ${
-            canEdit
+      <p>
+        🔒 469 original questions
+      </p>
 
-              ? `
+      <div class="question-grid">
 
-                <div class="question-actions">
+    `;
 
-                  <button
-                    class="secondary edit-question"
-                    data-index="${i}"
-                  >
-                    ✏️ Edit
-                  </button>
 
-                  <button
-                    class="secondary delete-question"
-                    data-index="${i}"
-                  >
-                    🗑️ Delete
-                  </button>
+    questions.forEach(
+      (question, i) => {
 
-                </div>
+        html += `
 
-              `
+          <div class="question-item">
 
-              : ""
+            <strong>
+              ${i + 1}.
+            </strong>
 
-          }
+            ${escapeHtml(
+              question.text
+            )}
 
-        </div>
+            =
 
-      `;
+            ${escapeHtml(
+              question.answer
+            )}
+
+          </div>
+
+        `;
+
+      }
+    );
+
+
+    html += `
+
+      </div>
+
+    `;
+
+  }
+
+
+  // ==========================================================
+  // LEVEL 2
+  // ==========================================================
+  //
+  // Level 2 contains 14,805 questions.
+  //
+  // We don't put all 14,805 elements into the iPhone DOM
+  // at once because that can make Safari/Home Screen slow.
+  //
+  // Instead we show 100 randomly selected examples.
+  // ==========================================================
+
+  else if (
+    Number(levelNumber) === 2
+  ) {
+
+    const sample =
+      shuffle(
+        LEVEL2_QUESTIONS
+      ).slice(
+        0,
+        100
+      );
+
+
+    html += `
+
+      <p>
+
+        ${LEVEL2_QUESTIONS.length.toLocaleString()}
+        total questions.
+
+      </p>
+
+      <p>
+        Showing 100 random examples.
+      </p>
+
+      <div class="question-grid">
+
+    `;
+
+
+    sample.forEach(
+      (question, i) => {
+
+        html += `
+
+          <div class="question-item">
+
+            <strong>
+              ${i + 1}.
+            </strong>
+
+            ${escapeHtml(
+              question.text
+            )}
+
+            =
+
+            ${escapeHtml(
+              question.answer
+            )}
+
+          </div>
+
+        `;
+
+      }
+    );
+
+
+    html += `
+
+      </div>
+
+    `;
+
+  }
+
+
+  // ==========================================================
+  // LEVELS 3–5
+  // ==========================================================
+  //
+  // These levels generate questions on demand rather than
+  // storing enormous question banks.
+  // ==========================================================
+
+  else if (
+    Number(levelNumber) >= 3 &&
+    Number(levelNumber) <= 5
+  ) {
+
+    const level =
+      getLevel(
+        levelNumber
+      );
+
+
+    html += `
+
+      <p>
+        Questions are generated automatically.
+      </p>
+
+      <p>
+        The level contains:
+      </p>
+
+      <ul>
+
+    `;
+
+
+    if (
+      level &&
+      level.categories
+    ) {
+
+      level.categories.forEach(
+        category => {
+
+          html += `
+
+            <li>
+              ${escapeHtml(
+                category
+              )}
+            </li>
+
+          `;
+
+        }
+      );
 
     }
-  );
 
 
-  html +=
-    "</div>";
+    html += `
 
+      </ul>
+
+    `;
+
+  }
+
+
+  // ==========================================================
+  // USER CREATED LEVELS 6+
+  // ==========================================================
+
+  else {
+
+    const level =
+      getLevel(
+        levelNumber
+      );
+
+
+    const questions =
+      level &&
+      level.questions
+        ? level.questions
+        : [];
+
+
+    html += `
+
+      <p>
+        ${questions.length}
+        questions
+      </p>
+
+      <div class="question-grid">
+
+    `;
+
+
+    questions.forEach(
+      (question, i) => {
+
+        html += `
+
+          <div class="question-item">
+
+            <strong>
+              ${i + 1}.
+            </strong>
+
+            ${escapeHtml(
+              question.text
+            )}
+
+            =
+
+            ${escapeHtml(
+              question.answer
+            )}
+
+          </div>
+
+        `;
+
+      }
+    );
+
+
+    html += `
+
+      </div>
+
+    `;
+
+  }
+
+
+  // ==========================================================
+  // DISPLAY LIST
+  // ==========================================================
 
   bankView.innerHTML =
     html;
 
+
+  // ==========================================================
+  // BACK BUTTON
+  // ==========================================================
 
   fastButton(
     document.getElementById(
@@ -2348,378 +4069,91 @@ function viewLevelQuestions(
       )
   );
 
-
-  // ----------------------------------------
-  // EDIT BUTTONS
-  // ----------------------------------------
-
-  document
-    .querySelectorAll(
-      ".edit-question"
-    )
-    .forEach(
-      button => {
-
-        fastButton(
-          button,
-          () => {
-
-            editQuestion(
-              levelNumber,
-              Number(
-                button.dataset.index
-              )
-            );
-
-          }
-        );
-
-      }
-    );
-
-
-  // ----------------------------------------
-  // DELETE BUTTONS
-  // ----------------------------------------
-
-  document
-    .querySelectorAll(
-      ".delete-question"
-    )
-    .forEach(
-      button => {
-
-        fastButton(
-          button,
-          () => {
-
-            deleteQuestion(
-              levelNumber,
-              Number(
-                button.dataset.index
-              )
-            );
-
-          }
-        );
-
-      }
-    );
-
 }
 
 
-// ==========================================
-// EDIT QUESTION
-// ==========================================
-
-function editQuestion(
-  levelNumber,
-  questionIndex
-) {
-
-  // LEVEL 1 IS PROTECTED
-  if (
-    levelNumber === 1
-  ) {
-
-    alert(
-      "Level 1 is protected. Its 469 original questions cannot be edited."
-    );
-
-    return;
-
-  }
-
-
-  const level =
-    getLevel(
-      levelNumber
-    );
-
-
-  if (!level) return;
-
-
-  const question =
-    level.questions[
-      questionIndex
-    ];
-
-
-  if (!question) return;
-
-
-  const newText =
-    prompt(
-      "Edit the question:",
-      question.text
-    );
-
-
-  if (
-    newText === null
-  ) return;
-
-
-  const trimmedText =
-    newText.trim();
-
-
-  if (!trimmedText) {
-
-    alert(
-      "The question cannot be empty."
-    );
-
-    return;
-
-  }
-
-
-  const newAnswer =
-    prompt(
-      "Edit the correct answer:",
-      String(
-        question.answer
-      )
-    );
-
-
-  if (
-    newAnswer === null
-  ) return;
-
-
-  const parsedAnswer =
-    Number(
-      newAnswer.trim()
-    );
-
-
-  if (
-    !Number.isFinite(
-      parsedAnswer
-    )
-  ) {
-
-    alert(
-      "Please enter a valid number."
-    );
-
-    return;
-
-  }
-
-
-  question.text =
-    trimmedText;
-
-
-  question.answer =
-    parsedAnswer;
-
-
-  saveLevels();
-
-
-  viewLevelQuestions(
-    levelNumber
-  );
-
-}
-
-
-// ==========================================
-// DELETE QUESTION
-// ==========================================
-
-function deleteQuestion(
-  levelNumber,
-  questionIndex
-) {
-
-  // LEVEL 1 IS PROTECTED
-  if (
-    levelNumber === 1
-  ) {
-
-    alert(
-      "Level 1 is protected. Its 469 original questions cannot be deleted."
-    );
-
-    return;
-
-  }
-
-
-  const level =
-    getLevel(
-      levelNumber
-    );
-
-
-  if (!level) return;
-
-
-  const question =
-    level.questions[
-      questionIndex
-    ];
-
-
-  if (!question) return;
-
-
-  const confirmed =
-    confirm(
-
-      `Delete this question?
-
-${question.text} = ${question.answer}
-
-This cannot be undone.`
-
-    );
-
-
-  if (!confirmed) return;
-
-
-  level.questions.splice(
-    questionIndex,
-    1
-  );
-
-
-  saveLevels();
-
-
-  viewLevelQuestions(
-    levelNumber
-  );
-
-}
-
-
-// ==========================================
-// LEVEL SETTINGS
-// ==========================================
-
-function levelSettings(
-  levelNumber
-) {
-
-  const level =
-    getLevel(
-      levelNumber
-    );
-
-
-  if (
-    !level ||
-    levelNumber === 1
-  ) {
-
-    return;
-
-  }
-
-
-  const reverse =
-    confirm(
-
-      `Entry direction for ${level.name}:
-
-OK = REVERSE ENTRY
-Units digit first
-
-Cancel = NORMAL ENTRY`
-
-    );
-
-
-  level.reverse =
-    reverse;
-
-
-  saveLevels();
-
-
-  alert(
-
-    reverse
-
-      ? "Reverse Entry enabled."
-
-      : "Normal Entry enabled."
-
-  );
-
-
-  showLevelMenu(
-    levelNumber
-  );
-
-}
-
-
-// ==========================================
-// ESCAPE HTML
-// ==========================================
+// ============================================================
+// HTML ESCAPE
+// ============================================================
+//
+// Protects the app when displaying question text or answers.
+// ============================================================
 
 function escapeHtml(
   value
 ) {
 
-  return String(value)
-    .replace(
-      /[&<>"']/g,
-      character => ({
+  return String(
+    value
+  ).replace(
+    /[&<>"']/g,
+    character => ({
 
-        "&": "&amp;",
+      "&":
+        "&amp;",
 
-        "<": "&lt;",
+      "<":
+        "&lt;",
 
-        ">": "&gt;",
+      ">":
+        "&gt;",
 
-        '"': "&quot;",
+      '"':
+        "&quot;",
 
-        "'": "&#039;"
+      "'":
+        "&#039;"
 
-      })[character]
-    );
+    })[character]
+  );
 
 }
 
 
-// ==========================================
+// ============================================================
 // FAST TOUCH BUTTON
-// ==========================================
+// ============================================================
+//
+// Makes buttons respond quickly on iPhone/Safari/Home Screen.
+// ============================================================
 
 function fastButton(
   element,
   action
 ) {
 
-  if (!element) return;
+  if (
+    !element
+  ) {
+
+    return;
+
+  }
 
 
   element.style.touchAction =
     "manipulation";
 
+
   element.style.webkitTapHighlightColor =
     "transparent";
 
+
   element.style.userSelect =
     "none";
+
 
   element.style.webkitUserSelect =
     "none";
 
 
-  let touchHandled = false;
+  let touchHandled =
+    false;
 
+
+  // ----------------------------------------------------------
+  // TOUCH START
+  // ----------------------------------------------------------
 
   element.addEventListener(
     "touchstart",
@@ -2730,10 +4164,15 @@ function fastButton(
 
       if (
         touchHandled
-      ) return;
+      ) {
+
+        return;
+
+      }
 
 
-      touchHandled = true;
+      touchHandled =
+        true;
 
 
       action();
@@ -2745,6 +4184,10 @@ function fastButton(
   );
 
 
+  // ----------------------------------------------------------
+  // TOUCH END
+  // ----------------------------------------------------------
+
   element.addEventListener(
     "touchend",
     event => {
@@ -2755,7 +4198,8 @@ function fastButton(
       setTimeout(
         () => {
 
-          touchHandled = false;
+          touchHandled =
+            false;
 
         },
         80
@@ -2768,15 +4212,24 @@ function fastButton(
   );
 
 
+  // ----------------------------------------------------------
+  // TOUCH CANCEL
+  // ----------------------------------------------------------
+
   element.addEventListener(
     "touchcancel",
     () => {
 
-      touchHandled = false;
+      touchHandled =
+        false;
 
     }
   );
 
+
+  // ----------------------------------------------------------
+  // NORMAL CLICK
+  // ----------------------------------------------------------
 
   element.addEventListener(
     "click",
@@ -2787,7 +4240,11 @@ function fastButton(
 
       if (
         touchHandled
-      ) return;
+      ) {
+
+        return;
+
+      }
 
 
       action();
@@ -2799,11 +4256,14 @@ function fastButton(
   );
 
 }
+// ============================================================
+// SECTION 10 — KEYPAD, BUTTONS & APP START
+// ============================================================
 
 
-// ==========================================
-// KEYPAD
-// ==========================================
+// ============================================================
+// KEYPAD BUTTONS
+// ============================================================
 
 document
   .querySelectorAll(".key")
@@ -2824,13 +4284,17 @@ document
 
             clearLast();
 
-          } else if (
+          }
+
+          else if (
             key === "clearAll"
           ) {
 
             clearAll();
 
-          } else {
+          }
+
+          else {
 
             enterDigit(
               key
@@ -2845,21 +4309,19 @@ document
   );
 
 
-// ==========================================
+// ============================================================
 // SUBMIT BUTTON
-// ==========================================
+// ============================================================
 
 fastButton(
-  document.getElementById(
-    "submitBtn"
-  ),
+  submitBtn,
   submitAnswer
 );
 
 
-// ==========================================
-// GAME BACK
-// ==========================================
+// ============================================================
+// GAME BACK BUTTON
+// ============================================================
 
 fastButton(
   document.getElementById(
@@ -2871,7 +4333,9 @@ fastButton(
       timerHandle
     );
 
-    timerHandle = null;
+    timerHandle =
+      null;
+
 
     renderHome();
 
@@ -2879,25 +4343,28 @@ fastButton(
 );
 
 
-// ==========================================
+// ============================================================
 // PLAY AGAIN
-// ==========================================
+// ============================================================
 
 fastButton(
   document.getElementById(
     "againBtn"
   ),
-  () =>
+  () => {
+
     startLevel(
       currentLevel,
       mode
-    )
+    );
+
+  }
 );
 
 
-// ==========================================
-// RESULTS HOME
-// ==========================================
+// ============================================================
+// RESULTS HOME BUTTON
+// ============================================================
 
 fastButton(
   document.getElementById(
@@ -2909,7 +4376,9 @@ fastButton(
       timerHandle
     );
 
-    timerHandle = null;
+    timerHandle =
+      null;
+
 
     renderHome();
 
@@ -2917,13 +4386,21 @@ fastButton(
 );
 
 
-// ==========================================
+// ============================================================
 // PHYSICAL KEYBOARD
-// ==========================================
+// ============================================================
+//
+// This also allows a normal keyboard to be used when testing
+// the app on a computer.
+// ============================================================
 
 document.addEventListener(
   "keydown",
   event => {
+
+    // --------------------------------------------------------
+    // NUMBER KEYS
+    // --------------------------------------------------------
 
     if (
       event.key >= "0" &&
@@ -2934,21 +4411,55 @@ document.addEventListener(
         event.key
       );
 
-    } else if (
+    }
+
+
+    // --------------------------------------------------------
+    // BACKSPACE
+    // --------------------------------------------------------
+
+    else if (
       event.key === "Backspace"
     ) {
 
       clearLast();
 
-    } else if (
+    }
+
+
+    // --------------------------------------------------------
+    // ESCAPE
+    // --------------------------------------------------------
+
+    else if (
       event.key === "Escape"
     ) {
 
       clearAll();
 
-    } else if (
+    }
+
+
+    // --------------------------------------------------------
+    // ENTER
+    // --------------------------------------------------------
+
+    else if (
       event.key === "Enter"
     ) {
+
+      // Multiple choice questions don't use
+      // the normal submit button.
+
+      if (
+        currentInputType() ===
+        "multipleChoice"
+      ) {
+
+        return;
+
+      }
+
 
       submitAnswer();
 
@@ -2958,8 +4469,13 @@ document.addEventListener(
 );
 
 
-// ==========================================
-// START
-// ==========================================
+// ============================================================
+// START APPLICATION
+// ============================================================
 
 renderHome();
+
+
+// ============================================================
+// END OF SCRIPT
+// ============================================================
